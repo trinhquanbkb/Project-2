@@ -1,0 +1,72 @@
+.label-form {
+	font-size: 13px;
+	color: #333;
+	margin-top: 10px;
+	font-weight: 600;
+}
+
+.input-form {
+	background: #fff;
+	border: 1px solid #eae4e4;
+	padding: 10px;
+	width: 85%;
+	height: 40px;
+	margin-top: 5px;
+	outline: none;
+}
+
+.login {
+	margin-top: calc($height-navbar + 35px);
+
+	.facebook-login {
+		width: 130px;
+		height: 40px;
+		background-color: #4a6eaa;
+		color: white;
+		line-height: 40px;
+		text-align: center;
+		.facebook-img {
+			width: auto;
+			height: 90%;
+		}
+	}
+	.google-login {
+		width: 130px;
+		height: 40px;
+		background-color: #ea4335;
+		color: white;
+		line-height: 40px;
+		text-align: center;
+		.google-img {
+			width: auto;
+			height: 90%;
+		}
+	}
+
+	.login-left {
+		width: 45%;
+		height: 400px;
+		background-color: #f7f7f7;
+		padding: 50px;
+		border: 1px solid #eaeaea;
+	}
+
+	.login-right {
+		width: 45%;
+		height: 400px;
+		background-color: #f7f7f7;
+		padding: 50px;
+		border: 1px solid #eaeaea;
+	}
+}
+
+.signin {
+	margin-top: calc($height-navbar + 35px);
+
+	.label-input-form {
+		width: 50%;
+	}
+	.btn-form-signin {
+		width: 44%;
+	}
+}

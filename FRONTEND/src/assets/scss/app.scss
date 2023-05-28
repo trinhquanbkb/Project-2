@@ -1,0 +1,14 @@
+//config css
+@import './config/variable.scss';
+
+//css component
+@import './custom/header.scss';
+@import './custom/content.scss';
+@import './custom/footer.scss';
+@import './custom/product.scss';
+@import './custom/auth.scss';
+@import './custom/cart.scss';
+
+* {
+	font-family: Pangea, sans-serif;
+}
