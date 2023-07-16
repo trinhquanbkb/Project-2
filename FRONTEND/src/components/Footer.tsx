@@ -12,7 +12,7 @@ import bank7 from '../assets/images/banking/bank7.png'
 export default function Footer() {
 	return (
 		<div className="footer-page">
-			<div className="container d-flex justify-content-between">
+			<div className="container-fluid d-flex justify-content-between">
 				<div className="footer-left d-flex justify-content-between">
 					<div className="d-flex flex-column">
 						<p className="title-footer">THÔNG TIN CÔNG TY</p>

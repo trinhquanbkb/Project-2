@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 
 interface IFormInput {
 	id: string
@@ -6,6 +6,7 @@ interface IFormInput {
 	label: string
 	type: string
 	required: boolean
+	onChange?: (event: ChangeEvent<HTMLInputElement>) => void
 }
 
 export default function FormInput({
@@ -13,7 +14,8 @@ export default function FormInput({
 	name,
 	type,
 	label,
-	required
+	required,
+	onChange
 }: IFormInput) {
 	return (
 		<div>
@@ -29,6 +31,8 @@ export default function FormInput({
 				className="input-text required-entry input-form"
 				id={id}
 				name={name}
+				autoComplete="off"
+				onChange={onChange}
 			/>
 		</div>
 	)

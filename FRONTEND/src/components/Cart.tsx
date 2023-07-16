@@ -29,7 +29,7 @@ export default function Cart() {
 	}
 
 	return (
-		<div className="cart-page container">
+		<div className="cart-page container-fluid">
 			<h2 className="fw-bold">Giỏ hàng</h2>
 			<div
 				className="flex-row d-flex justify-content-between"

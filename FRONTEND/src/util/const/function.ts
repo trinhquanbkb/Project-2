@@ -45,3 +45,8 @@ export function renderCode(id: number): string {
 		return id + ''
 	}
 }
+
+export function linkProduct(id: number): string {
+	const code = renderCode(id)
+	return `id=${code}`
+}

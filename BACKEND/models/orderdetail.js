@@ -16,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
     {
       price: DataTypes.INTEGER,
       count: DataTypes.INTEGER,
+      color: DataTypes.TEXT,
+      size: DataTypes.TEXT,
+      //rating và comment chỉ có giá trị khi status_order có giá trị (tức là hàng đã được mua)
       rating: DataTypes.INTEGER,
       comment: DataTypes.TEXT,
       status_order: DataTypes.INTEGER,

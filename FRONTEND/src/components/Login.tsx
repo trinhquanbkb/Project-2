@@ -1,12 +1,54 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import facebook from '../assets/images/facebook.png'
 import google from '../assets/images/google.png'
 import FormInput from './FormInput'
+import { useDispatch, useSelector } from 'react-redux'
+import { TOKEN_USER } from '../util/const/data'
 
 export default function Login() {
+	const navigate = useNavigate()
+	const dispatch = useDispatch()
+	const [user, setUser] = useState({
+		email: '',
+		password: '',
+		error: ''
+	})
+	const { statusLogin } = useSelector((state: any) => state.userReducer)
+	useEffect(() => {
+		if (localStorage.getItem(TOKEN_USER) !== null) {
+			setUser({
+				...user,
+				error: ''
+			})
+			navigate('/', { replace: true })
+		} else if (statusLogin === false) {
+			setUser({
+				...user,
+				error: 'Mật khẩu hoặc email điền sai, hãy nhập lại!'
+			})
+		}
+	}, [statusLogin])
+
+	const handleSubmit = (event: any) => {
+		if (user.email === '') {
+			setUser({ ...user, error: 'Chưa điền email' })
+		} else if (user.password === '') {
+			setUser({ ...user, error: 'Chưa điền mật khẩu' })
+		} else {
+			event.preventDefault()
+			dispatch({
+				type: 'LOGIN',
+				data: {
+					email: user.email,
+					password: user.password
+				}
+			})
+		}
+	}
+
 	return (
-		<div className="login container">
+		<div className="login container-fluid">
 			<h3 style={{ fontWeight: '600' }}>Đăng nhập</h3>
 			<div className="d-flex justify-content-center">
 				<div className="d-flex justify-content-evenly w-25">
@@ -44,6 +86,12 @@ export default function Login() {
 									type="email"
 									label="Email"
 									required={true}
+									onChange={(e) =>
+										setUser({
+											...user,
+											email: e.target.value
+										})
+									}
 								/>
 							</li>
 							<li>
@@ -53,6 +101,12 @@ export default function Login() {
 									type="password"
 									label="Mật khẩu"
 									required={true}
+									onChange={(e) =>
+										setUser({
+											...user,
+											password: e.target.value
+										})
+									}
 								/>
 							</li>
 						</ul>
@@ -63,10 +117,22 @@ export default function Login() {
 								* Yêu cầu bắt buộc
 							</span>
 							<button
+								onClick={(event) => {
+									handleSubmit(event)
+								}}
 								type="button"
 								className="btn btn-warning btn-md mt-4 w-50">
 								Đăng nhập
 							</button>
+							{user.error !== '' ? (
+								<div className="mt-2">
+									<span
+										className="text-danger"
+										style={{ fontSize: '12px' }}>
+										{user.error}
+									</span>
+								</div>
+							) : null}
 						</div>
 					</form>
 				</div>

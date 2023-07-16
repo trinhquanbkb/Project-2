@@ -8,12 +8,14 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate({ MaterialProduct }) {
-      this.hasMany(MaterialProduct, { foreignKey: "material_materialProduct_id" });
+      this.hasMany(MaterialProduct, {
+        foreignKey: "material_materialProduct_id",
+      });
     }
   }
   Material.init(
     {
-      name_material: DataTypes.STRING,
+      name_material: DataTypes.TEXT,
     },
     {
       sequelize,

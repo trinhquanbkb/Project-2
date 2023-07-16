@@ -37,7 +37,7 @@ const authRoutes: RoutesProps[] = [
 
 const publicRoutes: RoutesProps[] = [
 	{
-		path: '/product',
+		path: '/product/:product-detail',
 		name: 'Product',
 		component: ProductPage
 	},
@@ -52,7 +52,7 @@ const publicRoutes: RoutesProps[] = [
 		component: PolicyPurchasePage
 	},
 	{
-		path: '/all-product',
+		path: '/:list-product',
 		name: 'AllProduct',
 		component: AllProductPage
 	}

@@ -1,0 +1,213 @@
+"use strict";
+
+/** @type {import('sequelize-cli').Migration} */
+module.exports = {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.bulkInsert(
+      "ImageProducts",
+      [
+        {
+          product_imageProduct_id: 1,
+          url: "product1_1",
+          isMain: 1,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 1,
+          url: "product1_2",
+          isMain: 0,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 1,
+          url: "product1_3",
+          isMain: 0,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 1,
+          url: "product1_4",
+          isMain: 0,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 1,
+          url: "product1_5",
+          isMain: 0,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 1,
+          url: "product1_6",
+          isMain: 0,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 2,
+          url: "product2_1",
+          isMain: 1,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 2,
+          url: "product2_2",
+          isMain: 0,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 2,
+          url: "product2_3",
+          isMain: 0,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 2,
+          url: "product2_4",
+          isMain: 0,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 2,
+          url: "product2_5",
+          isMain: 0,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 3,
+          url: "product3_1",
+          isMain: 1,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 3,
+          url: "product3_2",
+          isMain: 0,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 3,
+          url: "product3_3",
+          isMain: 0,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 4,
+          url: "product4_1",
+          isMain: 1,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 4,
+          url: "product4_2",
+          isMain: 0,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 5,
+          url: "product5_1",
+          isMain: 1,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 5,
+          url: "product5_2",
+          isMain: 0,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 5,
+          url: "product5_3",
+          isMain: 0,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 6,
+          url: "product6_1",
+          isMain: 1,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 6,
+          url: "product6_2",
+          isMain: 0,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 7,
+          url: "product7_1",
+          isMain: 1,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 7,
+          url: "product7_2",
+          isMain: 0,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 7,
+          url: "product7_3",
+          isMain: 0,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 8,
+          url: "product8_1",
+          isMain: 1,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 8,
+          url: "product8_2",
+          isMain: 0,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 8,
+          url: "product8_3",
+          isMain: 0,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          product_imageProduct_id: 8,
+          url: "product8_4",
+          isMain: 0,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+      ],
+      {}
+    );
+  },
+
+  async down(queryInterface, Sequelize) {
+    await queryInterface.bulkDelete("ImageProducts", null, {});
+  },
+};

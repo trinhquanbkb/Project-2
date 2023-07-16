@@ -1,19 +1,20 @@
 import React from 'react'
-import { IFlashSale } from './FlashSale'
 import { Link } from 'react-router-dom'
 import FeatherIcon from 'feather-icons-react'
-import { renderPrice } from '../util/const/function'
+import { linkProduct, renderPrice } from '../util/const/function'
 
-interface Props {
-	item: IFlashSale
-}
-
-export default function ItemFlashSale(item: Props) {
+export default function ItemFlashSale(item: any) {
 	const itemSale = item.item
+	const url = linkProduct(itemSale.id)
 	const priceSale = (itemSale.price * (100 - itemSale.percent_sale)) / 100
 
 	return (
-		<Link to="#" className="item-flash-sale d-flex flex-column">
+		<Link
+			onClick={() => {
+				localStorage.setItem('productDetail', JSON.stringify(itemSale))
+			}}
+			to={`/product/product-detail?${url}`}
+			className="item-flash-sale d-flex flex-column">
 			<div className="img-sale">
 				<img
 					className="img-product"
@@ -28,7 +29,7 @@ export default function ItemFlashSale(item: Props) {
 			</div>
 
 			<div className="infor-flash-sale">
-				<p className="name-product-sale">{itemSale.name}</p>
+				<p className="name-product-sale">{itemSale.name_product}</p>
 				<div className="d-flex">
 					<span className="new-price">
 						{renderPrice(priceSale, 0, []) + 'đ'}

@@ -325,61 +325,52 @@ export const categories = [
 		href: '#',
 		children: [
 			{
-				parent_id: null,
-				name_category: 'Phụ kiện',
+				parent_id: 3,
+				name_category: 'Thắt lưng',
 				createdAt: '2023-05-12 02:39:24',
 				updatedAt: '2023-05-12 02:39:24',
 				href: '#',
-				children: [
-					{
-						parent_id: 3,
-						name_category: 'Thắt lưng',
-						createdAt: '2023-05-12 02:39:24',
-						updatedAt: '2023-05-12 02:39:24',
-						href: '#',
-						children: null
-					},
-					{
-						parent_id: 3,
-						name_category: 'Dây chuyền',
-						createdAt: '2023-05-12 02:39:24',
-						updatedAt: '2023-05-12 02:39:24',
-						href: '#',
-						children: null
-					},
-					{
-						parent_id: 3,
-						name_category: 'Cà vạt',
-						createdAt: '2023-05-12 02:39:24',
-						updatedAt: '2023-05-12 02:39:24',
-						href: '#',
-						children: null
-					},
-					{
-						parent_id: 3,
-						name_category: 'Mũ',
-						createdAt: '2023-05-12 02:39:24',
-						updatedAt: '2023-05-12 02:39:24',
-						href: '#',
-						children: null
-					},
-					{
-						parent_id: 3,
-						name_category: 'Tất',
-						createdAt: '2023-05-12 02:39:24',
-						updatedAt: '2023-05-12 02:39:24',
-						href: '#',
-						children: null
-					},
-					{
-						parent_id: 3,
-						name_category: 'Khuyên tai',
-						createdAt: '2023-05-12 02:39:24',
-						updatedAt: '2023-05-12 02:39:24',
-						href: '#',
-						children: null
-					}
-				]
+				children: null
+			},
+			{
+				parent_id: 3,
+				name_category: 'Dây chuyền',
+				createdAt: '2023-05-12 02:39:24',
+				updatedAt: '2023-05-12 02:39:24',
+				href: '#',
+				children: null
+			},
+			{
+				parent_id: 3,
+				name_category: 'Cà vạt',
+				createdAt: '2023-05-12 02:39:24',
+				updatedAt: '2023-05-12 02:39:24',
+				href: '#',
+				children: null
+			},
+			{
+				parent_id: 3,
+				name_category: 'Mũ',
+				createdAt: '2023-05-12 02:39:24',
+				updatedAt: '2023-05-12 02:39:24',
+				href: '#',
+				children: null
+			},
+			{
+				parent_id: 3,
+				name_category: 'Tất',
+				createdAt: '2023-05-12 02:39:24',
+				updatedAt: '2023-05-12 02:39:24',
+				href: '#',
+				children: null
+			},
+			{
+				parent_id: 3,
+				name_category: 'Khuyên tai',
+				createdAt: '2023-05-12 02:39:24',
+				updatedAt: '2023-05-12 02:39:24',
+				href: '#',
+				children: null
 			}
 		]
 	},

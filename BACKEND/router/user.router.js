@@ -6,9 +6,9 @@ const {
   loginUser,
 } = require("../controller/user.controller");
 
-userRouter.post("/registerUser", registerUser);
-userRouter.post("/loginUser", loginUser);
-userRouter.post("/loginAdmin", loginAdmin);
+userRouter.post("/register-user", registerUser);
+userRouter.post("/login-user", loginUser);
+userRouter.post("/login-admin", loginAdmin);
 
 module.exports = {
   userRouter,

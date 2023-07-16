@@ -33,14 +33,14 @@ module.exports = {
           updatedAt: "2023-05-12 02:39:24",
         },
         {
-          name_user: "Nguyễn Văn Hải",
+          name_user: "Nguyễn Đức Toàn",
           address_users_id: null,
           avatar: null,
           phone_number: "0988677000",
           email: "hais@gmail.com",
           password:
             "$2a$10$HhxAfn0YQ64OP/pc/xCmxuBmV7S9RZAGLNy5eZARY3f7hB2hPnSde",
-          role: "user",
+          role: "admin",
           isActive: 1,
           createdAt: "2023-05-12 02:39:24",
           updatedAt: "2023-05-12 02:39:24",

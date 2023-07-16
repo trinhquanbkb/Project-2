@@ -2,9 +2,13 @@ import React, { useEffect, useState } from 'react'
 
 interface IInputQuantity {
 	onInputChange: any
+	remain?: number
 }
 
-export default function InputQuantity({ onInputChange }: IInputQuantity) {
+export default function InputQuantity({
+	onInputChange,
+	remain
+}: IInputQuantity) {
 	const [numberProduct, setNumberProduct] = useState(1)
 
 	useEffect(() => {
@@ -30,6 +34,8 @@ export default function InputQuantity({ onInputChange }: IInputQuantity) {
 					let value = parseInt(event.target.value)
 					if (isNaN(value) || Number(value) < 1) {
 						setNumberProduct(1)
+					} else if (Number(value) > remain!) {
+						setNumberProduct(remain!)
 					} else {
 						setNumberProduct(parseInt(event.target.value))
 					}
@@ -38,7 +44,11 @@ export default function InputQuantity({ onInputChange }: IInputQuantity) {
 			<button
 				className="btn-plus"
 				onClick={() => {
-					setNumberProduct(numberProduct + 1)
+					if (numberProduct === remain!) {
+						setNumberProduct(remain!)
+					} else {
+						setNumberProduct(numberProduct + 1)
+					}
 				}}>
 				+
 			</button>

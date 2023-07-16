@@ -32,10 +32,10 @@ module.exports = {
       percent_sale: {
         type: Sequelize.INTEGER,
       },
-      description_detail: {
-        type: Sequelize.TEXT,
+      remain: {
+        type: Sequelize.INTEGER,
       },
-      salient_feature: {
+      description_detail: {
         type: Sequelize.TEXT,
       },
       createdAt: {

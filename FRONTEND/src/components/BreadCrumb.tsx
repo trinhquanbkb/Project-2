@@ -10,10 +10,11 @@ export default function BreadCrumb({ props }: IBreadCrumb) {
 	return (
 		<nav aria-label="breadcrumb" className="mt-4">
 			<ol className="breadcrumb mb-2">
-				{props.map((item) => {
+				{props.map((item, index) => {
 					if (item.pageCurrent === true) {
 						return (
 							<li
+								key={index}
 								className="breadcrumb-item active"
 								aria-current="page">
 								<Link to={item.url} className="text-breadcrum">
@@ -23,7 +24,7 @@ export default function BreadCrumb({ props }: IBreadCrumb) {
 						)
 					} else {
 						return (
-							<li className="breadcrumb-item">
+							<li className="breadcrumb-item" key={index}>
 								<Link to={item.url} className="text-breadcrum">
 									{item.name}
 								</Link>

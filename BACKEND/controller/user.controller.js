@@ -10,26 +10,37 @@ const registerUser = async (req, res) => {
     const salt = bcrypt.genSaltSync(10);
     //generate password
     const hashPassword = bcrypt.hashSync(password, salt);
-    const newUser = await Users.create({
-      name_user,
-      phone_number,
-      email,
-      password: hashPassword,
-      role: "user",
-      isActive: 1,
+    const allUser = await Users.findAll();
+    let i = 0;
+    allUser.forEach((item) => {
+      if (item.dataValues.email === email) {
+        i++;
+      }
     });
-    res.status(201).send(newUser);
+    if (i > 0) {
+      res.status(500).send(error);
+    } else {
+      const newUser = await Users.create({
+        name_user,
+        phone_number,
+        email,
+        password: hashPassword,
+        role: "user",
+        isActive: 1,
+      });
+      res.status(201).send(newUser);
+    }
   } catch (error) {
     res.status(500).send(error);
   }
 };
 
 const loginUser = async (req, res) => {
-  const { phone_number, password } = req.body;
+  const { email, password } = req.body;
   try {
     const results = await Users.findOne({
       where: {
-        phone_number,
+        email,
         isActive: 1,
         role: "user",
       },
@@ -47,7 +58,9 @@ const loginUser = async (req, res) => {
           "trinhhoangquan",
           { expiresIn: 60 * 60 }
         );
-        res.status(200).send({ message: "Login user success", token });
+        res
+          .status(200)
+          .send({ message: "Login user success", token, type: "user" });
       } else {
         throw new Error(`Password is not exist`);
       }
@@ -60,11 +73,11 @@ const loginUser = async (req, res) => {
 };
 
 const loginAdmin = async (req, res) => {
-  const { phone_number, password } = req.body;
+  const { email, password } = req.body;
   try {
     const results = await Users.findOne({
       where: {
-        phone_number,
+        email,
         isActive: 1,
         role: "admin",
       },
@@ -82,7 +95,9 @@ const loginAdmin = async (req, res) => {
           "trinhhoangquan",
           { expiresIn: 60 * 60 }
         );
-        res.status(200).send({ message: "Login admin success", token });
+        res
+          .status(200)
+          .send({ message: "Login admin success", token, type: "admin" });
       } else {
         throw new Error(`Password is not exist`);
       }

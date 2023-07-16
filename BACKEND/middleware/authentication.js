@@ -10,7 +10,7 @@ const authenticate = async (req, res, next) => {
       req.user = decode;
       next();
     } else {
-      res.send("You cannot loggin");
+      res.send("You are not loggin");
     }
   } catch (error) {
     res.status(500).send(error);

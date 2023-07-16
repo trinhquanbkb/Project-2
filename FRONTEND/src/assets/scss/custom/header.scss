@@ -1,47 +1,101 @@
-.header-page {
-	width: 100%;
-	height: $height-navbar;
-	position: fixed;
-	top: 0;
-	right: 0;
-	left: 0;
-	background-color: white;
-	z-index: 10000;
-	margin: 0;
-	border-bottom: 2px solid black;
+.nav-component {
+	position: relative;
 
-	.header-navbar {
-		height: $height-navbar;
+	.header-page {
+		position: absolute;
+		top: 0;
+		left: 0;
 		width: 100%;
+		height: $height-navbar;
+		position: fixed;
+		top: 0;
+		right: 0;
+		left: 0;
+		background-color: white;
+		z-index: 100;
+		margin: 0;
+		border-bottom: 1px solid rgb(194, 173, 173);
 
-		.logo {
+		.header-navbar {
+			height: $height-navbar;
 			width: 100%;
-			height: 95%;
+
+			.logo {
+				width: 100%;
+				height: 95%;
+			}
+
+			.authen-nav {
+				color: black;
+				text-align: center;
+				padding: 20px 5px;
+				font-weight: 600;
+				font-size: 16px;
+				line-height: 16px;
+			}
+
+			.authen-nav:hover {
+				color: #282424;
+				color: black;
+			}
+
+			.search-button:hover {
+				color: rgb(0, 89, 255);
+			}
 		}
 
-		.authen-nav {
-			text-align: center;
-			padding: 20px 5px;
+		.title-login {
+			font-size: 1rem;
 			font-weight: 600;
-			font-size: 16px;
-			line-height: 16px;
-		}
-
-		.authen-nav:hover {
-			color: #794f4f;
-		}
-
-		.search-button:hover {
-			color: rgb(0, 89, 255);
+			line-height: 4rem;
+			color: red;
+			text-decoration: none;
 		}
 	}
 
-	.title-login {
-		font-size: 1rem;
-		font-weight: 600;
-		line-height: 4rem;
-		color: red;
-		text-decoration: none;
+	.search-nav {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: $height-navbar;
+		position: fixed;
+		z-index: 1000;
+		background-color: white;
+		border-bottom: 1px solid rgb(194, 173, 173);
+
+		.search-label {
+			position: relative;
+			width: 40%;
+			height: 65%;
+			margin: auto 0px;
+			border-radius: 3rem;
+			padding: 0rem 1.5rem;
+			background-color: #eeeeee;
+
+			.input-search {
+				height: 100%;
+				background-color: #eeeeee;
+				width: 100%;
+				border: none;
+				outline: none;
+			}
+			.search-button {
+				text-align: center;
+				width: 10%;
+				line-height: 3rem;
+				height: 100%;
+				font-size: 1.25rem;
+				color: #b4a4a4;
+			}
+			.delete-search {
+				position: absolute;
+				top: 0;
+				right: -20%;
+				line-height: 3rem;
+				font-size: 2rem;
+			}
+		}
 	}
 }
 
@@ -52,6 +106,7 @@
 	font-size: 16px;
 	line-height: 16px;
 	text-decoration: none;
+	color: black;
 }
 
 .sub-menu {
@@ -59,6 +114,7 @@
 	min-height: 100px;
 	background-color: whitesmoke;
 	padding: 40px 0px 30px 0px;
+	color: rgb(36, 34, 34);
 }
 
 .category-nav:hover {
@@ -84,10 +140,45 @@
 	line-height: 1.7rem;
 	font-weight: 600;
 	text-decoration: none;
+	color: black;
 }
 
 .cate-2 {
 	font-size: 1.1rem;
 	line-height: 1.8rem;
 	text-decoration: none;
+	color: black;
+}
+
+.icon-user-infor {
+	position: relative;
+}
+
+.icon-user-infor div {
+	cursor: pointer;
+	padding: 5px;
+	position: absolute;
+	border-radius: 8px;
+	width: 160px;
+	top: 49px;
+	left: -65px;
+	min-height: 30px;
+	background-color: rgb(0 0 0 / 60%);
+}
+
+.icon-user-infor svg:hover + .icon-user-infor div {
+	display: block !important;
+	background-color: rgb(0 0 0 / 60%);
+}
+
+.icon-user-infor div:hover {
+	display: block !important;
+	background-color: rgb(0 0 0 / 60%);
+}
+
+.icon-user-infor div p {
+	color: white;
+	font-size: 14px;
+	text-decoration: none;
+	text-align: center;
 }

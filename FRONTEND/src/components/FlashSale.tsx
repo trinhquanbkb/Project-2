@@ -1,70 +1,74 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ItemFlashSale from './ItemFlashSale'
 import { Link } from 'react-router-dom'
-import sale1 from '../assets/images/product-sale/sale1.png'
-import sale2 from '../assets/images/product-sale/sale2.png'
-import sale3 from '../assets/images/product-sale/sale3.png'
-import sale4 from '../assets/images/product-sale/sale4.png'
-import sale5 from '../assets/images/product-sale/sale5.png'
-import sale6 from '../assets/images/product-sale/sale6.png'
-
-export interface IFlashSale {
-	name: string
-	price: number
-	img: string
-	percent_sale: number
-}
+import { useSelector } from 'react-redux'
 
 export default function FlashSale() {
-	const ListSales: IFlashSale[] = [
-		{
-			name: 'Quần Jeans dáng Slim Fit - Xanh nhạt',
-			price: 280000,
-			percent_sale: 40,
-			img: sale1
-		},
-		{
-			name: 'Đầm Thắt nút họa tiết hoa Boho',
-			price: 250000,
-			percent_sale: 50,
-			img: sale2
-		},
-		{
-			name: ' Quần jean nữ Dây kéo Nút',
-			price: 420000,
-			percent_sale: 30,
-			img: sale3
-		},
-		{
-			name: 'Kính mắt chống ánh sáng xanh mắt mèo',
-			price: 120000,
-			percent_sale: 30,
-			img: sale4
-		},
-		{
-			name: 'Quần shorts nam thể thao 7" V2 ',
-			price: 210000,
-			percent_sale: 35,
-			img: sale5
-		},
-		{
-			name: 'Áo thun nam Cotton Coolmate Basics',
-			price: 180000,
-			percent_sale: 60,
-			img: sale6
+	const { listProductSale } = useSelector(
+		(state: any) => state.productReducer
+	)
+
+	useEffect(() => {}, [listProductSale])
+
+	const imgMain = (listImg: any): any => {
+		let img
+		listImg.forEach((item: any) => {
+			if (item.isMain === 1) {
+				img = item.url
+			}
+		})
+		return img
+	}
+
+	const ListSales: any[] = []
+	listProductSale.forEach((item: any) => {
+		ListSales.push({
+			id: item.id,
+			cate_products_id: item.cate_products_id,
+			remain: item.remain,
+			description: item.description_detail,
+			created_at: item.createdAt,
+			updated_at: item.updatedAt,
+			name_brand: item.name_brand,
+			listImage: item.listImage,
+			listSize: item.listSize,
+			listColor: item.listColor,
+			listTag: item.listTag,
+			name_product: item.name_product,
+			price: item.price,
+			percent_sale: item.percent_sale,
+			img: imgMain(item.listImage)
+		})
+	})
+
+	let arrayProduct = []
+	if (ListSales.length > 6) {
+		for (let i = 0; i < 6; i++) {
+			arrayProduct.push(ListSales[i])
 		}
-	]
+	} else {
+		for (let i = 0; i < ListSales.length; i++) {
+			arrayProduct.push(ListSales[i])
+		}
+	}
 
 	return (
 		<div className="d-flex flex-column">
 			<div className="header-title-product d-flex justify-content-between">
 				<p className="title-product text-danger">FLASH SALE</p>
-				<Link to="#" className="view-all">
+				<Link
+					to="/all-product"
+					onClick={() => {
+						localStorage.setItem('isPage', '3')
+					}}
+					className="view-all">
 					Xem tất cả
 				</Link>
 			</div>
-			<div className="flash-sale d-flex justify-content-between">
-				{ListSales.map((item: IFlashSale, index: number) => {
+			<div
+				className="flash-sale d-flex justify-content-start
+			">
+				{arrayProduct.map((item: any, index: number) => {
 					return <ItemFlashSale item={item} key={index} />
 				})}
 			</div>

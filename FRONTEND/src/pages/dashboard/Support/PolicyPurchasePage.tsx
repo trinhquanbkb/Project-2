@@ -4,7 +4,7 @@ import HorizontalLayout from '../../../layouts/HorizontalLayout'
 export default function PolicyPurchasePage() {
 	return (
 		<HorizontalLayout>
-			<div className="container purchase">
+			<div className="container-fluid purchase">
 				<h1 className="text-center">CHÍNH SÁCH MUA HÀNG</h1>
 				<div className="content-purchase">
 					<p>

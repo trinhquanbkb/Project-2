@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate({
-      Category,
+      Categories,
       OrderDetail,
       Brand,
       SizeProduct,
@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       ColorProduct,
     }) {
       this.belongsTo(Brand, { foreignKey: "brand_products_id" });
-      this.belongsTo(Category, { foreignKey: "cate_products_id" });
+      this.belongsTo(Categories, { foreignKey: "cate_products_id" });
       this.hasMany(SizeProduct, { foreignKey: "products_sizeProduct_id" });
       this.hasMany(OrderDetail, { foreignKey: "products_orderDetail_id" });
       this.hasMany(MaterialProduct, {
@@ -33,8 +33,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       name_product: DataTypes.STRING,
       description_detail: DataTypes.TEXT,
-      salient_feature: DataTypes.TEXT,
       price: DataTypes.INTEGER,
+      remain: DataTypes.INTEGER, //số lượng hàng còn lại
       percent_sale: DataTypes.INTEGER,
     },
     {

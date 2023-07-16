@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import sleepwear from '../assets/images/collection/do-ngu.png'
+import male from '../assets/images/collection/male.png'
 import sport from '../assets/images/collection/do-the-thao.png'
 import accessory from '../assets/images/collection/phu-kien.png'
 import allProduct from '../assets/images/collection/tat-ca-san-pham.png'
@@ -18,12 +18,12 @@ export default function Collection() {
 			img: accessory
 		},
 		{
-			title: 'Đồ thể thao',
+			title: 'Sản phẩm mới',
 			img: sport
 		},
 		{
-			title: 'Đồ ngủ',
-			img: sleepwear
+			title: 'Flash sale',
+			img: male
 		}
 	]
 
@@ -66,7 +66,13 @@ export default function Collection() {
 					)
 				})}
 				<div className="d-flex flex-column justify-content-end w-25">
-					<Link to="#" className="buy-now">
+					<Link
+						to="/all-product"
+						onClick={() => {
+							// isPage là 1 tức là trang các sản phẩm đang được sale
+							localStorage.setItem('isPage', '3')
+						}}
+						className="buy-now">
 						Mua hàng ngay <FeatherIcon icon="arrow-right" />
 					</Link>
 				</div>
@@ -75,7 +81,17 @@ export default function Collection() {
 			<div className="collection-content d-flex justify-content-between">
 				{listCollection.map((item, index) => {
 					return (
-						<Link to="#" className="collection-item" key={index}>
+						<Link
+							to="/all-product"
+							className="collection-item"
+							onClick={() => {
+								// isPage là 0 tức là trang tất cả các sản phẩm
+								// isPage là 1 tức là trang phụ kiện
+								// isPage là 2 tức là trang tất cả các sản phẩm mới
+								// isPage là 3 tức là trang tất cả các sản phẩm đang được sale
+								localStorage.setItem('isPage', index.toString())
+							}}
+							key={index}>
 							<img
 								className="img-collection"
 								src={item.img}

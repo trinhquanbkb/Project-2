@@ -11,6 +11,12 @@ interface IBreadcumUrl {
 }
 
 export default function DetailProduct() {
+	let productDetail = {}
+	const jsonString = localStorage.getItem('productDetail')
+
+	if (jsonString !== null) {
+		productDetail = JSON.parse(jsonString)
+	}
 	const breadcumUrl: IBreadcumUrl[] = [
 		{
 			url: '/',
@@ -24,21 +30,26 @@ export default function DetailProduct() {
 		},
 		{
 			url: '#',
+			name: 'Áo nam',
+			pageCurrent: false
+		},
+		{
+			url: '#',
 			name: 'Áo thun',
 			pageCurrent: true
 		}
 	]
 
 	return (
-		<div className="container detail-product">
+		<div className="container-fluid detail-product">
 			<BreadCrumb props={breadcumUrl} />
 			<div className="line"></div>
 			<div className="d-flex mt-4">
 				<div className="detail-product-left">
-					<ImageProduct />
+					<ImageProduct item={productDetail} />
 				</div>
 				<div className="detail-product-right">
-					<ContentProduct />
+					<ContentProduct item={productDetail} />
 				</div>
 			</div>
 			<DescriptionProduct />

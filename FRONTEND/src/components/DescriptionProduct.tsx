@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
-import FeatherIcon from 'feather-icons-react'
 import DOMPurify from 'dompurify'
 
 export default function DescriptionProduct() {
 	const description =
 		'<p className="m-0">- Đường viền đan thoáng khí.</p><p className="m-0">- Chống tia cực tím.</p><p className="m-0">- Công nghệ "DRY-EX" khô nhanh.</p><p className="m-0">- Được làm bằng vải siêu co giãn.</p><p className="m-0">- Tay áo Raglan giúp cử động cánh tay dễ dàng.</p><p className="m-0">- Túi bên có khóa kéo.</p>'
 	const material =
-		'<p>[01 OFF WHITE, 09 BLACK, 53 GREEN, 63 BLUE] Thân:100% Polyeste ( 39% Sử Dụng Sợi Polyeste Tái Chế )/Vải Túi: 100% Polyeste [02 LIGHT GRAY, 08 DARK GRAY]Thân: 100% Polyeste ( 35% Sử Dụng Sợi Polyeste TáiChế )/ Vải Túi: 100% Polyeste </p>'
+		'<p>[01 OFF WHITE, 09 BLACK, 53 GREEN, 63 BLUE]</p> Thân:100% Polyeste ( 39% Sử Dụng Sợi Polyeste Tái Chế )/Vải Túi: 100% Polyeste [02 LIGHT GRAY, 08 DARK GRAY]Thân: 100% Polyeste ( 35% Sử Dụng Sợi Polyeste TáiChế )/ Vải Túi: 100% Polyeste'
 	const [isOpen1, setIsOpen1] = useState({ item: 0 })
 	const [isOpen2, setIsOpen2] = useState({ item: 0 })
 
@@ -31,11 +30,12 @@ export default function DescriptionProduct() {
 							}
 						}}>
 						<p>Tổng quan</p>
-						<FeatherIcon
-							icon={
-								isOpen1.item === 1 ? 'arrow-up' : 'arrow-down'
-							}
-						/>
+						<i
+							className={
+								isOpen1.item === 1
+									? 'fa-solid fa-chevron-up fs-5'
+									: 'fa-solid fa-chevron-down fs-5'
+							}></i>
 					</div>
 
 					<div
@@ -57,11 +57,12 @@ export default function DescriptionProduct() {
 							}
 						}}>
 						<p>Chất liệu</p>
-						<FeatherIcon
-							icon={
-								isOpen2.item === 1 ? 'arrow-up' : 'arrow-down'
-							}
-						/>
+						<i
+							className={
+								isOpen2.item === 1
+									? 'fa-solid fa-chevron-up fs-5'
+									: 'fa-solid fa-chevron-down fs-5'
+							}></i>
 					</div>
 
 					<div

@@ -10,11 +10,11 @@ export default function ContentPage() {
 	return (
 		<div>
 			<Carousel />
-			<div className="container">
+			<div className="container-fluid">
 				<Collection />
 			</div>
 			<HashTag />
-			<div className="container">
+			<div className="container-fluid">
 				<FlashSale />
 				<NewProduct />
 				<SuggestProduct />
