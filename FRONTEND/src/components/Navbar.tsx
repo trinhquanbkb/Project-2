@@ -173,11 +173,6 @@ export default function Navbar() {
 						{localStorage.getItem(TOKEN_USER) === null ? (
 							<div className="d-flex justify-content-between">
 								<div className="d-flex justify-content-center px-2">
-									<Link
-										to="/cart"
-										className="d-flex flex-column justify-content-center text-decoration-none px-2 text-black">
-										<FeatherIcon icon="shopping-cart" />
-									</Link>
 									<div className="d-flex flex-column justify-content-center px-2 search-button text-black">
 										<FeatherIcon
 											icon="search"
@@ -203,42 +198,59 @@ export default function Navbar() {
 								</Link>
 							</div>
 						) : (
-							<div
-								className="d-flex flex-column justify-content-center text-decoration-none fw-bold icon-user-infor"
-								style={{
-									marginRight: '1vw',
-									marginLeft: '4vw'
-								}}>
-								<FeatherIcon
-									onMouseLeave={() => {
-										setIsHoverUser('d-none')
-									}}
-									onMouseEnter={() => {
-										setIsHoverUser('active')
-									}}
-									icon="user"
-									size="28"
-								/>
+							<div className="d-flex justify-content-between">
+								<div className="d-flex justify-content-center px-2">
+									<Link
+										to="/cart"
+										className="d-flex flex-column justify-content-center text-decoration-none px-2 text-black">
+										<FeatherIcon icon="shopping-cart" />
+									</Link>
+									<div className="d-flex flex-column justify-content-center px-2 search-button text-black">
+										<FeatherIcon
+											icon="search"
+											onClick={() => {
+												setStatusSearch(true)
+											}}
+										/>
+									</div>
+								</div>
 								<div
-									className={`${isHoverUser}`}
-									onMouseEnter={() => {
-										setIsHoverUser('active')
-									}}
-									onMouseLeave={() => {
-										setIsHoverUser('d-none')
+									className="d-flex flex-column justify-content-center text-decoration-none fw-bold icon-user-infor"
+									style={{
+										marginRight: '1vw',
+										marginLeft: '4vw'
 									}}>
-									<p
-										className="m-0 py-2"
-										onClick={() => {
-											localStorage.clear()
-											setTimeout(() => {
-												navigate('/login', {
-													replace: true
-												})
-											}, 500)
+									<FeatherIcon
+										onMouseLeave={() => {
+											setIsHoverUser('d-none')
+										}}
+										onMouseEnter={() => {
+											setIsHoverUser('active')
+										}}
+										icon="user"
+										size="28"
+									/>
+									<div
+										className={`${isHoverUser}`}
+										onMouseEnter={() => {
+											setIsHoverUser('active')
+										}}
+										onMouseLeave={() => {
+											setIsHoverUser('d-none')
 										}}>
-										Đăng xuất
-									</p>
+										<p
+											className="m-0 py-2"
+											onClick={() => {
+												localStorage.clear()
+												setTimeout(() => {
+													navigate('/login', {
+														replace: true
+													})
+												}, 500)
+											}}>
+											Đăng xuất
+										</p>
+									</div>
 								</div>
 							</div>
 						)}

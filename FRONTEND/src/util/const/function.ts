@@ -50,3 +50,27 @@ export function linkProduct(id: number): string {
 	const code = renderCode(id)
 	return `id=${code}`
 }
+
+export function parseColor(color: string): string {
+	if (color === 'white') {
+		return 'trắng'
+	} else if (color === 'black') {
+		return 'đen'
+	} else if (color === 'yellow') {
+		return 'vàng'
+	} else if (color === 'grey') {
+		return 'xám'
+	} else if (color === 'brown') {
+		return 'nâu'
+	} else if (color === 'red') {
+		return 'đỏ'
+	} else if (color === 'orange') {
+		return 'cam'
+	} else if (color === 'pink') {
+		return 'hồng'
+	} else if (color === 'blue') {
+		return 'xanh biển'
+	} else {
+		return ''
+	}
+}

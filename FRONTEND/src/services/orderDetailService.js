@@ -26,5 +26,23 @@ export const orderDetail = async ({
 }
 
 export const getAllOrderDetail = async () => {
-	return await Axios.get(`${DOMAIN_SERVER}/orderDetails/get-all-order-detail`)
+	return await Axios.get(
+		`${DOMAIN_SERVER}/orderDetails/get-all-order-detail`,
+		{
+			headers: {
+				token: localStorage.getItem(TOKEN_USER)
+			}
+		}
+	)
+}
+
+export const deleteOrderDetail = async (id) => {
+	return await Axios.delete(
+		`${DOMAIN_SERVER}/orderDetails/delete-order-detail?id=${id}`,
+		{
+			headers: {
+				token: localStorage.getItem(TOKEN_USER)
+			}
+		}
+	)
 }

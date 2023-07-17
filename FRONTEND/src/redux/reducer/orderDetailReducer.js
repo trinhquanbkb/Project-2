@@ -1,8 +1,13 @@
-import { GET_ORDER_DETAIL_SAGA, ORDER_DETAIL_SAGA } from '../type'
+import {
+	DELETE_ORDER_DETAIL_SAGA,
+	GET_ORDER_DETAIL_SAGA,
+	ORDER_DETAIL_SAGA
+} from '../type'
 
 const orderDetailData = {
 	statusCreateOrderDetail: '',
-	listOrderDetail: []
+	listOrderDetail: [],
+	statusDelete: ''
 }
 
 const orderDetailReducer = (state = orderDetailData, action) => {
@@ -20,6 +25,14 @@ const orderDetailReducer = (state = orderDetailData, action) => {
 				}
 			} else {
 				state.statusCreateOrderDetail = ''
+			}
+			return { ...state }
+		}
+		case DELETE_ORDER_DETAIL_SAGA: {
+			if (action.data === '200') {
+				state.statusDelete = true
+			} else {
+				state.statusDelete = ''
 			}
 			return { ...state }
 		}

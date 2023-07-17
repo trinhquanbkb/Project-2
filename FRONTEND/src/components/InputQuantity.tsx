@@ -3,13 +3,15 @@ import React, { useEffect, useState } from 'react'
 interface IInputQuantity {
 	onInputChange: any
 	remain?: number
+	count?: number
 }
 
 export default function InputQuantity({
 	onInputChange,
-	remain
+	remain,
+	count
 }: IInputQuantity) {
-	const [numberProduct, setNumberProduct] = useState(1)
+	const [numberProduct, setNumberProduct] = useState(count || 1)
 
 	useEffect(() => {
 		onInputChange(numberProduct)

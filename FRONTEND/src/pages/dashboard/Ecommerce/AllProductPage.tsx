@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import HorizontalLayout from '../../../layouts/HorizontalLayout'
 import bg from '../../../assets/images/background_all_product.png'
 import BreadCrumb from '../../../components/BreadCrumb'
@@ -121,7 +121,9 @@ export default function AllProductPage() {
 								<Dropdown name={'Thứ tự'} item={itemDropdown} />
 							</div>
 						</div>
-						<div className="w-100 d-flex justify-content-start flex-wrap">
+						<div
+							className="w-100 d-flex justify-content-start flex-wrap"
+							style={{ minHeight: '300px' }}>
 							{list.map((item: any, index: number) => {
 								return (
 									<Link
