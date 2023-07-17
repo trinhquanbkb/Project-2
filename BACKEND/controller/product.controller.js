@@ -143,15 +143,6 @@ const getAllProduct = async (req, res) => {
       }
     }
 
-    for (let j = 0; j < products.length; j++) {
-      if (products[j].listSize == undefined) {
-        products[j]["listSize"] = [];
-      }
-      if (products[j].listColor == undefined) {
-        products[j]["listColor"] = [];
-      }
-    }
-
     if (products.length !== 0) {
       res.status(200).send(products);
     } else {
@@ -759,9 +750,6 @@ const getProductByCateId = async (req, res) => {
         });
       } else if (product2.length !== 0 && cateId.length !== 0) {
         products = [];
-        // product2.forEach((item) => {
-        //   products.push(item);
-        // });
         cateId.forEach(async (item) => {
           let [t, metadatat] = await sequelize.query(
             `SELECT id FROM categories WHERE categories.parent_id = ${item.id}`

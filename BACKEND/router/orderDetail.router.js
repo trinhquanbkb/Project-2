@@ -3,6 +3,7 @@ const orderDetailRouter = express.Router();
 const {
   adminAuthorize,
   userAuthorize,
+  allAuthorize,
 } = require("../middleware/authorization");
 const { authenticate } = require("../middleware/authentication");
 const {
@@ -12,7 +13,12 @@ const {
   deleteOrderDetail,
 } = require("../controller/orderDetail.controller");
 
-orderDetailRouter.get("/get-all-order-detail", getAllOrderDetail);
+orderDetailRouter.get(
+  "/get-all-order-detail",
+  authenticate,
+  userAuthorize,
+  getAllOrderDetail
+);
 
 orderDetailRouter.post(
   "/create-order-detail",
@@ -31,7 +37,7 @@ orderDetailRouter.put(
 orderDetailRouter.delete(
   "/delete-order-detail",
   authenticate,
-  adminAuthorize,
+  userAuthorize,
   deleteOrderDetail
 );
 

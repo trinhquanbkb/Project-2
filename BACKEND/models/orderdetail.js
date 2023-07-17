@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   OrderDetail.init(
     {
+      user_id: DataTypes.INTEGER,
       price: DataTypes.INTEGER,
       count: DataTypes.INTEGER,
       color: DataTypes.TEXT,

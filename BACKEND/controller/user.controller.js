@@ -56,7 +56,7 @@ const loginUser = async (req, res) => {
         const token = jwt.sign(
           { userId: results.id, role: results.role },
           "trinhhoangquan",
-          { expiresIn: 60 * 60 }
+          { expiresIn: 60 * 6000 }
         );
         res
           .status(200)
@@ -93,7 +93,7 @@ const loginAdmin = async (req, res) => {
         const token = jwt.sign(
           { userId: results.id, role: results.role },
           "trinhhoangquan",
-          { expiresIn: 60 * 60 }
+          { expiresIn: 60 * 6000 }
         );
         res
           .status(200)
