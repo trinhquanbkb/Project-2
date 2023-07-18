@@ -27,7 +27,32 @@ module.exports = {
           updatedAt: "2023-05-12 02:39:24",
         },
         {
-          name_tag: "đồ thể thao",
+          name_tag: "thể thao",
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          name_tag: "tất chống trơn",
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          name_tag: "Slub Jersey",
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          name_tag: "Recycle Active",
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          name_tag: "quần",
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          name_tag: "combo",
           createdAt: "2023-05-12 02:39:24",
           updatedAt: "2023-05-12 02:39:24",
         },

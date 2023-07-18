@@ -7,6 +7,9 @@ import createMiddleWareSaga from 'redux-saga'
 import { rootSaga } from './saga/root'
 import categoryReducer from './reducer/categoryReducer'
 import userReducer from './reducer/userReducer'
+import brandReducer from './reducer/brandReducer'
+import colorReducer from './reducer/colorReducer'
+import sizeReducer from './reducer/sizeReducer'
 import productReducer from './reducer/productReducer'
 import orderDetailReducer from './reducer/orderDetailReducer'
 import { persistStore, persistReducer } from 'redux-persist'
@@ -17,7 +20,10 @@ const rootReducer = combineReducers({
 	categoryReducer,
 	productReducer,
 	userReducer,
-	orderDetailReducer
+	orderDetailReducer,
+	brandReducer,
+	colorReducer,
+	sizeReducer
 })
 
 const persistConfig = {

@@ -8,6 +8,7 @@ const {
   getSaleProduct,
   getNewProduct,
   getProductByCateId,
+  getProductByName,
 } = require("../controller/product.controller");
 const { authenticate } = require("../middleware/authentication");
 const { allAuthorize, adminAuthorize } = require("../middleware/authorization");
@@ -16,6 +17,7 @@ productRouter.get("/get-all-product", getAllProduct);
 productRouter.get("/get-all-product-sale", getSaleProduct);
 productRouter.get("/get-new-product", getNewProduct);
 productRouter.get("/get-product-by-cateid", getProductByCateId);
+productRouter.get("/get-product-by-name", getProductByName);
 productRouter.post(
   "/create-product",
   authenticate,

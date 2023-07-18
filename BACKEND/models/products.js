@@ -36,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       price: DataTypes.INTEGER,
       remain: DataTypes.INTEGER, //số lượng hàng còn lại
       percent_sale: DataTypes.INTEGER,
+      material: DataTypes.STRING,
     },
     {
       sequelize,

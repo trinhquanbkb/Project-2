@@ -18,3 +18,9 @@ export const getProductByCate = async (id) => {
 		params: { id: id }
 	})
 }
+
+export const getProductByName = async ({ name }) => {
+	return await Axios.get(`${DOMAIN_SERVER}/products/get-product-by-name`, {
+		params: { name: name }
+	})
+}

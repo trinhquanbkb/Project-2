@@ -54,6 +54,36 @@ module.exports = {
           createdAt: "2023-05-12 02:39:24",
           updatedAt: "2023-05-12 02:39:24",
         },
+        {
+          color_colorProduct_id: 4,
+          products_colorProduct_id: 9,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          color_colorProduct_id: 5,
+          products_colorProduct_id: 10,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          color_colorProduct_id: 2,
+          products_colorProduct_id: 11,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          color_colorProduct_id: 5,
+          products_colorProduct_id: 12,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
+        {
+          color_colorProduct_id: 1,
+          products_colorProduct_id: 13,
+          createdAt: "2023-05-12 02:39:24",
+          updatedAt: "2023-05-12 02:39:24",
+        },
       ],
       {}
     );

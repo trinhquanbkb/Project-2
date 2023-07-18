@@ -12,6 +12,8 @@ const userReducer = (state = userData, action) => {
 				state.statusLogin = true
 			} else if (action.data === '401') {
 				state.statusLogin = false
+			} else {
+				state.statusLogin = ''
 			}
 			return { ...state }
 		}

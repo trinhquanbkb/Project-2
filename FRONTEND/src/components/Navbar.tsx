@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import FeatherIcon from 'feather-icons-react'
 import { useDispatch, useSelector } from 'react-redux'
 import { TOKEN_USER } from '../util/const/data'
-import { REGISTER_USER } from '../redux/type'
+import { LOGIN_USER, REGISTER_USER } from '../redux/type'
 import Swal from 'sweetalert2'
 
 interface Category {
@@ -60,6 +60,12 @@ export default function Navbar() {
 				data: '500'
 			})
 		}
+		if (localStorage.getItem(TOKEN_USER) !== null) {
+			dispatch({
+				type: LOGIN_USER,
+				data: '500'
+			})
+		}
 	}, [])
 
 	useEffect(() => {}, [listCategory, listProduct])
@@ -79,6 +85,12 @@ export default function Navbar() {
 									data: cate.id
 								})
 								localStorage.setItem('isPage', '')
+								localStorage.setItem(
+									'isCate',
+									cate.id.toString()
+								)
+								localStorage.setItem('keySearch', '')
+								window.scrollTo({ top: 0, behavior: 'smooth' })
 							}}
 							to={
 								cate.href === ''
@@ -107,6 +119,15 @@ export default function Navbar() {
 										data: cate.id
 									})
 									localStorage.setItem('isPage', '')
+									localStorage.setItem(
+										'isCate',
+										cate.id.toString()
+									)
+									localStorage.setItem('keySearch', '')
+									window.scrollTo({
+										top: 0,
+										behavior: 'smooth'
+									})
 								}}
 								to={
 									cate.href === ''
@@ -128,6 +149,19 @@ export default function Navbar() {
 		)
 	}
 
+	const handleKeyDown = (e: any) => {
+		if (e.key === 'Enter') {
+			dispatch({
+				type: 'GET_PRODUCT_BY_NAME',
+				data: e.target.value
+			})
+			localStorage.setItem('keySearch', e.target.value)
+			navigate('/all-product', {
+				replace: true
+			})
+		}
+	}
+
 	return (
 		<div className="nav-component">
 			<div className="header-page">
@@ -146,6 +180,18 @@ export default function Navbar() {
 												data: item.id
 											})
 											localStorage.setItem('isPage', '')
+											localStorage.setItem(
+												'isCate',
+												item.id.toString()
+											)
+											localStorage.setItem(
+												'keySearch',
+												''
+											)
+											window.scrollTo({
+												top: 0,
+												behavior: 'smooth'
+											})
 										}}
 										to={
 											item.href === ''
@@ -200,11 +246,6 @@ export default function Navbar() {
 						) : (
 							<div className="d-flex justify-content-between">
 								<div className="d-flex justify-content-center px-2">
-									<Link
-										to="/cart"
-										className="d-flex flex-column justify-content-center text-decoration-none px-2 text-black">
-										<FeatherIcon icon="shopping-cart" />
-									</Link>
 									<div className="d-flex flex-column justify-content-center px-2 search-button text-black">
 										<FeatherIcon
 											icon="search"
@@ -218,7 +259,7 @@ export default function Navbar() {
 									className="d-flex flex-column justify-content-center text-decoration-none fw-bold icon-user-infor"
 									style={{
 										marginRight: '1vw',
-										marginLeft: '4vw'
+										marginLeft: '2vw'
 									}}>
 									<FeatherIcon
 										onMouseLeave={() => {
@@ -238,6 +279,11 @@ export default function Navbar() {
 										onMouseLeave={() => {
 											setIsHoverUser('d-none')
 										}}>
+										<p className="m-0 py-2">
+											<Link to="/cart">
+												Giỏ hàng của bạn
+											</Link>
+										</p>
 										<p
 											className="m-0 py-2"
 											onClick={() => {
@@ -278,7 +324,10 @@ export default function Navbar() {
 				<label className="search-label d-flex justify-content-around">
 					<input
 						className="input-search"
-						placeholder="Tìm kiếm sản phẩm..."></input>
+						onKeyDown={(event) => {
+							handleKeyDown(event)
+						}}
+						placeholder="Tìm kiếm theo tên sản phẩm..."></input>
 					<i className="fa-solid fa-magnifying-glass search-button"></i>
 					<i
 						className="fa-solid fa-xmark delete-search"

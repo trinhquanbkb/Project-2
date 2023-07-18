@@ -3,6 +3,9 @@ import { categorySaga } from './categorySaga'
 import { productSaga } from './productSaga'
 import { userSaga } from './userSaga'
 import { orderDetailSaga } from './orderDetailSaga'
+import { colorSaga } from './colorSaga'
+import { sizeSaga } from './sizeSaga'
+import { brandSaga } from './brandSaga'
 
 export function* rootSaga() {
 	yield all([
@@ -10,6 +13,9 @@ export function* rootSaga() {
 		categorySaga(),
 		productSaga(),
 		userSaga(),
-		orderDetailSaga()
+		orderDetailSaga(),
+		colorSaga(),
+		sizeSaga(),
+		brandSaga()
 	])
 }

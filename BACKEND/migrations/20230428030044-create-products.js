@@ -23,6 +23,9 @@ module.exports = {
           key: "id",
         },
       },
+      material: {
+        type: Sequelize.STRING,
+      },
       name_product: {
         type: Sequelize.STRING,
       },

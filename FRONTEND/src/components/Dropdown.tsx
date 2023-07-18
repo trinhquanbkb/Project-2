@@ -1,11 +1,9 @@
 import React from 'react'
 
-interface IDropdown {
-	name: string
-	item: string[]
-}
-
-export default function Dropdown({ name, item }: IDropdown) {
+export default function Dropdown({ name, item, onHandle }: any) {
+	const handleChange = (item: string) => {
+		onHandle(item)
+	}
 	return (
 		<div className="dropdown">
 			<button
@@ -18,11 +16,15 @@ export default function Dropdown({ name, item }: IDropdown) {
 				{name}
 			</button>
 			<div className="dropdown-menu" aria-labelledby="filterDropdown">
-				{item.map((i) => {
+				{item.map((i: any) => {
 					return (
-						<a className="dropdown-item" href="#">
+						<div
+							onClick={() => {
+								handleChange(i)
+							}}
+							className="dropdown-item">
 							{i}
-						</a>
+						</div>
 					)
 				})}
 			</div>

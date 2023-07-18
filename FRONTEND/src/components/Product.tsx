@@ -36,7 +36,7 @@ export default function Product(item: any) {
 
 	const product = item.item
 	let priceSale = null
-	if (product.percent_sale !== undefined) {
+	if (product.percent_sale !== null) {
 		priceSale = (product.price * (100 - product.percent_sale)) / 100
 	}
 

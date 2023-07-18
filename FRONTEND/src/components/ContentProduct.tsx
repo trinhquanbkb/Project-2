@@ -47,6 +47,10 @@ export default function ContentProduct(item: any) {
 				icon: 'error',
 				confirmButtonText: 'Chấp nhận'
 			})
+			dispatch({
+				type: ORDER_DETAIL_SAGA,
+				data: '500'
+			})
 		}
 	}, [statusCreateOrderDetail])
 

@@ -52,7 +52,7 @@ export default function DetailProduct() {
 					<ContentProduct item={productDetail} />
 				</div>
 			</div>
-			<DescriptionProduct />
+			<DescriptionProduct item={productDetail} />
 			<div
 				className="bg-success mt-5"
 				style={{ width: '100%', height: '600px' }}>
