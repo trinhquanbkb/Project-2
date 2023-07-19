@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import male from '../assets/images/collection/male.png'
+import sale from '../assets/images/collection/sale.png'
 import sport from '../assets/images/collection/do-the-thao.png'
 import accessory from '../assets/images/collection/phu-kien.png'
 import allProduct from '../assets/images/collection/tat-ca-san-pham.png'
@@ -23,7 +23,7 @@ export default function Collection() {
 		},
 		{
 			title: 'Flash sale',
-			img: male
+			img: sale
 		}
 	]
 
@@ -92,10 +92,20 @@ export default function Collection() {
 								localStorage.setItem('isPage', index.toString())
 							}}
 							key={index}>
-							<img
+							<div
 								className="img-collection"
-								src={item.img}
-								alt={item.title}></img>
+								style={{
+									backgroundImage: `url(${item.img})`,
+									backgroundSize: 'cover'
+								}}>
+								<div
+									style={{
+										borderRadius: '8px',
+										width: '100%',
+										height: '100%',
+										backgroundColor: 'rgb(0 0 0 / 40%)'
+									}}></div>
+							</div>
 							<p className="title-item-collection">
 								{item.title}
 							</p>

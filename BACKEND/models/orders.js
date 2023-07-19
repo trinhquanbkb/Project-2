@@ -20,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
       email: DataTypes.STRING,
       phoneNumber: DataTypes.STRING,
       status: DataTypes.INTEGER,
+      //status = 1: sản phẩm đã được đặt, đang chờ xử lý
+      //status = 2: sản phẩm đã được duyệt, đang chờ giao hàng
+      //status = 3: sản phẩm đã được nhận
       note: DataTypes.TEXT,
       date_order: DataTypes.DATE,
     },

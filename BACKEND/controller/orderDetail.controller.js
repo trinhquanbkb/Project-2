@@ -8,6 +8,7 @@ const getAllOrderDetail = async (req, res) => {
     const orderDetails = await OrderDetail.findAll({
       where: {
         user_id: userId,
+        status_order: null,
       },
     });
     const [products, metadataProduct] = await sequelize.query(
@@ -188,7 +189,8 @@ const createOrderDetail = async (req, res) => {
       if (
         item.dataValues.products_orderDetail_id == product_id &&
         item.dataValues.size == size &&
-        item.dataValues.color == color
+        item.dataValues.color == color &&
+        item.dataValues.status_order === null
       ) {
         x++;
       }
@@ -275,9 +277,60 @@ const deleteOrderDetail = async (req, res) => {
   }
 };
 
+const getOrderManager = async (req, res) => {
+  const { userId } = req.user;
+  try {
+    const [orders, metadataOrder] = await sequelize.query(
+      `SELECT orderdetails.id, orders.status, orderdetails.count, imageproducts.url, orderdetails.user_id, orderdetails.products_orderDetail_id, orderdetails.color, orderdetails.size, orderdetails.rating , orderdetails.price, products.cate_products_id, products.name_product, products.percent_sale, brands.name_brand FROM ecommerce_clothes.products, ecommerce_clothes.brands, ecommerce_clothes.orderdetails, ecommerce_clothes.imageproducts, ecommerce_clothes.orders where products.brand_products_id = brands.id and orderdetails.status_order = 1 and orderdetails.products_orderDetail_id = products.id and imageproducts.product_imageProduct_id = orderdetails.products_orderDetail_id and imageproducts.isMain = 1 and orders.id = orderdetails.orders_orderDetail_id and orderdetails.user_id = ${userId}`
+    );
+    let result = [];
+    orders.forEach((item) => {
+      result.push({
+        ...item,
+        image: "http://localhost:3000/product/" + item.url + ".png",
+      });
+    });
+    if (result) {
+      res.status(200).send(result);
+    } else {
+      throw new Error("Cannot get order detail");
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+const ratingOrderDetail = async (req, res) => {
+  const { id } = req.query;
+  const { userId } = req.user;
+  const { value } = req.body;
+  try {
+    const updateRating = await OrderDetail.update(
+      {
+        rating: value,
+      },
+      {
+        where: {
+          id: id,
+          user_id: userId,
+        },
+      }
+    );
+    if (updateRating) {
+      res.status(200).send("Update rating success");
+    } else {
+      throw new Error("Cannot update rating");
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
 module.exports = {
   getAllOrderDetail,
   createOrderDetail,
   updateOrderDetail,
   deleteOrderDetail,
+  getOrderManager,
+  ratingOrderDetail,
 };

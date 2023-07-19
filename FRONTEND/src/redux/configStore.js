@@ -12,6 +12,7 @@ import colorReducer from './reducer/colorReducer'
 import sizeReducer from './reducer/sizeReducer'
 import productReducer from './reducer/productReducer'
 import orderDetailReducer from './reducer/orderDetailReducer'
+import orderReducer from './reducer/orderReducer'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
 	orderDetailReducer,
 	brandReducer,
 	colorReducer,
-	sizeReducer
+	sizeReducer,
+	orderReducer
 })
 
 const persistConfig = {

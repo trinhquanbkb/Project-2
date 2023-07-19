@@ -157,7 +157,7 @@ export default function Navbar() {
 			})
 			localStorage.setItem('keySearch', e.target.value)
 			navigate('/all-product', {
-				replace: true
+				replace: false
 			})
 		}
 	}
@@ -282,6 +282,11 @@ export default function Navbar() {
 										<p className="m-0 py-2">
 											<Link to="/cart">
 												Giỏ hàng của bạn
+											</Link>
+										</p>
+										<p className="m-0 py-2">
+											<Link to="/order-manager">
+												Quản lý đơn hàng
 											</Link>
 										</p>
 										<p

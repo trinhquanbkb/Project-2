@@ -25,7 +25,7 @@ module.exports = {
           price: 150000,
           count: 5,
           color: "black",
-          size: null,
+          size: "XL",
           rating: null,
           comment: null,
           status_order: null,

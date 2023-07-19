@@ -1,13 +1,18 @@
 import { takeLatest, put } from 'redux-saga/effects'
 import {
+	CREATE_ORDER_PRODUCT_SAGA,
 	DELETE_ORDER_DETAIL_SAGA,
+	GET_ALL_ORDER_MANAGER_SAGA,
 	GET_ORDER_DETAIL_SAGA,
 	ORDER_DETAIL_SAGA
 } from '../type'
 import {
+	createOrder,
 	deleteOrderDetail,
 	getAllOrderDetail,
-	orderDetail
+	getOrderManager,
+	orderDetail,
+	updateRating
 } from '../../services/orderDetailService'
 
 function* createOrderDetailSaga(action) {
@@ -48,8 +53,39 @@ function* deleteOrderDetailSaga(action) {
 	} catch (error) {}
 }
 
+function* createOrderSaga(action) {
+	try {
+		const promise = yield createOrder(action.data)
+		if (promise.status === 201) {
+			yield put({
+				type: CREATE_ORDER_PRODUCT_SAGA,
+				data: true
+			})
+		}
+	} catch (error) {}
+}
+
+function* getOrderManagerSaga(action) {
+	try {
+		const promise = yield getOrderManager()
+		yield put({
+			type: GET_ALL_ORDER_MANAGER_SAGA,
+			data: promise.data
+		})
+	} catch (error) {}
+}
+
+function* updateRatingSaga(action) {
+	try {
+		yield updateRating(action.data)
+	} catch (error) {}
+}
+
 export function* orderDetailSaga() {
 	yield takeLatest('ORDER_DETAIL', createOrderDetailSaga)
+	yield takeLatest('CREATE_ORDER', createOrderSaga)
 	yield takeLatest('GET_ALL_ORDER_DETAIL', getAllOrderDetailSaga)
 	yield takeLatest('DELETE_ORDER_DETAIL', deleteOrderDetailSaga)
+	yield takeLatest('GET_ALL_ORDER_MANAGER', getOrderManagerSaga)
+	yield takeLatest('UPDATE_RATING_ORDER', updateRatingSaga)
 }

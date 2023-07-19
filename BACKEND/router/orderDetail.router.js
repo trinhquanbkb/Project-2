@@ -11,6 +11,8 @@ const {
   createOrderDetail,
   updateOrderDetail,
   deleteOrderDetail,
+  getOrderManager,
+  ratingOrderDetail,
 } = require("../controller/orderDetail.controller");
 
 orderDetailRouter.get(
@@ -18,6 +20,13 @@ orderDetailRouter.get(
   authenticate,
   userAuthorize,
   getAllOrderDetail
+);
+
+orderDetailRouter.get(
+  "/get-order-detail-manager",
+  authenticate,
+  userAuthorize,
+  getOrderManager
 );
 
 orderDetailRouter.post(
@@ -32,6 +41,13 @@ orderDetailRouter.put(
   authenticate,
   adminAuthorize,
   updateOrderDetail
+);
+
+orderDetailRouter.put(
+  "/update-order-detail-rating",
+  authenticate,
+  userAuthorize,
+  ratingOrderDetail
 );
 
 orderDetailRouter.delete(

@@ -46,3 +46,38 @@ export const deleteOrderDetail = async (id) => {
 		}
 	)
 }
+
+export const createOrder = async (item) => {
+	return await Axios.post(
+		`${DOMAIN_SERVER}/orders/create-order-product`,
+		item,
+		{
+			headers: {
+				token: localStorage.getItem(TOKEN_USER)
+			}
+		}
+	)
+}
+
+export const getOrderManager = async () => {
+	return await Axios.get(
+		`${DOMAIN_SERVER}/orderDetails/get-order-detail-manager`,
+		{
+			headers: {
+				token: localStorage.getItem(TOKEN_USER)
+			}
+		}
+	)
+}
+
+export const updateRating = async ({ id, value }) => {
+	return await Axios.put(
+		`${DOMAIN_SERVER}/orderDetails/update-order-detail-rating?id=${id}`,
+		{ value: value },
+		{
+			headers: {
+				token: localStorage.getItem(TOKEN_USER)
+			}
+		}
+	)
+}

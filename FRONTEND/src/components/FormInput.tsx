@@ -6,6 +6,7 @@ interface IFormInput {
 	label: string
 	type: string
 	required: boolean
+	value?: any
 	onChange?: (event: ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -15,6 +16,7 @@ export default function FormInput({
 	type,
 	label,
 	required,
+	value,
 	onChange
 }: IFormInput) {
 	return (
@@ -33,6 +35,7 @@ export default function FormInput({
 				name={name}
 				autoComplete="off"
 				onChange={onChange}
+				value={value === undefined ? null : value}
 			/>
 		</div>
 	)

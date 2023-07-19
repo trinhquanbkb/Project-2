@@ -3,6 +3,8 @@ import SigninPage from '../pages/auth/SigninPage'
 import index from '../pages/dashboard'
 import AllProductPage from '../pages/dashboard/Ecommerce/AllProductPage'
 import CartPage from '../pages/dashboard/Ecommerce/CartPage'
+import OrderPage from '../pages/dashboard/Ecommerce/OrderPage'
+import Ordermanager from '../pages/dashboard/Ecommerce/Ordermanager'
 import ProductPage from '../pages/dashboard/Ecommerce/ProductPage'
 import PolicyPurchasePage from '../pages/dashboard/Support/PolicyPurchasePage'
 
@@ -45,6 +47,16 @@ const publicRoutes: RoutesProps[] = [
 		path: '/cart',
 		name: 'Cart',
 		component: CartPage
+	},
+	{
+		path: '/order-product',
+		name: 'OrderProduct',
+		component: OrderPage
+	},
+	{
+		path: '/order-manager',
+		name: 'OrderManager',
+		component: Ordermanager
 	},
 	{
 		path: '/policy-purchase',

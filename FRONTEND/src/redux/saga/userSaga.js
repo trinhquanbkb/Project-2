@@ -1,7 +1,11 @@
 import { takeLatest, put } from 'redux-saga/effects'
-import { loginUserInfor, registerUserInfor } from '../../services/userService'
+import {
+	getUserInfor,
+	loginUserInfor,
+	registerUserInfor
+} from '../../services/userService'
 import { TOKEN_USER } from '../../util/const/data'
-import { LOGIN_USER, REGISTER_USER } from '../type'
+import { LOGIN_USER, REGISTER_USER, USER_INFO_SAGA } from '../type'
 
 function* loginUserSaga(action) {
 	try {
@@ -49,7 +53,23 @@ function* registerUserSaga(action) {
 	}
 }
 
+function* getUserInfoSaga() {
+	try {
+		let promiseUser = yield getUserInfor()
+		yield put({
+			type: USER_INFO_SAGA,
+			data: promiseUser.data
+		})
+	} catch (error) {
+		yield put({
+			type: USER_INFO_SAGA,
+			data: {}
+		})
+	}
+}
+
 export function* userSaga() {
 	yield takeLatest('LOGIN', loginUserSaga)
 	yield takeLatest('REGISTER', registerUserSaga)
+	yield takeLatest('GET_USER_INFO', getUserInfoSaga)
 }

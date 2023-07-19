@@ -1,10 +1,18 @@
 import Axios from 'axios'
-import { TOKEN_ADMIN, TOKEN_USER, DOMAIN_SERVER } from '../util/const/data'
+import { TOKEN_USER, DOMAIN_SERVER } from '../util/const/data'
 
 export const loginUserInfor = async (email, password) => {
 	return await Axios.post(`${DOMAIN_SERVER}/users/login-user`, {
 		email,
 		password
+	})
+}
+
+export const getUserInfor = async () => {
+	return await Axios.get(`${DOMAIN_SERVER}/users/get-user-info`, {
+		headers: {
+			token: localStorage.getItem(TOKEN_USER)
+		}
 	})
 }
 

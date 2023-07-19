@@ -7,6 +7,7 @@ const { orderDetailRouter } = require("./orderDetail.router");
 const { sizeRouter } = require("./size.router");
 const { brandRouter } = require("./brand.router");
 const { colorRouter } = require("./color.router");
+const { orderRouter } = require("./order.router");
 
 rootRouter.use("/users", userRouter);
 rootRouter.use("/products", productRouter);
@@ -15,6 +16,7 @@ rootRouter.use("/orderDetails", orderDetailRouter);
 rootRouter.use("/sizes", sizeRouter);
 rootRouter.use("/brands", brandRouter);
 rootRouter.use("/colors", colorRouter);
+rootRouter.use("/orders", orderRouter);
 
 module.exports = {
   rootRouter,

@@ -72,6 +72,11 @@ export default function Cart() {
 	return (
 		<div className="cart-page container-fluid">
 			<h2 className="fw-bold">Giỏ hàng</h2>
+			{listOrderDetail.length === 0 ? (
+				<div className="mt-4">
+					Không còn gì trong giỏ, hãy mua gì đi!
+				</div>
+			) : null}
 			<div
 				className="flex-row d-flex justify-content-between"
 				style={{ position: 'relative' }}>

@@ -109,8 +109,33 @@ const loginAdmin = async (req, res) => {
   }
 };
 
+const getUserInfo = async (req, res) => {
+  const { userId } = req.user;
+  try {
+    const user = await Users.findOne({
+      where: {
+        id: userId,
+      },
+    });
+    const result = {
+      name_user: user.dataValues.name_user,
+      phone_number: user.dataValues.phone_number,
+      email: user.dataValues.email,
+      role: user.dataValues.role,
+    };
+    if (result) {
+      res.status(200).send(result);
+    } else {
+      throw new Error("Cannot get user information");
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
 module.exports = {
   registerUser,
   loginAdmin,
   loginUser,
+  getUserInfo,
 };

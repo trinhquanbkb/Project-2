@@ -1,8 +1,9 @@
-import { LOGIN_USER, REGISTER_USER } from '../type'
+import { LOGIN_USER, REGISTER_USER, USER_INFO_SAGA } from '../type'
 
 const userData = {
 	statusLogin: '',
-	statusRegister: ''
+	statusRegister: '',
+	userInfo: null
 }
 
 const userReducer = (state = userData, action) => {
@@ -31,6 +32,10 @@ const userReducer = (state = userData, action) => {
 					state.statusRegister = ''
 				}
 			}
+			return { ...state }
+		}
+		case USER_INFO_SAGA: {
+			state.userInfo = { ...action.data }
 			return { ...state }
 		}
 		default: {
