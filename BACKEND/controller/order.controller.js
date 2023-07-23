@@ -28,6 +28,7 @@ const createOrder = async (req, res) => {
           price: item.price,
           orders_orderDetail_id: order.dataValues.id,
           status_order: 1,
+          count: item.count,
         },
         {
           where: {

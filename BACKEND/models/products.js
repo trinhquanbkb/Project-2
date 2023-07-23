@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "products_materialProduct_id",
       });
       this.hasMany(TagProduct, { foreignKey: "products_tagProduct_id" });
-      this.hasMany(ImageProduct, { foreignKey: "products_imageProduct_id" });
+      this.hasMany(ImageProduct, { foreignKey: "product_imageProduct_id" });
       this.hasMany(ColorProduct, { foreignKey: "products_colorProduct_id" });
     }
   }
@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       price: DataTypes.INTEGER,
       remain: DataTypes.INTEGER, //số lượng hàng còn lại
       percent_sale: DataTypes.INTEGER,
-      material: DataTypes.STRING,
+      material: DataTypes.TEXT,
     },
     {
       sequelize,

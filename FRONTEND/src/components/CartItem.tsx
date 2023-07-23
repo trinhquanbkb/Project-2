@@ -23,7 +23,8 @@ export default function CartItem({
 				id: cart.id,
 				totalPrice: cart.price * inputValue,
 				color: cart.color,
-				size: cart.size
+				size: cart.size,
+				count: inputValue
 			})
 		}
 	}, [inputValue])
@@ -44,7 +45,8 @@ export default function CartItem({
 				id: cart.id,
 				totalPrice: cart.price * inputValue,
 				color: cart.color,
-				size: cart.size
+				size: cart.size,
+				count: inputValue
 			})
 			setIsSelect(1)
 		} else {

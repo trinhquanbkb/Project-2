@@ -1,0 +1,44 @@
+.footer-page {
+	width: 100%;
+	margin-top: 70px;
+	padding: 60px 0px 40px 0px;
+	background-color: rgb(245, 245, 245, 1);
+
+	.footer-left {
+		width: 65%;
+
+		.title-footer {
+			font-size: 0.9rem;
+			font-weight: 600;
+		}
+		.info {
+			font-size: 0.8rem;
+			text-decoration: none;
+			padding: 3px 0px;
+		}
+		.bank {
+			width: 2.6rem;
+			height: 1.8rem;
+			margin: 0px 12px 14px 0px;
+		}
+	}
+
+	.footer-right {
+		width: 35%;
+
+		.title-footer {
+			padding-left: 8px;
+			font-size: 0.9rem;
+			font-weight: 600;
+		}
+		.icon {
+			margin: 0px 8px;
+		}
+		.input-register {
+			width: 75%;
+			padding-left: 8px;
+			height: 2.2rem;
+			margin-top: -4px;
+		}
+	}
+}

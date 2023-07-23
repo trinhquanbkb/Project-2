@@ -1,0 +1,29 @@
+.demo-logo {
+  margin-left: -25px;
+  font-size: 22px;
+  font-weight: 600;
+  color: white;
+}
+
+.ant-layout-sider-children {
+  .ant-menu-submenu .ant-menu-submenu-title {
+    color: black !important;
+    .ant-menu-item-icon {
+      min-width: 17px !important;
+      font-size: 17px !important;
+    }
+    .ant-menu-title-content {
+      font-size: 16px !important;
+    }
+  }
+
+  .ant-menu-item {
+    .ant-menu-item-icon {
+      min-width: 17px !important;
+      font-size: 17px !important;
+    }
+    .ant-menu-title-content {
+      font-size: 16px !important;
+    }
+  }
+}

@@ -1,0 +1,76 @@
+.manager-order-page {
+	margin-top: calc($height-navbar + 65px);
+}
+
+.img-order-manager {
+	padding: 25px 4px !important;
+	width: 12%;
+	img {
+		width: 100%;
+		height: auto;
+		aspect-ratio: 6/5;
+		object-fit: cover;
+	}
+}
+
+.name-order-manager {
+	padding: 25px 4px !important;
+	width: 25%;
+	text-align: center;
+}
+
+.count-order-manager {
+	padding: 25px 4px !important;
+	width: 11%;
+	text-align: center;
+}
+
+.price-order-manager {
+	padding: 25px 4px !important;
+	width: 12%;
+	text-align: center;
+}
+
+.rating-order-manager {
+	padding: 25px 4px !important;
+	width: 20%;
+	text-align: center;
+}
+
+.status-order-manager {
+	width: 20%;
+	padding: 25px 0px !important;
+	text-align: center;
+}
+
+.tr {
+	border-style: dashed !important;
+}
+
+.star {
+	color: #000000;
+}
+
+.star-full {
+	color: #ffd700;
+	fill: #ffd700;
+}
+
+.star-container {
+	position: relative;
+}
+
+.star-wrapper {
+	color: #ffd700;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.star-half {
+	fill: #ffd700;
+	color: #ffd700;
+	position: absolute;
+	top: 0;
+	left: 0;
+}

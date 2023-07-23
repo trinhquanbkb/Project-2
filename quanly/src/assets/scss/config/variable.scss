@@ -1,0 +1,38 @@
+$height-navbar: 70px;
+
+$height-collection-content: 200px;
+
+$height-header-title-product: 50px;
+
+$height-flashsale-item: 350px;
+
+$height-header-suggest-product: 60px;
+
+@media (max-width: 576px) {
+	:root {
+		--container-fluid-padding-x: 16px;
+	}
+}
+
+@media (min-width: 576px) {
+	:root {
+		--container-fluid-padding-x: 32px;
+	}
+}
+
+@media (min-width: 992px) {
+	:root {
+		--container-fluid-padding-x: 64px;
+	}
+}
+
+@media (min-width: 1400px) {
+	:root {
+		--container-fluid-padding-x: 144px;
+	}
+}
+
+.container-fluid {
+	padding-left: var(--container-fluid-padding-x);
+	padding-right: var(--container-fluid-padding-x);
+}

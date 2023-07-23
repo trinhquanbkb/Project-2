@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 interface IListSelect {
 	id: number
+	count: number
 	totalPrice: number
 	color: string
 	size: string

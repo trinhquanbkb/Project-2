@@ -1,0 +1,20 @@
+//config css
+@import "react-quill/dist/quill.snow.css";
+@import "./config/variable.scss";
+
+//css component
+@import "./custom/header.scss";
+@import "./custom/content.scss";
+@import "./custom/footer.scss";
+// @import "./custom/product.scss";
+@import "./custom/auth.scss";
+@import "./custom/cart.scss";
+@import "./custom/manager.scss";
+
+* {
+  font-family: Pangea, sans-serif;
+}
+
+body {
+  margin: 0px !important;
+}

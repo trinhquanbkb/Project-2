@@ -24,7 +24,7 @@ module.exports = {
         },
       },
       material: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
       },
       name_product: {
         type: Sequelize.STRING,

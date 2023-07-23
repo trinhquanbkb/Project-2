@@ -1,5 +1,16 @@
 const { Op } = require("sequelize");
-const { Products } = require("../models");
+const {
+  Products,
+  ImageProduct,
+  Size,
+  SizeProduct,
+  Tags,
+  TagProduct,
+  Color,
+  ColorProduct,
+  Categories,
+  Brand,
+} = require("../models");
 const { sequelize } = require("../models/index");
 
 //CRUD product
@@ -98,14 +109,12 @@ const getAllProduct = async (req, res) => {
           if (products[j].listImage == undefined) {
             products[j]["listImage"] = [];
             products[j]["listImage"].push({
-              url:
-                "http://localhost:3000/product/" + resultImage[i].url + ".png",
+              url: "http://localhost:3000/product/" + resultImage[i].url,
               isMain: resultImage[i].isMain,
             });
           } else {
             products[j]["listImage"].push({
-              url:
-                "http://localhost:3000/product/" + resultImage[i].url + ".png",
+              url: "http://localhost:3000/product/" + resultImage[i].url,
               isMain: resultImage[i].isMain,
             });
           }
@@ -118,8 +127,7 @@ const getAllProduct = async (req, res) => {
           ...{
             url:
               "http://localhost:3000/product/" +
-              products[products.length - 1].url +
-              ".png",
+              products[products.length - 1].url,
             isMain: products[products.length - 1].isMain,
           },
         ];
@@ -160,25 +168,71 @@ const createProduct = async (req, res) => {
     description_detail,
     price,
     percent_sale,
-    brand_products_id,
     cate_products_id,
     remain,
+    material,
+    brand,
+    listColor,
+    listSize,
+    listTag,
   } = req.body;
   try {
+    let sale;
+    if (percent_sale === 0 || percent_sale === undefined) {
+      sale = null;
+    } else {
+      sale = percent_sale;
+    }
     const newProduct = await Products.create({
       name_product,
       description_detail,
       price,
-      percent_sale,
-      brand_products_id,
+      percent_sale: sale,
       cate_products_id,
       remain,
+      material,
     });
-    if (newProduct) {
-      res.status(201).send(newProduct);
-    } else {
-      throw new Error("Cannot create new product");
+    //create infor
+    if (newProduct.dataValues.id) {
+      // brand
+      const createBrand = await Brand.create({
+        name_brand: brand,
+      });
+      const updateProduct = await Products.update(
+        { brand_products_id: createBrand.dataValues.id },
+        {
+          where: {
+            id: newProduct.dataValues.id,
+          },
+        }
+      );
+      listColor.forEach(async (item) => {
+        const updateColor = await ColorProduct.create({
+          color_colorProduct_id: item,
+          products_colorProduct_id: newProduct.dataValues.id,
+        });
+      });
+      listSize.forEach(async (item) => {
+        const updateSize = await SizeProduct.create({
+          size_sizeProduct_id: item,
+          products_sizeProduct_id: newProduct.dataValues.id,
+        });
+      });
+      listTag.forEach(async (item) => {
+        const updateTag = await TagProduct.create({
+          tags_tagProduct_id: item,
+          products_tagProduct_id: newProduct.dataValues.id,
+        });
+      });
     }
+
+    setTimeout(() => {
+      if (newProduct) {
+        res.status(201).send(newProduct);
+      } else {
+        throw new Error("Cannot create new product");
+      }
+    }, 500);
   } catch (e) {
     res.status(500).send(e);
   }
@@ -279,14 +333,12 @@ const getSaleProduct = async (req, res) => {
           if (products[j].listImage == undefined) {
             products[j]["listImage"] = [];
             products[j]["listImage"].push({
-              url:
-                "http://localhost:3000/product/" + resultImage[i].url + ".png",
+              url: "http://localhost:3000/product/" + resultImage[i].url,
               isMain: resultImage[i].isMain,
             });
           } else {
             products[j]["listImage"].push({
-              url:
-                "http://localhost:3000/product/" + resultImage[i].url + ".png",
+              url: "http://localhost:3000/product/" + resultImage[i].url,
               isMain: resultImage[i].isMain,
             });
           }
@@ -299,8 +351,7 @@ const getSaleProduct = async (req, res) => {
           ...{
             url:
               "http://localhost:3000/product/" +
-              products[products.length - 1].url +
-              ".png",
+              products[products.length - 1].url,
             isMain: products[products.length - 1].isMain,
           },
         ];
@@ -439,14 +490,12 @@ const getNewProduct = async (req, res) => {
           if (products[j].listImage == undefined) {
             products[j]["listImage"] = [];
             products[j]["listImage"].push({
-              url:
-                "http://localhost:3000/product/" + resultImage[i].url + ".png",
+              url: "http://localhost:3000/product/" + resultImage[i].url,
               isMain: resultImage[i].isMain,
             });
           } else {
             products[j]["listImage"].push({
-              url:
-                "http://localhost:3000/product/" + resultImage[i].url + ".png",
+              url: "http://localhost:3000/product/" + resultImage[i].url,
               isMain: resultImage[i].isMain,
             });
           }
@@ -459,8 +508,7 @@ const getNewProduct = async (req, res) => {
           ...{
             url:
               "http://localhost:3000/product/" +
-              products[products.length - 1].url +
-              ".png",
+              products[products.length - 1].url,
             isMain: products[products.length - 1].isMain,
           },
         ];
@@ -647,18 +695,12 @@ const getProductByCateId = async (req, res) => {
             if (products[j].listImage == undefined) {
               products[j]["listImage"] = [];
               products[j]["listImage"].push({
-                url:
-                  "http://localhost:3000/product/" +
-                  resultImage[i].url +
-                  ".png",
+                url: "http://localhost:3000/product/" + resultImage[i].url,
                 isMain: resultImage[i].isMain,
               });
             } else {
               products[j]["listImage"].push({
-                url:
-                  "http://localhost:3000/product/" +
-                  resultImage[i].url +
-                  ".png",
+                url: "http://localhost:3000/product/" + resultImage[i].url,
                 isMain: resultImage[i].isMain,
               });
             }
@@ -671,8 +713,7 @@ const getProductByCateId = async (req, res) => {
             ...{
               url:
                 "http://localhost:3000/product/" +
-                products[products.length - 1].url +
-                ".png",
+                products[products.length - 1].url,
               isMain: products[products.length - 1].isMain,
             },
           ];
@@ -788,18 +829,12 @@ const getProductByCateId = async (req, res) => {
               if (products[j].listImage == undefined) {
                 products[j]["listImage"] = [];
                 products[j]["listImage"].push({
-                  url:
-                    "http://localhost:3000/product/" +
-                    resultImage[i].url +
-                    ".png",
+                  url: "http://localhost:3000/product/" + resultImage[i].url,
                   isMain: resultImage[i].isMain,
                 });
               } else {
                 products[j]["listImage"].push({
-                  url:
-                    "http://localhost:3000/product/" +
-                    resultImage[i].url +
-                    ".png",
+                  url: "http://localhost:3000/product/" + resultImage[i].url,
                   isMain: resultImage[i].isMain,
                 });
               }
@@ -929,14 +964,12 @@ const getProductByName = async (req, res) => {
           if (products[j].listImage == undefined) {
             products[j]["listImage"] = [];
             products[j]["listImage"].push({
-              url:
-                "http://localhost:3000/product/" + resultImage[i].url + ".png",
+              url: "http://localhost:3000/product/" + resultImage[i].url,
               isMain: resultImage[i].isMain,
             });
           } else {
             products[j]["listImage"].push({
-              url:
-                "http://localhost:3000/product/" + resultImage[i].url + ".png",
+              url: "http://localhost:3000/product/" + resultImage[i].url,
               isMain: resultImage[i].isMain,
             });
           }
@@ -949,8 +982,7 @@ const getProductByName = async (req, res) => {
           ...{
             url:
               "http://localhost:3000/product/" +
-              products[products.length - 1].url +
-              ".png",
+              products[products.length - 1].url,
             isMain: products[products.length - 1].isMain,
           },
         ];
@@ -985,6 +1017,94 @@ const getProductByName = async (req, res) => {
   }
 };
 
+const uploadImageProduct = async (req, res) => {
+  const image = req.file;
+  const { id, isMain } = req.query;
+  try {
+    console.log(id);
+    if (isMain === "true") {
+      const createImg = await ImageProduct.create({
+        url: image.filename,
+        product_imageProduct_id: parseInt(id),
+        isMain: 1,
+      });
+      if (createImg) {
+        res.status(201).send("upload image product success");
+      } else {
+        throw new Error("Upload image for product is error!");
+      }
+    } else {
+      const createImg = await ImageProduct.create({
+        url: image.filename,
+        product_imageProduct_id: parseInt(id),
+        isMain: 0,
+      });
+      if (createImg) {
+        res.status(201).send("upload image product success");
+      } else {
+        throw new Error("Upload image for product is error!");
+      }
+    }
+  } catch (error) {
+    res.status(401).send(error);
+  }
+};
+
+const getAtrrProduct = async (req, res) => {
+  try {
+    const size = await Size.findAll();
+    const color = await Color.findAll();
+    const cate = await Categories.findAll({
+      where: {
+        parent_id: {
+          [Op.ne]: null,
+        },
+      },
+    });
+    const tags = await Tags.findAll();
+    let result = {
+      listColor: [],
+      listSize: [],
+      listTag: [],
+      listCate: [],
+    };
+    size.forEach((item) => {
+      result.listSize.push(item.dataValues);
+    });
+    color.forEach((item) => {
+      result.listColor.push(item.dataValues);
+    });
+    tags.forEach((item) => {
+      result.listTag.push(item.dataValues);
+    });
+    cate.forEach(async (item) => {
+      const detailCate = await Categories.findOne({
+        where: {
+          id: item.dataValues.parent_id,
+        },
+      });
+      result.listCate.push({
+        id: item.dataValues.id,
+        name_category:
+          item.dataValues.name_category +
+          " (" +
+          detailCate.dataValues.name_category +
+          ")",
+        updatedAt: item.dataValues.updatedAt,
+        createdAt: item.dataValues.createdAt,
+      });
+    });
+    setTimeout(() => {
+      if (result) {
+        res.status(200).send(result);
+      } else {
+        throw new Error("Error server");
+      }
+    }, 500);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 module.exports = {
   getAllProduct,
   createProduct,
@@ -994,4 +1114,6 @@ module.exports = {
   getNewProduct,
   getProductByCateId,
   getProductByName,
+  uploadImageProduct,
+  getAtrrProduct,
 };

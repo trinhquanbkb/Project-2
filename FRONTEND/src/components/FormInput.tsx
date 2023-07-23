@@ -35,7 +35,6 @@ export default function FormInput({
 				name={name}
 				autoComplete="off"
 				onChange={onChange}
-				value={value === undefined ? null : value}
 			/>
 		</div>
 	)

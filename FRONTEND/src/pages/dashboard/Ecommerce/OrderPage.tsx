@@ -72,7 +72,8 @@ export default function OrderPage() {
 		listSelect.forEach((item: any) => {
 			listOrderDetail.push({
 				id: item.id,
-				price: item.totalPrice
+				price: item.totalPrice,
+				count: item.count
 			})
 		})
 		e.preventDefault()
