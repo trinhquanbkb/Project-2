@@ -33,7 +33,8 @@ export default function Navbar() {
 	]
 	const dispatch = useDispatch()
 	const { listCategory } = useSelector((state: any) => state.categoryReducer)
-	const { listProduct } = useSelector((state: any) => state.productReducer)
+	const { listProduct, listProductSale, listProductNew, listProductCate } =
+		useSelector((state: any) => state.productReducer)
 	const { statusRegister } = useSelector((state: any) => state.userReducer)
 
 	useEffect(() => {
@@ -68,7 +69,13 @@ export default function Navbar() {
 		}
 	}, [])
 
-	useEffect(() => {}, [listCategory, listProduct])
+	useEffect(() => {}, [
+		listCategory,
+		listProduct,
+		listProductCate,
+		listProductNew,
+		listProductSale
+	])
 
 	const [subMenu, setSubMenu] = useState<any>(initialState)
 

@@ -81,3 +81,17 @@ export const updateRating = async ({ id, value }) => {
 		}
 	)
 }
+
+export const updateStatusOrder = async (id) => {
+	return await Axios.put(
+		`${DOMAIN_SERVER}/orders/update-status-order?id=${id}`,
+		{
+			params: { id: id }
+		},
+		{
+			headers: {
+				token: localStorage.getItem(TOKEN_USER)
+			}
+		}
+	)
+}

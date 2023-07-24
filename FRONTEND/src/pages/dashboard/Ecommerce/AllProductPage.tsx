@@ -63,21 +63,13 @@ export default function AllProductPage() {
 	}
 
 	useEffect(() => {
-		if (
-			localStorage.getItem('keySearch') !== null ||
-			localStorage.getItem('keySearch') !== undefined ||
-			localStorage.getItem('keySearch') !== ''
-		) {
+		if (localStorage.getItem('keySearch') !== null) {
 			dispatch({
 				type: 'GET_PRODUCT_BY_NAME',
 				data: localStorage.getItem('keySearch')
 			})
 		}
-		if (
-			localStorage.getItem('isCate') !== null ||
-			localStorage.getItem('isCate') !== undefined ||
-			localStorage.getItem('isCate') !== ''
-		) {
+		if (localStorage.getItem('isCate') !== null) {
 			dispatch({
 				type: 'GET_PRODUCT_BY_CATEID',
 				data: localStorage.getItem('isCate')
@@ -115,11 +107,16 @@ export default function AllProductPage() {
 
 	useEffect(() => {
 		setCurrentPagination(1)
-		if (localStorage.getItem('keySearch') !== '') {
+		if (localStorage.getItem('keySearch') !== null) {
 			setList(listSearch)
 		}
-		if (sort === '' && localStorage.getItem('keySearch') === '') {
-			if (localStorage.getItem('isPage') === '0') {
+		if (
+			(sort === '' && localStorage.getItem('keySearch') === null) ||
+			localStorage.getItem('keySearch') === ''
+		) {
+			if (localStorage.getItem('isCate') !== null) {
+				setList(listProductCate)
+			} else if (localStorage.getItem('isPage') === '0') {
 				//tất cả sản phẩm
 				setList(listProduct)
 			} else if (localStorage.getItem('isPage') === '1') {

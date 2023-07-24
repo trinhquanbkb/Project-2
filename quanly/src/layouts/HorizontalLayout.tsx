@@ -47,7 +47,7 @@ const HorizontalLayout = ({ children }: ILayoutProp) => {
               </NavLink>
             </Menu.Item>
             <Menu.Item icon={<PieChartOutlined className="menu-item" />}>
-              <NavLink className="nav-link menu-item-link" to="#">
+              <NavLink className="nav-link menu-item-link" to="/manager-order">
                 Quản lý đơn hàng
               </NavLink>
             </Menu.Item>

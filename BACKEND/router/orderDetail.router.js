@@ -13,6 +13,7 @@ const {
   deleteOrderDetail,
   getOrderManager,
   ratingOrderDetail,
+  getAllOrderDetailAdmin,
 } = require("../controller/orderDetail.controller");
 
 orderDetailRouter.get(
@@ -20,6 +21,13 @@ orderDetailRouter.get(
   authenticate,
   userAuthorize,
   getAllOrderDetail
+);
+
+orderDetailRouter.get(
+  "/get-all-order-detail-admin",
+  authenticate,
+  adminAuthorize,
+  getAllOrderDetailAdmin
 );
 
 orderDetailRouter.get(

@@ -1,4 +1,5 @@
 import index from "../pages/Dashboard";
+import OrderManagerPage from "../pages/Order.tsx/OrderManagerPage";
 import ProductPage from "../pages/Product/ProductPage";
 import LoginPage from "../pages/auth/LoginPage";
 
@@ -18,11 +19,16 @@ const rootRoute: RoutesProps = {
   component: index,
 };
 
-const productRoute: RoutesProps[] = [
+const managerRoute: RoutesProps[] = [
   {
     path: "/manager-product",
-    name: "createProduct",
+    name: "Product",
     component: ProductPage,
+  },
+  {
+    path: "/manager-order",
+    name: "Oder",
+    component: OrderManagerPage,
   },
 ];
 
@@ -48,7 +54,7 @@ const mergeRoutes = (routes: RoutesProps[]) => {
   return flatRoutes;
 };
 
-const routes: any[] = [rootRoute, ...productRoute, ...authRoutes];
+const routes: any[] = [rootRoute, ...managerRoute, ...authRoutes];
 
 const mergePublicRoutes = mergeRoutes(routes);
 

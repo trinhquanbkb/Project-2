@@ -1,5 +1,8 @@
 const express = require("express");
-const { createOrder } = require("../controller/order.controller");
+const {
+  createOrder,
+  updateStatusOrder,
+} = require("../controller/order.controller");
 const orderRouter = express.Router();
 const {
   adminAuthorize,
@@ -13,6 +16,13 @@ orderRouter.post(
   authenticate,
   userAuthorize,
   createOrder
+);
+
+orderRouter.put(
+  "/update-status-order",
+  authenticate,
+  allAuthorize,
+  updateStatusOrder
 );
 
 module.exports = {

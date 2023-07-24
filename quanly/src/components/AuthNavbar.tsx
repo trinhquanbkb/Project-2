@@ -37,19 +37,6 @@ export default function AuthNavbar() {
                 alt="logo"
               ></img>
             </Link>
-            <Link
-              to="#"
-              className="title-login"
-              style={{
-                fontSize: "1rem",
-                fontWeight: "600",
-                lineHeight: "4rem",
-                color: "red",
-                textDecoration: "none",
-              }}
-            >
-              Bạn cần giúp đỡ?
-            </Link>
           </div>
         </div>
       </div>

@@ -14,9 +14,9 @@ export const getNewProduct = async () => {
 }
 
 export const getProductByCate = async (id) => {
-	return await Axios.get(`${DOMAIN_SERVER}/products/get-product-by-cateid`, {
-		params: { id: id }
-	})
+	return await Axios.get(
+		`${DOMAIN_SERVER}/products/get-product-by-cateid?id=${id}`
+	)
 }
 
 export const getProductByName = async ({ name }) => {

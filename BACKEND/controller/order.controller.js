@@ -50,6 +50,44 @@ const createOrder = async (req, res) => {
   }
 };
 
+const updateStatusOrder = async (req, res) => {
+  const { id } = req.query;
+  try {
+    const order = await Orders.findOne({
+      where: {
+        id: id,
+      },
+    });
+    if (order.dataValues.status === 1) {
+      await Orders.update(
+        { status: 2 },
+        {
+          where: {
+            id: id,
+          },
+        }
+      );
+    } else if (order.dataValues.status === 2) {
+      await Orders.update(
+        { status: 3 },
+        {
+          where: {
+            id: id,
+          },
+        }
+      );
+    }
+    if (order) {
+      res.status(200).send("Update status order success");
+    } else {
+      throw new Error("Cannot update status order");
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
 module.exports = {
   createOrder,
+  updateStatusOrder,
 };

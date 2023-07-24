@@ -1,12 +1,20 @@
 import React, { useEffect } from 'react'
 import ItemFlashSale from './ItemFlashSale'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 export default function FlashSale() {
+	const dispatch = useDispatch()
 	const { listProductSale } = useSelector(
 		(state: any) => state.productReducer
 	)
+
+	useEffect(() => {
+		dispatch({
+			type: 'GET_PRODUCT_SALE'
+		})
+	}, [])
+	console.log(listProductSale)
 
 	useEffect(() => {}, [listProductSale])
 
@@ -24,6 +32,8 @@ export default function FlashSale() {
 	listProductSale.forEach((item: any) => {
 		ListSales.push({
 			id: item.id,
+			sold: item.sold,
+			rating: item.rating,
 			cate_products_id: item.cate_products_id,
 			remain: item.remain,
 			description_detail: item.description_detail,

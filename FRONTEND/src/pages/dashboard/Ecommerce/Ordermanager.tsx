@@ -53,7 +53,41 @@ export default function Ordermanager() {
 				</div>
 			)
 		} else if (item.status === 2) {
-			return <p className="text-warning">Sản phẩm đang được giao</p>
+			return (
+				<div>
+					<p className="text-warning">Sản phẩm đang được giao</p>
+					<button
+						className="btn btn-danger"
+						onClick={() => {
+							Swal.fire({
+								title: 'Bạn có chắc chắn đã nhận đơn hàng này không?',
+								icon: 'warning',
+								confirmButtonText: 'Xác nhận',
+								showCancelButton: true,
+								preConfirm: () => {
+									dispatch({
+										type: 'ORDER_BROWSING',
+										data: item.orders_orderDetail_id
+									})
+									setTimeout(() => {
+										dispatch({
+											type: 'GET_ALL_ORDER_MANAGER'
+										})
+									}, 300)
+									setTimeout(() => {
+										Swal.fire({
+											title: 'Cảm ơn bạn, hãy đánh giá 5 sao cho chúng tôi nhé!',
+											icon: 'success',
+											confirmButtonText: 'OK'
+										})
+									}, 500)
+								}
+							})
+						}}>
+						Đã nhận hàng?
+					</button>
+				</div>
+			)
 		} else if (item.status === 3) {
 			return (
 				<div>
@@ -209,11 +243,13 @@ export default function Ordermanager() {
 			}
 		}
 	}
-
 	const renderOrder = () => {
 		return orderManager.map((item: any, index: number) => {
 			return (
 				<tr key={index}>
+					<td className="id-order-manager">
+						{item.orders_orderDetail_id}
+					</td>
 					<td className="img-order-manager">
 						<img src={item.image} alt={item.name_product} />
 					</td>
@@ -237,6 +273,9 @@ export default function Ordermanager() {
 				<table className="table manager-order-page">
 					<thead>
 						<tr>
+							<th scope="col" className="text-center">
+								ID
+							</th>
 							<th scope="col" className="text-center">
 								Hình ảnh
 							</th>

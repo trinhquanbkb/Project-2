@@ -313,14 +313,18 @@ export default function ProductPage() {
             >
               <Button
                 type="text"
-                style={{ backgroundColor: "#d4b106", marginRight: "0.8rem" }}
+                style={{
+                  backgroundColor: "rgb(231 192 8)",
+                  marginRight: "0.8rem",
+                  color: "white",
+                }}
               >
                 Chỉnh sửa
               </Button>
             </Typography.Link>
             <Button
               type="text"
-              style={{ backgroundColor: "red" }}
+              style={{ backgroundColor: "#bd0c0c", color: "white" }}
               onClick={() => {
                 dispatch({
                   type: "DELETE_PRODUCT",

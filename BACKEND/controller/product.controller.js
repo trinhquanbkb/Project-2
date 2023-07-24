@@ -32,8 +32,9 @@ const getAllProduct = async (req, res) => {
       "SELECT products.id, imageproducts.isMain, imageproducts.url FROM ecommerce_clothes.imageproducts, ecommerce_clothes.products WHERE products.id = imageproducts.product_imageProduct_id and products.isDelete = 0"
     );
     const [resultOrder, metadataOrder] = await sequelize.query(
-      "SELECT products.id, orderdetails.count, orderdetails.rating FROM ecommerce_clothes.orders, ecommerce_clothes.orderdetails, ecommerce_clothes.products WHERE orderdetails.products_orderDetail_id = products.id and orders.status = 3"
+      "SELECT products.id, orderdetails.count, orderdetails.rating FROM ecommerce_clothes.orders, ecommerce_clothes.orderdetails, ecommerce_clothes.products WHERE orderdetails.products_orderDetail_id = products.id and orders.status = 3 and orderdetails.orders_orderDetail_id = orders.id;"
     );
+    console.log(resultOrder);
 
     const mergedOrders = resultOrder.reduce((acc, order) => {
       const existingOrder = acc.find((item) => item.id === order.id);
@@ -293,7 +294,7 @@ const getSaleProduct = async (req, res) => {
       "SELECT products.id, imageproducts.isMain, imageproducts.url FROM ecommerce_clothes.imageproducts, ecommerce_clothes.products WHERE products.id = imageproducts.product_imageProduct_id and products.percent_sale is not null and products.percent_sale != 0 and products.isDelete = 0"
     );
     const [resultOrder, metadataOrder] = await sequelize.query(
-      "SELECT products.id, orderdetails.count, orderdetails.rating FROM ecommerce_clothes.orders, ecommerce_clothes.orderdetails, ecommerce_clothes.products WHERE orderdetails.products_orderDetail_id = products.id and orders.status = 3"
+      "SELECT products.id, orderdetails.count, orderdetails.rating FROM ecommerce_clothes.orders, ecommerce_clothes.orderdetails, ecommerce_clothes.products WHERE orderdetails.products_orderDetail_id = products.id and orders.status = 3 and orderdetails.orders_orderDetail_id = orders.id;"
     );
 
     const mergedOrders = resultOrder.reduce((acc, order) => {
@@ -486,7 +487,7 @@ const getNewProduct = async (req, res) => {
       "SELECT products.id, imageproducts.isMain, imageproducts.url FROM ecommerce_clothes.imageproducts, ecommerce_clothes.products WHERE products.id = imageproducts.product_imageProduct_id and products.isDelete = 0"
     );
     const [resultOrder, metadataOrder] = await sequelize.query(
-      "SELECT products.id, orderdetails.count, orderdetails.rating FROM ecommerce_clothes.orders, ecommerce_clothes.orderdetails, ecommerce_clothes.products WHERE orderdetails.products_orderDetail_id = products.id and orders.status = 3"
+      "SELECT products.id, orderdetails.count, orderdetails.rating FROM ecommerce_clothes.orders, ecommerce_clothes.orderdetails, ecommerce_clothes.products WHERE orderdetails.products_orderDetail_id = products.id and orders.status = 3 and orderdetails.orders_orderDetail_id = orders.id;"
     );
 
     const mergedOrders = resultOrder.reduce((acc, order) => {
@@ -719,7 +720,7 @@ const getProductByCateId = async (req, res) => {
         `SELECT products.id, imageproducts.isMain, imageproducts.url FROM ecommerce_clothes.imageproducts, ecommerce_clothes.products WHERE products.id = imageproducts.product_imageProduct_id and products.isDelete = 0`
       );
       const [resultOrder, metadataOrder] = await sequelize.query(
-        "SELECT products.id, orderdetails.count, orderdetails.rating FROM ecommerce_clothes.orders, ecommerce_clothes.orderdetails, ecommerce_clothes.products WHERE orderdetails.products_orderDetail_id = products.id and orders.status = 3"
+        "SELECT products.id, orderdetails.count, orderdetails.rating FROM ecommerce_clothes.orders, ecommerce_clothes.orderdetails, ecommerce_clothes.products WHERE orderdetails.products_orderDetail_id = products.id and orders.status = 3 and orderdetails.orders_orderDetail_id = orders.id;"
       );
 
       const mergedOrders = resultOrder.reduce((acc, order) => {
@@ -907,7 +908,7 @@ const getProductByCateId = async (req, res) => {
         }
       });
       const [resultOrder, metadataOrder] = await sequelize.query(
-        "SELECT products.id, orderdetails.count, orderdetails.rating FROM ecommerce_clothes.orders, ecommerce_clothes.orderdetails, ecommerce_clothes.products WHERE orderdetails.products_orderDetail_id = products.id and orders.status = 3"
+        "SELECT products.id, orderdetails.count, orderdetails.rating FROM ecommerce_clothes.orders, ecommerce_clothes.orderdetails, ecommerce_clothes.products WHERE orderdetails.products_orderDetail_id = products.id and orders.status = 3 and orderdetails.orders_orderDetail_id = orders.id;"
       );
 
       const mergedOrders = resultOrder.reduce((acc, order) => {
@@ -1064,7 +1065,7 @@ const getProductByName = async (req, res) => {
       `SELECT products.id, imageproducts.isMain, imageproducts.url FROM ecommerce_clothes.imageproducts, ecommerce_clothes.products WHERE products.id = imageproducts.product_imageProduct_id and products.name_product like '%${name}%' and products.isDelete = 0`
     );
     const [resultOrder, metadataOrder] = await sequelize.query(
-      "SELECT products.id, orderdetails.count, orderdetails.rating FROM ecommerce_clothes.orders, ecommerce_clothes.orderdetails, ecommerce_clothes.products WHERE orderdetails.products_orderDetail_id = products.id and orders.status = 3"
+      "SELECT products.id, orderdetails.count, orderdetails.rating FROM ecommerce_clothes.orders, ecommerce_clothes.orderdetails, ecommerce_clothes.products WHERE orderdetails.products_orderDetail_id = products.id and orders.status = 3 and orderdetails.orders_orderDetail_id = orders.id;"
     );
 
     const mergedOrders = resultOrder.reduce((acc, order) => {

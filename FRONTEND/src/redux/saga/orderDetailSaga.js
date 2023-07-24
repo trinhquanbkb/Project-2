@@ -12,7 +12,8 @@ import {
 	getAllOrderDetail,
 	getOrderManager,
 	orderDetail,
-	updateRating
+	updateRating,
+	updateStatusOrder
 } from '../../services/orderDetailService'
 
 function* createOrderDetailSaga(action) {
@@ -81,6 +82,12 @@ function* updateRatingSaga(action) {
 	} catch (error) {}
 }
 
+function* updateOrderBrowseSaga(action) {
+	try {
+		yield updateStatusOrder(action.data)
+	} catch (error) {}
+}
+
 export function* orderDetailSaga() {
 	yield takeLatest('ORDER_DETAIL', createOrderDetailSaga)
 	yield takeLatest('CREATE_ORDER', createOrderSaga)
@@ -88,4 +95,5 @@ export function* orderDetailSaga() {
 	yield takeLatest('DELETE_ORDER_DETAIL', deleteOrderDetailSaga)
 	yield takeLatest('GET_ALL_ORDER_MANAGER', getOrderManagerSaga)
 	yield takeLatest('UPDATE_RATING_ORDER', updateRatingSaga)
+	yield takeLatest('ORDER_BROWSING', updateOrderBrowseSaga)
 }

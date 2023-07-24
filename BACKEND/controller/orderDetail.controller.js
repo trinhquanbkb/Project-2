@@ -1,5 +1,6 @@
-const { OrderDetail } = require("../models");
+const { OrderDetail, Orders, Products } = require("../models");
 const { sequelize } = require("../models/index");
+const { Op } = require("sequelize");
 
 //CRUD order detail
 const getAllOrderDetail = async (req, res) => {
@@ -279,7 +280,7 @@ const getOrderManager = async (req, res) => {
   const { userId } = req.user;
   try {
     const [orders, metadataOrder] = await sequelize.query(
-      `SELECT orderdetails.id, orders.status, orderdetails.count, imageproducts.url, orderdetails.user_id, orderdetails.products_orderDetail_id, orderdetails.color, orderdetails.size, orderdetails.rating , orderdetails.price, products.cate_products_id, products.name_product, products.percent_sale, brands.name_brand FROM ecommerce_clothes.products, ecommerce_clothes.brands, ecommerce_clothes.orderdetails, ecommerce_clothes.imageproducts, ecommerce_clothes.orders where products.brand_products_id = brands.id and orderdetails.status_order = 1 and orderdetails.products_orderDetail_id = products.id and imageproducts.product_imageProduct_id = orderdetails.products_orderDetail_id and imageproducts.isMain = 1 and orders.id = orderdetails.orders_orderDetail_id and orderdetails.user_id = ${userId}`
+      `SELECT orderdetails.id, orderdetails.orders_orderDetail_id, orders.status, orderdetails.count, imageproducts.url, orderdetails.user_id, orderdetails.products_orderDetail_id, orderdetails.color, orderdetails.size, orderdetails.rating , orderdetails.price, products.cate_products_id, products.name_product, products.percent_sale, brands.name_brand FROM ecommerce_clothes.products, ecommerce_clothes.brands, ecommerce_clothes.orderdetails, ecommerce_clothes.imageproducts, ecommerce_clothes.orders where products.brand_products_id = brands.id and orderdetails.status_order = 1 and orderdetails.products_orderDetail_id = products.id and imageproducts.product_imageProduct_id = orderdetails.products_orderDetail_id and imageproducts.isMain = 1 and orders.id = orderdetails.orders_orderDetail_id and orderdetails.user_id = ${userId}`
     );
     let result = [];
     orders.forEach((item) => {
@@ -324,6 +325,47 @@ const ratingOrderDetail = async (req, res) => {
   }
 };
 
+const getAllOrderDetailAdmin = async (req, res) => {
+  try {
+    const allOrder = await OrderDetail.findAll({
+      where: {
+        orders_orderDetail_id: {
+          [Op.ne]: null,
+        },
+      },
+    });
+    let result = [];
+    allOrder.forEach(async (item, index) => {
+      result.push(item.dataValues);
+      delete result[index].status_order;
+      delete result[index].id;
+      result[index].id = item.dataValues.orders_orderDetail_id;
+      const order = await Orders.findOne({
+        where: {
+          id: item.dataValues.orders_orderDetail_id,
+        },
+      });
+      result[index].status = order.dataValues.status;
+      result[index].note = order.dataValues.note;
+      const product = await Products.findOne({
+        where: {
+          id: item.dataValues.products_orderDetail_id,
+        },
+      });
+      result[index].name_product = product.dataValues.name_product;
+    });
+    setTimeout(() => {
+      if (result) {
+        res.status(200).send(result);
+      } else {
+        throw new Error("Cannot get all order detail admin");
+      }
+    }, 500);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
 module.exports = {
   getAllOrderDetail,
   createOrderDetail,
@@ -331,4 +373,5 @@ module.exports = {
   deleteOrderDetail,
   getOrderManager,
   ratingOrderDetail,
+  getAllOrderDetailAdmin,
 };
