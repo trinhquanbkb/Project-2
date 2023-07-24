@@ -6,6 +6,7 @@ import InputQuantity from './InputQuantity'
 import { useDispatch, useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
 import { ORDER_DETAIL_SAGA } from '../redux/type'
+import RatingStar from './RatingStar'
 
 export default function ContentProduct(item: any) {
 	const dispatch = useDispatch()
@@ -61,23 +62,71 @@ export default function ContentProduct(item: any) {
 			</p>
 			<div className="d-flex justify-content-between">
 				<p className="price-product">
-					Giá:{' '}
-					<span className="text-danger fw-bold">
-						{renderPrice(productDetail.price, 0, [])}đ
-					</span>
+					{productDetail.percent_sale === 0 ||
+					productDetail.percent_sale === null ? (
+						<div>
+							Giá:{' '}
+							<span className="text-danger fw-bold">
+								{renderPrice(productDetail.price, 0, [])}đ
+							</span>
+						</div>
+					) : (
+						<div>
+							Giá:{' '}
+							<span className="text-danger fw-bold me-1">
+								{renderPrice(
+									~~(
+										(productDetail.price *
+											(100 -
+												productDetail.percent_sale)) /
+										100
+									),
+									0,
+									[]
+								)}
+								đ
+							</span>
+							<span className="old-price">
+								{renderPrice(productDetail.price, 0, [])}đ
+							</span>
+						</div>
+					)}
 				</p>
 				<p className="m-0" style={{ fontSize: '14px' }}>
 					MSP: #{renderCode(productDetail.id)}
 				</p>
 			</div>
+			<p className="m-0 d-flex justify-content-start">
+				<span className="me-1">Đánh giá:</span>
+				<span className="fw-bold">
+					{productDetail.rating === null ? (
+						<span
+							className="text-danger"
+							style={{ fontWeight: '400', fontSize: '14px' }}>
+							chưa có đánh giá
+						</span>
+					) : (
+						<RatingStar
+							size={'sm'}
+							maxValue={5}
+							value={productDetail.rating}
+						/>
+					)}
+				</span>{' '}
+			</p>
 			<p className="m-0">
-				Đánh giá:{' '}
-				<span className="fw-bold">{productDetail.rating}/5</span> (Đã
-				bán: <span className="fw-bold">{productDetail.sold}</span>)
+				Đã bán:{' '}
+				<span className="fw-bold">
+					{productDetail.sold === null ? 0 : productDetail.sold}
+				</span>
 			</p>
 			<p className="m-0">
 				Sản phẩm còn lại:{' '}
-				<span className="fw-bold">{productDetail.remain}</span>
+				{productDetail.remain === 0 || productDetail.remain === null ? (
+					<span className="fw-bold text-danger">hết hàng</span>
+				) : (
+					<span className="fw-bold">{productDetail.remain}</span>
+				)}
 			</p>
 			<p>
 				Thương hiệu:{' '}

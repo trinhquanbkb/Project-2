@@ -51,3 +51,35 @@ export const uploadImage = async ({ id, file, isMain }) => {
     }
   );
 };
+
+export const updateProduct = async ({
+  id,
+  name_product,
+  price,
+  percent_sale,
+  remain,
+}) => {
+  return await Axios.put(
+    `${DOMAIN_SERVER}/products/update-product?id=${id}`,
+    { name_product, price, percent_sale, remain },
+    {
+      headers: {
+        token: localStorage.getItem(TOKEN_ADMIN),
+      },
+    }
+  );
+};
+
+export const deleteProductById = async (id) => {
+  return await Axios.put(
+    `${DOMAIN_SERVER}/products/delete-product?id=${id}`,
+    {
+      params: { id: id },
+    },
+    {
+      headers: {
+        token: localStorage.getItem(TOKEN_ADMIN),
+      },
+    }
+  );
+};

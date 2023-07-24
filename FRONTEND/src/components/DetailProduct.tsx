@@ -42,7 +42,7 @@ export default function DetailProduct() {
 
 	return (
 		<div className="container-fluid detail-product">
-			<BreadCrumb props={breadcumUrl} />
+			{/* <BreadCrumb props={breadcumUrl} /> */}
 			<div className="line"></div>
 			<div className="d-flex mt-4">
 				<div className="detail-product-left">

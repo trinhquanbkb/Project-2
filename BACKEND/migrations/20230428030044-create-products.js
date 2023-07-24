@@ -16,6 +16,9 @@ module.exports = {
           key: "id",
         },
       },
+      isDelete: {
+        type: Sequelize.INTEGER,
+      },
       brand_products_id: {
         type: Sequelize.INTEGER,
         references: {

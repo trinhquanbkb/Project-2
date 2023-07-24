@@ -37,7 +37,7 @@ export default function Product(item: any) {
 	const product = item.item
 	let priceSale = null
 	if (product.percent_sale !== null) {
-		priceSale = (product.price * (100 - product.percent_sale)) / 100
+		priceSale = ~~((product.price * (100 - product.percent_sale)) / 100)
 	}
 
 	const imgMain = (listImg: any): any => {

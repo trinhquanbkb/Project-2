@@ -7,7 +7,6 @@ import Swal from 'sweetalert2'
 export default function Ordermanager() {
 	const dispatch = useDispatch()
 	const { orderManager } = useSelector((state: any) => state.orderReducer)
-
 	useEffect(() => {
 		dispatch({
 			type: 'GET_ALL_ORDER_MANAGER'

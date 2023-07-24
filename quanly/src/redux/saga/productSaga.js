@@ -10,12 +10,14 @@ import {
 } from "../type";
 import {
   createProduct,
+  deleteProductById,
   getAllAttribute,
   getAllProduct,
   getAllProductSale,
   getNewProduct,
   getProductByCate,
   getProductByName,
+  updateProduct,
   uploadImage,
 } from "../../services/productService";
 
@@ -136,6 +138,18 @@ function* createProductSaga(action) {
   }
 }
 
+function* updateProductSaga(action) {
+  try {
+    yield updateProduct(action.data);
+  } catch (error) {}
+}
+
+function* deleteProductSaga(action) {
+  try {
+    yield deleteProductById(action.data);
+  } catch (error) {}
+}
+
 export function* productSaga() {
   yield takeLatest("GET_PRODUCTS", getProducts);
   yield takeLatest("GET_PRODUCT_SALE", getProductSale);
@@ -144,4 +158,6 @@ export function* productSaga() {
   yield takeLatest("GET_PRODUCT_BY_NAME", getProductByNameSaga);
   yield takeLatest("GET_ALL_ATTRIBUTE", getAllAttrSaga);
   yield takeLatest("CREATE_PRODUCT", createProductSaga);
+  yield takeLatest("UPDATE_PRODUCT", updateProductSaga);
+  yield takeLatest("DELETE_PRODUCT", deleteProductSaga);
 }

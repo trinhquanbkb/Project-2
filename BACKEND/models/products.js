@@ -37,6 +37,9 @@ module.exports = (sequelize, DataTypes) => {
       remain: DataTypes.INTEGER, //số lượng hàng còn lại
       percent_sale: DataTypes.INTEGER,
       material: DataTypes.TEXT,
+      //isDelete: 0 => sản phẩm vẫn tồn tại
+      //isDelete: 1 => sản phẩm đã xóa
+      isDelete: DataTypes.INTEGER,
     },
     {
       sequelize,

@@ -103,14 +103,12 @@ const getAllOrderDetail = async (req, res) => {
           if (products[j].listImage == undefined) {
             products[j]["listImage"] = [];
             products[j]["listImage"].push({
-              url:
-                "http://localhost:3000/product/" + resultImage[i].url + ".png",
+              url: "http://localhost:3000/product/" + resultImage[i].url,
               isMain: resultImage[i].isMain,
             });
           } else {
             products[j]["listImage"].push({
-              url:
-                "http://localhost:3000/product/" + resultImage[i].url + ".png",
+              url: "http://localhost:3000/product/" + resultImage[i].url,
               isMain: resultImage[i].isMain,
             });
           }
@@ -287,7 +285,7 @@ const getOrderManager = async (req, res) => {
     orders.forEach((item) => {
       result.push({
         ...item,
-        image: "http://localhost:3000/product/" + item.url + ".png",
+        image: "http://localhost:3000/product/" + item.url,
       });
     });
     if (result) {

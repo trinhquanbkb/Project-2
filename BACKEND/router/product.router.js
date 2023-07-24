@@ -41,7 +41,7 @@ productRouter.put(
   updateProduct
 );
 productRouter.get("/get-all-attr", getAtrrProduct);
-productRouter.delete(
+productRouter.put(
   "/delete-product",
   authenticate,
   adminAuthorize,

@@ -16,21 +16,57 @@ const { sequelize } = require("../models/index");
 //CRUD product
 const getAllProduct = async (req, res) => {
   try {
-    const [products, metadataProduct] = await sequelize.query(
-      "SELECT products.id, products.material, products.cate_products_id, products.name_product, products.price, products.percent_sale, products.remain, products.description_detail, products.createdAt, products.updatedAt, brands.name_brand FROM ecommerce_clothes.products, ecommerce_clothes.brands where products.brand_products_id = brands.id"
+    let [products, metadataProduct] = await sequelize.query(
+      "SELECT products.id, products.material, products.cate_products_id, products.name_product, products.price, products.percent_sale, products.remain, products.description_detail, products.createdAt, products.updatedAt, brands.name_brand FROM ecommerce_clothes.products, ecommerce_clothes.brands where products.brand_products_id = brands.id and products.isDelete = 0"
     );
     const [resultSize, metadataSize] = await sequelize.query(
-      "SELECT products.id, sizes.size FROM ecommerce_clothes.sizeproducts, ecommerce_clothes.products, ecommerce_clothes.sizes WHERE sizeproducts.products_sizeProduct_id = products.id and sizeproducts.size_sizeProduct_id = sizes.id"
+      "SELECT products.id, sizes.size FROM ecommerce_clothes.sizeproducts, ecommerce_clothes.products, ecommerce_clothes.sizes WHERE sizeproducts.products_sizeProduct_id = products.id and sizeproducts.size_sizeProduct_id = sizes.id and products.isDelete = 0"
     );
     const [resultColor, metadataColor] = await sequelize.query(
-      "SELECT products.id, colors.color FROM ecommerce_clothes.colorproducts, ecommerce_clothes.products, ecommerce_clothes.colors WHERE colorproducts.products_colorProduct_id = products.id and colorproducts.color_colorProduct_id = colors.id"
+      "SELECT products.id, colors.color FROM ecommerce_clothes.colorproducts, ecommerce_clothes.products, ecommerce_clothes.colors WHERE colorproducts.products_colorProduct_id = products.id and colorproducts.color_colorProduct_id = colors.id and products.isDelete = 0"
     );
     const [resultTag, metadataTag] = await sequelize.query(
-      "SELECT products.id, tags.name_tag FROM ecommerce_clothes.tagproducts, ecommerce_clothes.products, ecommerce_clothes.tags WHERE tagproducts.products_tagProduct_id = products.id and tagproducts.tags_tagProduct_id = tags.id"
+      "SELECT products.id, tags.name_tag FROM ecommerce_clothes.tagproducts, ecommerce_clothes.products, ecommerce_clothes.tags WHERE tagproducts.products_tagProduct_id = products.id and tagproducts.tags_tagProduct_id = tags.id and products.isDelete = 0"
     );
     const [resultImage, metadataImage] = await sequelize.query(
-      "SELECT products.id, imageproducts.isMain, imageproducts.url FROM ecommerce_clothes.imageproducts, ecommerce_clothes.products WHERE products.id = imageproducts.product_imageProduct_id;"
+      "SELECT products.id, imageproducts.isMain, imageproducts.url FROM ecommerce_clothes.imageproducts, ecommerce_clothes.products WHERE products.id = imageproducts.product_imageProduct_id and products.isDelete = 0"
     );
+    const [resultOrder, metadataOrder] = await sequelize.query(
+      "SELECT products.id, orderdetails.count, orderdetails.rating FROM ecommerce_clothes.orders, ecommerce_clothes.orderdetails, ecommerce_clothes.products WHERE orderdetails.products_orderDetail_id = products.id and orders.status = 3"
+    );
+
+    const mergedOrders = resultOrder.reduce((acc, order) => {
+      const existingOrder = acc.find((item) => item.id === order.id);
+      if (!existingOrder) {
+        acc.push({ ...order });
+      } else {
+        existingOrder.count += order.count;
+        if (order.rating !== null) {
+          existingOrder.rating = existingOrder.rating || 0;
+          existingOrder.rating = (existingOrder.rating + order.rating) / 2;
+        }
+      }
+      return acc;
+    }, []);
+
+    products = products.map((item) => {
+      const { id } = item;
+      const foundItem = mergedOrders.find((resultItem) => resultItem.id === id);
+
+      if (foundItem) {
+        return {
+          ...item,
+          sold: foundItem.count,
+          rating: foundItem.rating,
+        };
+      } else {
+        return {
+          ...item,
+          sold: null,
+          rating: null,
+        };
+      }
+    });
 
     // gắn size vào product
     for (let i = 0; i < resultSize.length; i++) {
@@ -191,6 +227,7 @@ const createProduct = async (req, res) => {
       cate_products_id,
       remain,
       material,
+      isDelete: 0,
     });
     //create infor
     if (newProduct.dataValues.id) {
@@ -240,21 +277,57 @@ const createProduct = async (req, res) => {
 
 const getSaleProduct = async (req, res) => {
   try {
-    const [products, metadataProduct] = await sequelize.query(
-      "SELECT products.id, products.material, products.cate_products_id, products.name_product, products.price, products.percent_sale, products.remain, products.description_detail, products.createdAt, products.updatedAt, brands.name_brand FROM ecommerce_clothes.products, ecommerce_clothes.brands where products.brand_products_id = brands.id and products.percent_sale is not null and products.percent_sale != 0"
+    let [products, metadataProduct] = await sequelize.query(
+      "SELECT products.id, products.material, products.cate_products_id, products.name_product, products.price, products.percent_sale, products.remain, products.description_detail, products.createdAt, products.updatedAt, brands.name_brand FROM ecommerce_clothes.products, ecommerce_clothes.brands where products.brand_products_id = brands.id and products.percent_sale is not null and products.percent_sale != 0  and products.isDelete = 0"
     );
     const [resultSize, metadataSize] = await sequelize.query(
-      "SELECT products.id, sizes.size FROM ecommerce_clothes.sizeproducts, ecommerce_clothes.products, ecommerce_clothes.sizes WHERE sizeproducts.products_sizeProduct_id = products.id and sizeproducts.size_sizeProduct_id = sizes.id and products.percent_sale is not null and products.percent_sale != 0"
+      "SELECT products.id, sizes.size FROM ecommerce_clothes.sizeproducts, ecommerce_clothes.products, ecommerce_clothes.sizes WHERE sizeproducts.products_sizeProduct_id = products.id and sizeproducts.size_sizeProduct_id = sizes.id and products.percent_sale is not null and products.percent_sale != 0 and products.isDelete = 0"
     );
     const [resultColor, metadataColor] = await sequelize.query(
-      "SELECT products.id, colors.color FROM ecommerce_clothes.colorproducts, ecommerce_clothes.products, ecommerce_clothes.colors WHERE colorproducts.products_colorProduct_id = products.id and colorproducts.color_colorProduct_id = colors.id and products.percent_sale is not null and products.percent_sale != 0"
+      "SELECT products.id, colors.color FROM ecommerce_clothes.colorproducts, ecommerce_clothes.products, ecommerce_clothes.colors WHERE colorproducts.products_colorProduct_id = products.id and colorproducts.color_colorProduct_id = colors.id and products.percent_sale is not null and products.percent_sale != 0 and products.isDelete = 0"
     );
     const [resultTag, metadataTag] = await sequelize.query(
-      "SELECT products.id, tags.name_tag FROM ecommerce_clothes.tagproducts, ecommerce_clothes.products, ecommerce_clothes.tags WHERE tagproducts.products_tagProduct_id = products.id and tagproducts.tags_tagProduct_id = tags.id and products.percent_sale is not null and products.percent_sale != 0"
+      "SELECT products.id, tags.name_tag FROM ecommerce_clothes.tagproducts, ecommerce_clothes.products, ecommerce_clothes.tags WHERE tagproducts.products_tagProduct_id = products.id and tagproducts.tags_tagProduct_id = tags.id and products.percent_sale is not null and products.percent_sale != 0 and products.isDelete = 0"
     );
     const [resultImage, metadataImage] = await sequelize.query(
-      "SELECT products.id, imageproducts.isMain, imageproducts.url FROM ecommerce_clothes.imageproducts, ecommerce_clothes.products WHERE products.id = imageproducts.product_imageProduct_id and products.percent_sale is not null and products.percent_sale != 0"
+      "SELECT products.id, imageproducts.isMain, imageproducts.url FROM ecommerce_clothes.imageproducts, ecommerce_clothes.products WHERE products.id = imageproducts.product_imageProduct_id and products.percent_sale is not null and products.percent_sale != 0 and products.isDelete = 0"
     );
+    const [resultOrder, metadataOrder] = await sequelize.query(
+      "SELECT products.id, orderdetails.count, orderdetails.rating FROM ecommerce_clothes.orders, ecommerce_clothes.orderdetails, ecommerce_clothes.products WHERE orderdetails.products_orderDetail_id = products.id and orders.status = 3"
+    );
+
+    const mergedOrders = resultOrder.reduce((acc, order) => {
+      const existingOrder = acc.find((item) => item.id === order.id);
+      if (!existingOrder) {
+        acc.push({ ...order });
+      } else {
+        existingOrder.count += order.count;
+        if (order.rating !== null) {
+          existingOrder.rating = existingOrder.rating || 0;
+          existingOrder.rating = (existingOrder.rating + order.rating) / 2;
+        }
+      }
+      return acc;
+    }, []);
+
+    products = products.map((item) => {
+      const { id } = item;
+      const foundItem = mergedOrders.find((resultItem) => resultItem.id === id);
+
+      if (foundItem) {
+        return {
+          ...item,
+          sold: foundItem.count,
+          rating: foundItem.rating,
+        };
+      } else {
+        return {
+          ...item,
+          sold: null,
+          rating: null,
+        };
+      }
+    });
 
     // gắn size vào product
     for (let i = 0; i < resultSize.length; i++) {
@@ -397,21 +470,57 @@ const getSaleProduct = async (req, res) => {
 
 const getNewProduct = async (req, res) => {
   try {
-    const [products, metadataProduct] = await sequelize.query(
-      "SELECT products.id, products.material, products.cate_products_id, products.name_product, products.price, products.percent_sale, products.remain, products.description_detail, products.createdAt, products.updatedAt, brands.name_brand FROM ecommerce_clothes.products, ecommerce_clothes.brands where products.brand_products_id = brands.id ORDER BY products.updatedAt DESC LIMIT 24"
+    let [products, metadataProduct] = await sequelize.query(
+      "SELECT products.id, products.material, products.cate_products_id, products.name_product, products.price, products.percent_sale, products.remain, products.description_detail, products.createdAt, products.updatedAt, brands.name_brand FROM ecommerce_clothes.products, ecommerce_clothes.brands where products.brand_products_id = brands.id and products.isDelete = 0 ORDER BY products.updatedAt DESC LIMIT 24"
     );
     const [resultSize, metadataSize] = await sequelize.query(
-      "SELECT products.id, sizes.size FROM ecommerce_clothes.sizeproducts, ecommerce_clothes.products, ecommerce_clothes.sizes WHERE sizeproducts.products_sizeProduct_id = products.id and sizeproducts.size_sizeProduct_id = sizes.id ORDER BY products.updatedAt DESC LIMIT 20"
+      "SELECT products.id, sizes.size FROM ecommerce_clothes.sizeproducts, ecommerce_clothes.products, ecommerce_clothes.sizes WHERE sizeproducts.products_sizeProduct_id = products.id and sizeproducts.size_sizeProduct_id = sizes.id and products.isDelete = 0 ORDER BY products.updatedAt DESC LIMIT 20"
     );
     const [resultColor, metadataColor] = await sequelize.query(
-      "SELECT products.id, colors.color FROM ecommerce_clothes.colorproducts, ecommerce_clothes.products, ecommerce_clothes.colors WHERE colorproducts.products_colorProduct_id = products.id and colorproducts.color_colorProduct_id = colors.id ORDER BY products.updatedAt DESC LIMIT 20"
+      "SELECT products.id, colors.color FROM ecommerce_clothes.colorproducts, ecommerce_clothes.products, ecommerce_clothes.colors WHERE colorproducts.products_colorProduct_id = products.id and colorproducts.color_colorProduct_id = colors.id and products.isDelete = 0 ORDER BY products.updatedAt DESC LIMIT 20"
     );
     const [resultTag, metadataTag] = await sequelize.query(
-      "SELECT products.id, tags.name_tag FROM ecommerce_clothes.tagproducts, ecommerce_clothes.products, ecommerce_clothes.tags WHERE tagproducts.products_tagProduct_id = products.id and tagproducts.tags_tagProduct_id = tags.id ORDER BY products.updatedAt DESC LIMIT 20"
+      "SELECT products.id, tags.name_tag FROM ecommerce_clothes.tagproducts, ecommerce_clothes.products, ecommerce_clothes.tags WHERE tagproducts.products_tagProduct_id = products.id and tagproducts.tags_tagProduct_id = tags.id and products.isDelete = 0 ORDER BY products.updatedAt DESC LIMIT 20"
     );
     const [resultImage, metadataImage] = await sequelize.query(
-      "SELECT products.id, imageproducts.isMain, imageproducts.url FROM ecommerce_clothes.imageproducts, ecommerce_clothes.products WHERE products.id = imageproducts.product_imageProduct_id"
+      "SELECT products.id, imageproducts.isMain, imageproducts.url FROM ecommerce_clothes.imageproducts, ecommerce_clothes.products WHERE products.id = imageproducts.product_imageProduct_id and products.isDelete = 0"
     );
+    const [resultOrder, metadataOrder] = await sequelize.query(
+      "SELECT products.id, orderdetails.count, orderdetails.rating FROM ecommerce_clothes.orders, ecommerce_clothes.orderdetails, ecommerce_clothes.products WHERE orderdetails.products_orderDetail_id = products.id and orders.status = 3"
+    );
+
+    const mergedOrders = resultOrder.reduce((acc, order) => {
+      const existingOrder = acc.find((item) => item.id === order.id);
+      if (!existingOrder) {
+        acc.push({ ...order });
+      } else {
+        existingOrder.count += order.count;
+        if (order.rating !== null) {
+          existingOrder.rating = existingOrder.rating || 0;
+          existingOrder.rating = (existingOrder.rating + order.rating) / 2;
+        }
+      }
+      return acc;
+    }, []);
+
+    products = products.map((item) => {
+      const { id } = item;
+      const foundItem = mergedOrders.find((resultItem) => resultItem.id === id);
+
+      if (foundItem) {
+        return {
+          ...item,
+          sold: foundItem.count,
+          rating: foundItem.rating,
+        };
+      } else {
+        return {
+          ...item,
+          sold: null,
+          rating: null,
+        };
+      }
+    });
 
     // gắn size vào product
     for (let i = 0; i < resultSize.length; i++) {
@@ -543,26 +652,15 @@ const getNewProduct = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
-  const {
-    cate_products_id,
-    brand_products_id,
-    name_product,
-    price,
-    percent_sale,
-    remain,
-    description_detail,
-  } = req.body;
+  const { name_product, price, percent_sale, remain } = req.body;
   const { id } = req.query;
   try {
     const product = await Products.update(
       {
-        cate_products_id,
-        brand_products_id,
         name_product,
         price,
         percent_sale,
         remain,
-        description_detail,
       },
       {
         where: {
@@ -583,11 +681,14 @@ const updateProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
   const { id } = req.query;
   try {
-    const product = await Products.destroy({
-      where: {
-        id,
-      },
-    });
+    const product = await Products.update(
+      { isDelete: 1 },
+      {
+        where: {
+          id,
+        },
+      }
+    );
     if (product) {
       res.status(200).send(`Success delete product id = ${id}`);
     } else {
@@ -602,21 +703,59 @@ const getProductByCateId = async (req, res) => {
   const { id } = req.query;
   try {
     if (id == 1) {
-      const [products, metadataProduct] = await sequelize.query(
-        `SELECT products.id, products.material, products.cate_products_id, products.name_product, products.price, products.percent_sale, products.remain, products.description_detail, products.createdAt, products.updatedAt, brands.name_brand FROM ecommerce_clothes.products, ecommerce_clothes.brands where products.brand_products_id = brands.id`
+      let [products, metadataProduct] = await sequelize.query(
+        `SELECT products.id, products.material, products.cate_products_id, products.name_product, products.price, products.percent_sale, products.remain, products.description_detail, products.createdAt, products.updatedAt, brands.name_brand FROM ecommerce_clothes.products, ecommerce_clothes.brands where products.brand_products_id = brands.id and products.isDelete = 0`
       );
       const [resultSize, metadataSize] = await sequelize.query(
-        `SELECT products.id, sizes.size FROM ecommerce_clothes.sizeproducts, ecommerce_clothes.products, ecommerce_clothes.sizes WHERE sizeproducts.products_sizeProduct_id = products.id and sizeproducts.size_sizeProduct_id = sizes.id`
+        `SELECT products.id, sizes.size FROM ecommerce_clothes.sizeproducts, ecommerce_clothes.products, ecommerce_clothes.sizes WHERE sizeproducts.products_sizeProduct_id = products.id and sizeproducts.size_sizeProduct_id = sizes.id and products.isDelete = 0`
       );
       const [resultColor, metadataColor] = await sequelize.query(
-        `SELECT products.id, colors.color FROM ecommerce_clothes.colorproducts, ecommerce_clothes.products, ecommerce_clothes.colors WHERE colorproducts.products_colorProduct_id = products.id and colorproducts.color_colorProduct_id = colors.id`
+        `SELECT products.id, colors.color FROM ecommerce_clothes.colorproducts, ecommerce_clothes.products, ecommerce_clothes.colors WHERE colorproducts.products_colorProduct_id = products.id and colorproducts.color_colorProduct_id = colors.id and products.isDelete = 0`
       );
       const [resultTag, metadataTag] = await sequelize.query(
-        `SELECT products.id, tags.name_tag FROM ecommerce_clothes.tagproducts, ecommerce_clothes.products, ecommerce_clothes.tags WHERE tagproducts.products_tagProduct_id = products.id and tagproducts.tags_tagProduct_id = tags.id`
+        `SELECT products.id, tags.name_tag FROM ecommerce_clothes.tagproducts, ecommerce_clothes.products, ecommerce_clothes.tags WHERE tagproducts.products_tagProduct_id = products.id and tagproducts.tags_tagProduct_id = tags.id and products.isDelete = 0`
       );
       const [resultImage, metadataImage] = await sequelize.query(
-        `SELECT products.id, imageproducts.isMain, imageproducts.url FROM ecommerce_clothes.imageproducts, ecommerce_clothes.products WHERE products.id = imageproducts.product_imageProduct_id`
+        `SELECT products.id, imageproducts.isMain, imageproducts.url FROM ecommerce_clothes.imageproducts, ecommerce_clothes.products WHERE products.id = imageproducts.product_imageProduct_id and products.isDelete = 0`
       );
+      const [resultOrder, metadataOrder] = await sequelize.query(
+        "SELECT products.id, orderdetails.count, orderdetails.rating FROM ecommerce_clothes.orders, ecommerce_clothes.orderdetails, ecommerce_clothes.products WHERE orderdetails.products_orderDetail_id = products.id and orders.status = 3"
+      );
+
+      const mergedOrders = resultOrder.reduce((acc, order) => {
+        const existingOrder = acc.find((item) => item.id === order.id);
+        if (!existingOrder) {
+          acc.push({ ...order });
+        } else {
+          existingOrder.count += order.count;
+          if (order.rating !== null) {
+            existingOrder.rating = existingOrder.rating || 0;
+            existingOrder.rating = (existingOrder.rating + order.rating) / 2;
+          }
+        }
+        return acc;
+      }, []);
+
+      products = products.map((item) => {
+        const { id } = item;
+        const foundItem = mergedOrders.find(
+          (resultItem) => resultItem.id === id
+        );
+
+        if (foundItem) {
+          return {
+            ...item,
+            sold: foundItem.count,
+            rating: foundItem.rating,
+          };
+        } else {
+          return {
+            ...item,
+            sold: null,
+            rating: null,
+          };
+        }
+      });
 
       // gắn size vào product
       for (let i = 0; i < resultSize.length; i++) {
@@ -744,7 +883,7 @@ const getProductByCateId = async (req, res) => {
       }
     } else {
       const [product2, metadataProduct2] = await sequelize.query(
-        `SELECT products.id, categories.parent_id, products.material, products.cate_products_id, products.name_product, products.price, products.percent_sale, products.remain, products.description_detail, products.createdAt, products.updatedAt, brands.name_brand FROM ecommerce_clothes.brands, ecommerce_clothes.categories, ecommerce_clothes.products WHERE products.brand_products_id = brands.id and categories.id = products.cate_products_id;`
+        `SELECT products.id, categories.parent_id, products.material, products.cate_products_id, products.name_product, products.price, products.percent_sale, products.remain, products.description_detail, products.createdAt, products.updatedAt, brands.name_brand FROM ecommerce_clothes.brands, ecommerce_clothes.categories, ecommerce_clothes.products WHERE products.brand_products_id = brands.id and categories.id = products.cate_products_id and products.isDelete = 0;`
       );
       const [cates, metadataCate] = await sequelize.query(
         `select id from categories where parent_id=${id}`
@@ -767,17 +906,55 @@ const getProductByCateId = async (req, res) => {
           });
         }
       });
+      const [resultOrder, metadataOrder] = await sequelize.query(
+        "SELECT products.id, orderdetails.count, orderdetails.rating FROM ecommerce_clothes.orders, ecommerce_clothes.orderdetails, ecommerce_clothes.products WHERE orderdetails.products_orderDetail_id = products.id and orders.status = 3"
+      );
+
+      const mergedOrders = resultOrder.reduce((acc, order) => {
+        const existingOrder = acc.find((item) => item.id === order.id);
+        if (!existingOrder) {
+          acc.push({ ...order });
+        } else {
+          existingOrder.count += order.count;
+          if (order.rating !== null) {
+            existingOrder.rating = existingOrder.rating || 0;
+            existingOrder.rating = (existingOrder.rating + order.rating) / 2;
+          }
+        }
+        return acc;
+      }, []);
+
+      products = products.map((item) => {
+        const { id } = item;
+        const foundItem = mergedOrders.find(
+          (resultItem) => resultItem.id === id
+        );
+
+        if (foundItem) {
+          return {
+            ...item,
+            sold: foundItem.count,
+            rating: foundItem.rating,
+          };
+        } else {
+          return {
+            ...item,
+            sold: null,
+            rating: null,
+          };
+        }
+      });
       const [resultSize, metadataSize] = await sequelize.query(
-        `SELECT products.id, sizes.size FROM ecommerce_clothes.sizeproducts, ecommerce_clothes.products, ecommerce_clothes.sizes, ecommerce_clothes.categories WHERE sizeproducts.products_sizeProduct_id = products.id and sizeproducts.size_sizeProduct_id = sizes.id and categories.id = products.cate_products_id`
+        `SELECT products.id, sizes.size FROM ecommerce_clothes.sizeproducts, ecommerce_clothes.products, ecommerce_clothes.sizes, ecommerce_clothes.categories WHERE sizeproducts.products_sizeProduct_id = products.id and sizeproducts.size_sizeProduct_id = sizes.id and categories.id = products.cate_products_id and products.isDelete = 0`
       );
       const [resultColor, metadataColor] = await sequelize.query(
-        `SELECT products.id, colors.color FROM ecommerce_clothes.colorproducts, ecommerce_clothes.products, ecommerce_clothes.colors, ecommerce_clothes.categories WHERE colorproducts.products_colorProduct_id = products.id and colorproducts.color_colorProduct_id = colors.id and categories.id = products.cate_products_id`
+        `SELECT products.id, colors.color FROM ecommerce_clothes.colorproducts, ecommerce_clothes.products, ecommerce_clothes.colors, ecommerce_clothes.categories WHERE colorproducts.products_colorProduct_id = products.id and colorproducts.color_colorProduct_id = colors.id and categories.id = products.cate_products_id and products.isDelete = 0`
       );
       const [resultTag, metadataTag] = await sequelize.query(
-        `SELECT products.id, tags.name_tag FROM ecommerce_clothes.tagproducts, ecommerce_clothes.products, ecommerce_clothes.tags, ecommerce_clothes.categories WHERE tagproducts.products_tagProduct_id = products.id and tagproducts.tags_tagProduct_id = tags.id and categories.id = products.cate_products_id`
+        `SELECT products.id, tags.name_tag FROM ecommerce_clothes.tagproducts, ecommerce_clothes.products, ecommerce_clothes.tags, ecommerce_clothes.categories WHERE tagproducts.products_tagProduct_id = products.id and tagproducts.tags_tagProduct_id = tags.id and categories.id = products.cate_products_id and products.isDelete = 0`
       );
       const [resultImage, metadataImage] = await sequelize.query(
-        `SELECT products.id, imageproducts.isMain, imageproducts.url FROM ecommerce_clothes.imageproducts, ecommerce_clothes.products, ecommerce_clothes.categories WHERE products.id = imageproducts.product_imageProduct_id and categories.id = products.cate_products_id`
+        `SELECT products.id, imageproducts.isMain, imageproducts.url FROM ecommerce_clothes.imageproducts, ecommerce_clothes.products, ecommerce_clothes.categories WHERE products.id = imageproducts.product_imageProduct_id and categories.id = products.cate_products_id and products.isDelete = 0`
       );
 
       setTimeout(() => {
@@ -871,21 +1048,57 @@ const getProductByCateId = async (req, res) => {
 const getProductByName = async (req, res) => {
   const { name } = req.query;
   try {
-    const [products, metadataProduct] = await sequelize.query(
-      `SELECT products.id, products.material, products.cate_products_id, products.name_product, products.price, products.percent_sale, products.remain, products.description_detail, products.createdAt, products.updatedAt, brands.name_brand FROM ecommerce_clothes.products, ecommerce_clothes.brands where products.brand_products_id = brands.id and products.name_product like '%${name}%'`
+    let [products, metadataProduct] = await sequelize.query(
+      `SELECT products.id, products.material, products.cate_products_id, products.name_product, products.price, products.percent_sale, products.remain, products.description_detail, products.createdAt, products.updatedAt, brands.name_brand FROM ecommerce_clothes.products, ecommerce_clothes.brands where products.brand_products_id = brands.id and products.name_product like '%${name}%' and products.isDelete = 0`
     );
     const [resultSize, metadataSize] = await sequelize.query(
-      `SELECT products.id, sizes.size FROM ecommerce_clothes.sizeproducts, ecommerce_clothes.products, ecommerce_clothes.sizes WHERE sizeproducts.products_sizeProduct_id = products.id and sizeproducts.size_sizeProduct_id = sizes.id and products.name_product like '%${name}%'`
+      `SELECT products.id, sizes.size FROM ecommerce_clothes.sizeproducts, ecommerce_clothes.products, ecommerce_clothes.sizes WHERE sizeproducts.products_sizeProduct_id = products.id and sizeproducts.size_sizeProduct_id = sizes.id and products.name_product like '%${name}%' and products.isDelete = 0`
     );
     const [resultColor, metadataColor] = await sequelize.query(
-      `SELECT products.id, colors.color FROM ecommerce_clothes.colorproducts, ecommerce_clothes.products, ecommerce_clothes.colors WHERE colorproducts.products_colorProduct_id = products.id and colorproducts.color_colorProduct_id = colors.id and products.name_product like '%${name}%'`
+      `SELECT products.id, colors.color FROM ecommerce_clothes.colorproducts, ecommerce_clothes.products, ecommerce_clothes.colors WHERE colorproducts.products_colorProduct_id = products.id and colorproducts.color_colorProduct_id = colors.id and products.name_product like '%${name}%' and products.isDelete = 0`
     );
     const [resultTag, metadataTag] = await sequelize.query(
-      `SELECT products.id, tags.name_tag FROM ecommerce_clothes.tagproducts, ecommerce_clothes.products, ecommerce_clothes.tags WHERE tagproducts.products_tagProduct_id = products.id and tagproducts.tags_tagProduct_id = tags.id and products.name_product like '%${name}%'`
+      `SELECT products.id, tags.name_tag FROM ecommerce_clothes.tagproducts, ecommerce_clothes.products, ecommerce_clothes.tags WHERE tagproducts.products_tagProduct_id = products.id and tagproducts.tags_tagProduct_id = tags.id and products.name_product like '%${name}%' and products.isDelete = 0`
     );
     const [resultImage, metadataImage] = await sequelize.query(
-      `SELECT products.id, imageproducts.isMain, imageproducts.url FROM ecommerce_clothes.imageproducts, ecommerce_clothes.products WHERE products.id = imageproducts.product_imageProduct_id and products.name_product like '%${name}%';`
+      `SELECT products.id, imageproducts.isMain, imageproducts.url FROM ecommerce_clothes.imageproducts, ecommerce_clothes.products WHERE products.id = imageproducts.product_imageProduct_id and products.name_product like '%${name}%' and products.isDelete = 0`
     );
+    const [resultOrder, metadataOrder] = await sequelize.query(
+      "SELECT products.id, orderdetails.count, orderdetails.rating FROM ecommerce_clothes.orders, ecommerce_clothes.orderdetails, ecommerce_clothes.products WHERE orderdetails.products_orderDetail_id = products.id and orders.status = 3"
+    );
+
+    const mergedOrders = resultOrder.reduce((acc, order) => {
+      const existingOrder = acc.find((item) => item.id === order.id);
+      if (!existingOrder) {
+        acc.push({ ...order });
+      } else {
+        existingOrder.count += order.count;
+        if (order.rating !== null) {
+          existingOrder.rating = existingOrder.rating || 0;
+          existingOrder.rating = (existingOrder.rating + order.rating) / 2;
+        }
+      }
+      return acc;
+    }, []);
+
+    products = products.map((item) => {
+      const { id } = item;
+      const foundItem = mergedOrders.find((resultItem) => resultItem.id === id);
+
+      if (foundItem) {
+        return {
+          ...item,
+          sold: foundItem.count,
+          rating: foundItem.rating,
+        };
+      } else {
+        return {
+          ...item,
+          sold: null,
+          rating: null,
+        };
+      }
+    });
 
     // gắn size vào product
     for (let i = 0; i < resultSize.length; i++) {

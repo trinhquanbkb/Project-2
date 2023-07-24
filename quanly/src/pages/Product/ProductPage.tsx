@@ -29,7 +29,7 @@ interface Item {
   price: any;
   count: any;
   update: any;
-  brand: any;
+  percent: any;
 }
 
 interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
@@ -173,7 +173,7 @@ export default function ProductPage() {
         price: renderPrice(i.price, 0, []) + "đ",
         count: i.remain,
         update: parseDate(i.updatedAt),
-        brand: i.name_brand,
+        percent: i.percent_sale == null ? "0%" : i.percent_sale + "%",
       });
     });
   }
@@ -262,12 +262,18 @@ export default function ProductPage() {
     {
       title: "Tên sản phẩm",
       dataIndex: "name",
-      width: "25%",
+      width: "26%",
       editable: true,
     },
     {
       title: "Giá sản phẩm",
       dataIndex: "price",
+      width: "13%",
+      editable: true,
+    },
+    {
+      title: "Giảm giá",
+      dataIndex: "percent",
       width: "13%",
       editable: true,
     },
@@ -278,16 +284,9 @@ export default function ProductPage() {
       editable: true,
     },
     {
-      title: "Thương hiệu",
-      dataIndex: "brand",
-      width: "15%",
-      editable: true,
-    },
-    {
       title: "Cập nhật lần cuối",
       dataIndex: "update",
-      width: "16%",
-      editable: true,
+      width: "17%",
     },
     {
       title: "Chức năng",
@@ -298,21 +297,50 @@ export default function ProductPage() {
           <span>
             <Typography.Link
               onClick={() => save(record.key)}
-              style={{ marginRight: 8 }}
+              style={{ marginRight: 8, color: "blue", fontSize: "15px" }}
             >
               Lưu
             </Typography.Link>
-            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-              Thoát
+            <Popconfirm title="Bỏ cập nhật?" onConfirm={cancel}>
+              <span style={{ color: "blue" }}>Thoát</span>
             </Popconfirm>
           </span>
         ) : (
-          <Typography.Link
-            disabled={editingKey !== ""}
-            onClick={() => edit(record)}
-          >
-            Edit
-          </Typography.Link>
+          <div>
+            <Typography.Link
+              disabled={editingKey !== ""}
+              onClick={() => edit(record)}
+            >
+              <Button
+                type="text"
+                style={{ backgroundColor: "#d4b106", marginRight: "0.8rem" }}
+              >
+                Chỉnh sửa
+              </Button>
+            </Typography.Link>
+            <Button
+              type="text"
+              style={{ backgroundColor: "red" }}
+              onClick={() => {
+                dispatch({
+                  type: "DELETE_PRODUCT",
+                  data: record.key,
+                });
+                setTimeout(() => {
+                  Swal.fire({
+                    title: "Xóa sản phẩm thành công!",
+                    icon: "success",
+                    confirmButtonText: "Chấp nhận",
+                  });
+                  dispatch({
+                    type: "GET_PRODUCTS",
+                  });
+                }, 500);
+              }}
+            >
+              Xóa
+            </Button>
+          </div>
         );
       },
     },
@@ -334,7 +362,92 @@ export default function ProductPage() {
     };
   });
 
-  const save = async (key: React.Key) => {};
+  const save = async (key: React.Key) => {
+    const editedRow = originData.find((row) => row.key === key);
+    let data: any = { id: key };
+    let xsubmit = true;
+
+    if (editedRow) {
+      const formValues = form.getFieldsValue();
+      const pattern = /^\d+$/;
+      for (const x in formValues) {
+        if (x === "count") {
+          if (!pattern.test(formValues[x])) {
+            xsubmit = false;
+            Swal.fire({
+              title: "Trường 'tồn kho' cần nhập giá trị số!",
+              icon: "error",
+              confirmButtonText: "Chấp nhận",
+            });
+          } else if (parseInt(formValues[x]) < 0) {
+            xsubmit = false;
+            Swal.fire({
+              title: "Trường 'tồn kho' cần nhập giá trị dương!",
+              icon: "error",
+              confirmButtonText: "Chấp nhận",
+            });
+          } else {
+            data = { ...data, remain: parseInt(formValues[x]) };
+          }
+        } else if (x === "percent") {
+          if (!pattern.test(formValues[x])) {
+            xsubmit = false;
+            Swal.fire({
+              title: "Trường 'giảm giá' cần nhập giá trị số!",
+              icon: "error",
+              confirmButtonText: "Chấp nhận",
+            });
+          } else if (parseInt(formValues[x]) < 0) {
+            xsubmit = false;
+            Swal.fire({
+              title: "Trường 'giảm giá' cần nhập giá trị dương!",
+              icon: "error",
+              confirmButtonText: "Chấp nhận",
+            });
+          } else {
+            data = { ...data, percent_sale: parseInt(formValues[x]) };
+          }
+        } else if (x === "price") {
+          if (!pattern.test(formValues[x])) {
+            xsubmit = false;
+            Swal.fire({
+              title: "Trường 'giá sản phẩm' cần nhập giá trị số!",
+              icon: "error",
+              confirmButtonText: "Chấp nhận",
+            });
+          } else if (formValues[x] <= 0) {
+            xsubmit = false;
+            Swal.fire({
+              title: "Trường 'giá sản phẩm' cần nhập giá trị dương!",
+              icon: "error",
+              confirmButtonText: "Chấp nhận",
+            });
+          } else {
+            data = { ...data, price: parseInt(formValues[x]) };
+          }
+        } else {
+          data = { ...data, name_product: formValues[x] };
+        }
+      }
+    }
+    if (xsubmit) {
+      setEditingKey("");
+      dispatch({
+        type: "UPDATE_PRODUCT",
+        data: data,
+      });
+      setTimeout(() => {
+        Swal.fire({
+          title: "Cập nhật thành công!",
+          icon: "success",
+          confirmButtonText: "Chấp nhận",
+        });
+        dispatch({
+          type: "GET_PRODUCTS",
+        });
+      }, 500);
+    }
+  };
 
   let listCate: any[] = [];
   let listColor: any[] = [];
