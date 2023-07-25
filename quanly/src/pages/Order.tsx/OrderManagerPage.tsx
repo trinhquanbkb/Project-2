@@ -137,7 +137,7 @@ export default function OrderManagerPage() {
               type="primary"
               onClick={() => handleApproveOrder(record.id)}
             >
-              Chờ duyệt
+              Duyệt đơn
             </Button>
           );
         } else if (status === 2) {
@@ -158,11 +158,12 @@ export default function OrderManagerPage() {
         name: i.name_product,
         price: renderPrice(i.price, 0, []) + "đ",
         color:
-          i.color === null ? (
+          i.color === null || i.color === "" ? (
             "không có màu sắc"
           ) : (
             <div
               style={{
+                border: "1px solid black",
                 width: "1.5rem",
                 height: "1.5rem",
                 borderRadius: "1.5rem",
@@ -187,7 +188,7 @@ export default function OrderManagerPage() {
         onChange={handleFilterStatusChange}
       >
         <Select.Option value={null}>Tất cả</Select.Option>
-        <Select.Option value={1}>Chờ duyệt</Select.Option>
+        <Select.Option value={1}>Đơn cần duyệt</Select.Option>
         <Select.Option value={2}>Đợi khách nhận</Select.Option>
         <Select.Option value={3}>Đã xong</Select.Option>
       </Select>

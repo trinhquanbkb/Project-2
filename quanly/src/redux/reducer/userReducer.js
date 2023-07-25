@@ -1,9 +1,15 @@
-import { LOGIN_ADMIN_SAGA, REGISTER_USER, USER_INFO_SAGA } from "../type";
+import {
+  GET_CHART_USER_SAGA,
+  LOGIN_ADMIN_SAGA,
+  REGISTER_USER,
+  USER_INFO_SAGA,
+} from "../type";
 
 const userData = {
   statusLogin: "",
   statusRegister: "",
   userInfo: null,
+  chartUser: [],
 };
 
 const userReducer = (state = userData, action) => {
@@ -36,6 +42,17 @@ const userReducer = (state = userData, action) => {
     }
     case USER_INFO_SAGA: {
       state.userInfo = { ...action.data };
+      return { ...state };
+    }
+    case GET_CHART_USER_SAGA: {
+      let array = [];
+      action.data.forEach((item) => {
+        array.push({
+          month: "Tháng " + item.month,
+          totalUser: item.totalUser,
+        });
+      });
+      state.chartUser = [...array];
       return { ...state };
     }
     default: {

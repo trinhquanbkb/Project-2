@@ -3,6 +3,7 @@ import {
   CREATE_ORDER_PRODUCT_SAGA,
   DELETE_ORDER_DETAIL_SAGA,
   GET_ALL_ORDER_MANAGER_SAGA,
+  GET_CHART_MONEY_SAGA,
   GET_ORDER_DETAIL_ADMIN_SAGA,
   GET_ORDER_DETAIL_SAGA,
   ORDER_DETAIL_SAGA,
@@ -11,6 +12,7 @@ import {
   createOrder,
   deleteOrderDetail,
   getAllOrderDetail,
+  getChartMoney,
   getOrderAdmin,
   getOrderManager,
   orderDetail,
@@ -107,6 +109,23 @@ function* updateOrderBrowseSaga(action) {
   } catch (error) {}
 }
 
+function* getChartMoneySaga(action) {
+  try {
+    const promise = yield getChartMoney(action.data);
+    if (promise) {
+      yield put({
+        type: GET_CHART_MONEY_SAGA,
+        data: promise.data,
+      });
+    }
+  } catch (error) {
+    yield put({
+      type: GET_CHART_MONEY_SAGA,
+      data: [],
+    });
+  }
+}
+
 export function* orderDetailSaga() {
   yield takeLatest("ORDER_DETAIL", createOrderDetailSaga);
   yield takeLatest("CREATE_ORDER", createOrderSaga);
@@ -116,4 +135,5 @@ export function* orderDetailSaga() {
   yield takeLatest("UPDATE_RATING_ORDER", updateRatingSaga);
   yield takeLatest("GET_ALL_ORDER_DETAIL_ADMIN", getAllOrderAdminSaga);
   yield takeLatest("ORDER_BROWSING", updateOrderBrowseSaga);
+  yield takeLatest("GET_CHART_MONEY", getChartMoneySaga);
 }

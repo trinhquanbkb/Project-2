@@ -1,5 +1,6 @@
 import {
   DELETE_ORDER_DETAIL_SAGA,
+  GET_CHART_MONEY_SAGA,
   GET_ORDER_DETAIL_ADMIN_SAGA,
   GET_ORDER_DETAIL_SAGA,
   ORDER_DETAIL_SAGA,
@@ -10,6 +11,7 @@ const orderDetailData = {
   listOrderDetail: [],
   statusDelete: "",
   listOrderAdmin: [],
+  chartMoney: [],
 };
 
 const orderDetailReducer = (state = orderDetailData, action) => {
@@ -52,6 +54,17 @@ const orderDetailReducer = (state = orderDetailData, action) => {
         array.push(item);
       });
       state.listOrderAdmin = [...array];
+      return { ...state };
+    }
+    case GET_CHART_MONEY_SAGA: {
+      let array = [];
+      action.data.forEach((item) => {
+        array.push({
+          month: "Tháng " + item.month,
+          totalPrice: item.totalPrice,
+        });
+      });
+      state.chartMoney = [...array];
       return { ...state };
     }
     default: {

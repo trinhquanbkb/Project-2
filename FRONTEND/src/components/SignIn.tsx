@@ -110,7 +110,6 @@ export default function SignIn() {
 			error: changeErrors
 		})
 	}
-
 	const handleSubmit = (event: any) => {
 		event.preventDefault()
 		const { values, error } = user
@@ -134,16 +133,18 @@ export default function SignIn() {
 				icon: 'error',
 				confirmButtonText: 'Chấp nhận'
 			})
+		} else {
+			dispatch({
+				type: 'REGISTER',
+				data: {
+					name_user:
+						user.values.firstName + ' ' + user.values.lastName,
+					phone_number: user.values.phone,
+					password: user.values.password,
+					email: user.values.email
+				}
+			})
 		}
-		dispatch({
-			type: 'REGISTER',
-			data: {
-				name_user: user.values.firstName + ' ' + user.values.lastName,
-				phone_number: user.values.phone,
-				password: user.values.password,
-				email: user.values.email
-			}
-		})
 	}
 
 	const goBack = () => {

@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import DOMPurify from 'dompurify'
 
 export default function DescriptionProduct({ item }: any) {
-	console.log(item)
 	const [isOpen1, setIsOpen1] = useState({ item: 0 })
 	const [isOpen2, setIsOpen2] = useState({ item: 0 })
 

@@ -4,9 +4,11 @@ import {
   loginUserInfor,
   registerUserInfor,
   loginAdminInfor,
+  getChartUser,
 } from "../../services/userService";
 import { TOKEN_ADMIN, TOKEN_USER } from "../../util/const/data";
 import {
+  GET_CHART_USER_SAGA,
   LOGIN_ADMIN_SAGA,
   LOGIN_USER,
   REGISTER_USER,
@@ -93,9 +95,27 @@ function* getUserInfoSaga() {
   }
 }
 
+function* getChartUserSaga(action) {
+  try {
+    const promise = yield getChartUser(action.data);
+    if (promise) {
+      yield put({
+        type: GET_CHART_USER_SAGA,
+        data: promise.data,
+      });
+    }
+  } catch (error) {
+    yield put({
+      type: GET_CHART_USER_SAGA,
+      data: [],
+    });
+  }
+}
+
 export function* userSaga() {
   yield takeLatest("LOGIN", loginUserSaga);
   yield takeLatest("LOGIN_ADMIN", loginAdminSaga);
   yield takeLatest("REGISTER", registerUserSaga);
   yield takeLatest("GET_USER_INFO", getUserInfoSaga);
+  yield takeLatest("GET_CHART_USER", getChartUserSaga);
 }

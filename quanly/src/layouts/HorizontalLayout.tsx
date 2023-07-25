@@ -2,9 +2,9 @@ import React from "react";
 import {
   ProfileOutlined,
   PieChartOutlined,
-  DollarOutlined,
   DatabaseOutlined,
   ExportOutlined,
+  BarChartOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
 import { NavLink } from "react-router-dom";
@@ -56,17 +56,19 @@ const HorizontalLayout = ({ children }: ILayoutProp) => {
                 Quản lý danh mục
               </NavLink>
             </Menu.Item>
-            <Menu.Item icon={<DollarOutlined className="menu-item" />}>
-              <NavLink className="nav-link menu-item-link" to="#">
-                Doanh thu
+            <Menu.Item icon={<BarChartOutlined className="menu-item" />}>
+              <NavLink
+                className="nav-link menu-item-link"
+                to="/manager-business"
+              >
+                Thống kê
               </NavLink>
             </Menu.Item>
             <Menu.Item
-              style={{ position: "absolute", bottom: "1rem" }}
+              icon={<ExportOutlined className="menu-item" />}
               onClick={() => {
                 localStorage.clear();
               }}
-              icon={<ExportOutlined className="menu-item" />}
             >
               <NavLink className="nav-link menu-item-link" to="/login">
                 Đăng xuất

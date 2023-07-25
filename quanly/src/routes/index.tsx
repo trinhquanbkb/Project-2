@@ -1,3 +1,4 @@
+import BusinessPage from "../pages/Business/BusinessPage";
 import index from "../pages/Dashboard";
 import OrderManagerPage from "../pages/Order.tsx/OrderManagerPage";
 import ProductPage from "../pages/Product/ProductPage";
@@ -29,6 +30,11 @@ const managerRoute: RoutesProps[] = [
     path: "/manager-order",
     name: "Oder",
     component: OrderManagerPage,
+  },
+  {
+    path: "/manager-business",
+    name: "Business",
+    component: BusinessPage,
   },
 ];
 

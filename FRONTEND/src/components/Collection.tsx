@@ -90,6 +90,7 @@ export default function Collection() {
 								// isPage là 2 tức là trang tất cả các sản phẩm mới
 								// isPage là 3 tức là trang tất cả các sản phẩm đang được sale
 								localStorage.removeItem('keySearch')
+								localStorage.removeItem('isCate')
 								localStorage.setItem('isPage', index.toString())
 							}}
 							key={index}>

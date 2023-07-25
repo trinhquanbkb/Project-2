@@ -34,7 +34,6 @@ const getAllProduct = async (req, res) => {
     const [resultOrder, metadataOrder] = await sequelize.query(
       "SELECT products.id, orderdetails.count, orderdetails.rating FROM ecommerce_clothes.orders, ecommerce_clothes.orderdetails, ecommerce_clothes.products WHERE orderdetails.products_orderDetail_id = products.id and orders.status = 3 and orderdetails.orders_orderDetail_id = orders.id;"
     );
-    console.log(resultOrder);
 
     const mergedOrders = resultOrder.reduce((acc, order) => {
       const existingOrder = acc.find((item) => item.id === order.id);
@@ -1235,7 +1234,6 @@ const uploadImageProduct = async (req, res) => {
   const image = req.file;
   const { id, isMain } = req.query;
   try {
-    console.log(id);
     if (isMain === "true") {
       const createImg = await ImageProduct.create({
         url: image.filename,

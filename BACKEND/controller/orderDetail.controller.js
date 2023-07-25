@@ -366,6 +366,52 @@ const getAllOrderDetailAdmin = async (req, res) => {
   }
 };
 
+const getCharMoney = async (req, res) => {
+  const { fullYear } = req.query;
+  try {
+    const [orders, metadataOrder] = await sequelize.query(
+      `SELECT orderdetails.price, orders.updatedAt FROM ecommerce_clothes.orders, ecommerce_clothes.orderdetails WHERE orderdetails.orders_orderDetail_id = orders.id and orders.status = 3;`
+    );
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1;
+    let x;
+    if (parseInt(fullYear) === 0) {
+      x = 6;
+    } else {
+      x = 12;
+    }
+    let arrayMonth = [];
+    while (x > 0) {
+      if (currentMonth - x + 1 <= 0) {
+        arrayMonth.push(currentMonth - x + 12 + 1);
+      } else {
+        arrayMonth.push(currentMonth - x + 1);
+      }
+      x--;
+    }
+    let result = [];
+    arrayMonth.forEach((item, index) => {
+      result.push({
+        month: item,
+        totalPrice: 0,
+      });
+      orders.forEach((i) => {
+        const date = new Date(i.updatedAt);
+        if (date.getMonth() + 1 === item) {
+          result[index].totalPrice += i.price;
+        }
+      });
+    });
+    if (result) {
+      res.status(200).send(result);
+    } else {
+      throw new Error("Cannot get chart money");
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
 module.exports = {
   getAllOrderDetail,
   createOrderDetail,
@@ -374,4 +420,5 @@ module.exports = {
   getOrderManager,
   ratingOrderDetail,
   getAllOrderDetailAdmin,
+  getCharMoney,
 };

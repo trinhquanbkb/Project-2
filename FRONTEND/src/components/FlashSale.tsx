@@ -14,7 +14,6 @@ export default function FlashSale() {
 			type: 'GET_PRODUCT_SALE'
 		})
 	}, [])
-	console.log(listProductSale)
 
 	useEffect(() => {}, [listProductSale])
 

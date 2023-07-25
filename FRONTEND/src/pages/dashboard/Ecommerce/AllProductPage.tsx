@@ -58,6 +58,7 @@ export default function AllProductPage() {
 	}
 
 	const handleSort = (item: string) => {
+		localStorage.removeItem('keySearch')
 		setSort(item)
 		setStop(true)
 	}
@@ -268,7 +269,6 @@ export default function AllProductPage() {
 						</p>
 					</div>
 				</div>
-				<BreadCrumb props={breadcumUrl} />
 				<div className="line"></div>
 				<div className="d-flex">
 					{/* <Filter

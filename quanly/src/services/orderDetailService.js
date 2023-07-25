@@ -103,3 +103,14 @@ export const updateStatusOrder = async (id) => {
     }
   );
 };
+
+export const getChartMoney = async (fullYear) => {
+  return await Axios.get(
+    `${DOMAIN_SERVER}/orderDetails/get-chart-money?fullYear=${fullYear}`,
+    {
+      headers: {
+        token: localStorage.getItem(TOKEN_ADMIN),
+      },
+    }
+  );
+};

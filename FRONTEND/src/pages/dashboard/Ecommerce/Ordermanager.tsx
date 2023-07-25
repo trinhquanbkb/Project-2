@@ -3,17 +3,23 @@ import HorizontalLayout from '../../../layouts/HorizontalLayout'
 import { useDispatch, useSelector } from 'react-redux'
 import RatingStar from '../../../components/RatingStar'
 import Swal from 'sweetalert2'
+import { Link } from 'react-router-dom'
+import { linkProduct } from '../../../util/const/function'
 
 export default function Ordermanager() {
 	const dispatch = useDispatch()
 	const { orderManager } = useSelector((state: any) => state.orderReducer)
+	const { listProduct } = useSelector((state: any) => state.productReducer)
 	useEffect(() => {
 		dispatch({
 			type: 'GET_ALL_ORDER_MANAGER'
 		})
+		dispatch({
+			type: 'GET_PRODUCTS'
+		})
 	}, [])
 
-	useEffect(() => {}, [orderManager])
+	useEffect(() => {}, [orderManager, listProduct])
 
 	const renderStatus = (item: any) => {
 		if (item.status === 1) {
@@ -251,7 +257,22 @@ export default function Ordermanager() {
 						{item.orders_orderDetail_id}
 					</td>
 					<td className="img-order-manager">
-						<img src={item.image} alt={item.name_product} />
+						<Link
+							onClick={() => {
+								listProduct.forEach((i: any) => {
+									if (i.id === item.products_orderDetail_id) {
+										localStorage.setItem(
+											'productDetail',
+											JSON.stringify(i)
+										)
+									}
+								})
+							}}
+							to={`/product/product-detail?${linkProduct(
+								item.id
+							)}`}>
+							<img src={item.image} alt={item.name_product} />
+						</Link>
 					</td>
 					<td className="name-order-manager">{item.name_product}</td>
 					<td className="count-order-manager">{item.count}</td>
@@ -300,6 +321,11 @@ export default function Ordermanager() {
 						{orderManager.length > 0 ? renderOrder() : null}
 					</tbody>
 				</table>
+				{orderManager.length === 0 ? (
+					<p className="text-center mt-5 fs-2">
+						Bạn chưa có đơn hàng nào!
+					</p>
+				) : null}
 			</div>
 		</HorizontalLayout>
 	)

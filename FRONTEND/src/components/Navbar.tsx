@@ -35,7 +35,9 @@ export default function Navbar() {
 	const { listCategory } = useSelector((state: any) => state.categoryReducer)
 	const { listProduct, listProductSale, listProductNew, listProductCate } =
 		useSelector((state: any) => state.productReducer)
-	const { statusRegister } = useSelector((state: any) => state.userReducer)
+	const { statusRegister, userInfo } = useSelector(
+		(state: any) => state.userReducer
+	)
 
 	useEffect(() => {
 		dispatch({
@@ -49,6 +51,9 @@ export default function Navbar() {
 		})
 		dispatch({
 			type: 'GET_ALL_NEW_PRODUCT'
+		})
+		dispatch({
+			type: 'GET_USER_INFO'
 		})
 		if (statusRegister === true) {
 			Swal.fire({
@@ -74,7 +79,8 @@ export default function Navbar() {
 		listProduct,
 		listProductCate,
 		listProductNew,
-		listProductSale
+		listProductSale,
+		userInfo
 	])
 
 	const [subMenu, setSubMenu] = useState<any>(initialState)
@@ -168,6 +174,7 @@ export default function Navbar() {
 			})
 		}
 	}
+	console.log(userInfo)
 
 	return (
 		<div className="nav-component">
@@ -265,10 +272,10 @@ export default function Navbar() {
 								<div
 									className="d-flex flex-column justify-content-center text-decoration-none fw-bold icon-user-infor"
 									style={{
-										marginRight: '1vw',
 										marginLeft: '2vw'
 									}}>
 									<FeatherIcon
+										className="icon-user-navbar"
 										onMouseLeave={() => {
 											setIsHoverUser('d-none')
 										}}
@@ -310,6 +317,12 @@ export default function Navbar() {
 										</p>
 									</div>
 								</div>
+								{/* {userInfo === null ||
+								userInfo === undefined ? null : (
+									<div className="d-flex flex-column justify-content-center name-user-navbar">
+										{userInfo.name_user}
+									</div>
+								)} */}
 							</div>
 						)}
 					</div>

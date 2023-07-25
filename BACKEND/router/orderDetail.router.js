@@ -14,6 +14,7 @@ const {
   getOrderManager,
   ratingOrderDetail,
   getAllOrderDetailAdmin,
+  getCharMoney,
 } = require("../controller/orderDetail.controller");
 
 orderDetailRouter.get(
@@ -28,6 +29,13 @@ orderDetailRouter.get(
   authenticate,
   adminAuthorize,
   getAllOrderDetailAdmin
+);
+
+orderDetailRouter.get(
+  "/get-chart-money",
+  authenticate,
+  adminAuthorize,
+  getCharMoney
 );
 
 orderDetailRouter.get(

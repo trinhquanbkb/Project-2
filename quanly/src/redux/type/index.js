@@ -16,6 +16,7 @@ export const LOGIN_USER = "LOGIN_USER";
 export const LOGIN_ADMIN_SAGA = "LOGIN_ADMIN_SAGA";
 export const REGISTER_USER = "REGISTER_USER";
 export const USER_INFO_SAGA = "USER_INFO_SAGA";
+export const GET_CHART_USER_SAGA = "GET_CHART_USER_SAGA";
 
 //order detail
 export const ORDER_DETAIL_SAGA = "ORDER_DETAIL_SAGA";
@@ -36,3 +37,4 @@ export const GET_ALL_BRAND_SAGA = "GET_ALL_BRAND_SAGA";
 
 //order
 export const CREATE_ORDER_PRODUCT_SAGA = "CREATE_ORDER_PRODUCT_SAGA";
+export const GET_CHART_MONEY_SAGA = "GET_CHART_MONEY_SAGA";

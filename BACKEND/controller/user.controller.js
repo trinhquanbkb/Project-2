@@ -2,6 +2,7 @@ const { Users } = require("../models");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { Op } = require("sequelize");
+const { sequelize } = require("../models/index");
 
 const registerUser = async (req, res) => {
   const { name_user, phone_number, password, email } = req.body;
@@ -133,9 +134,56 @@ const getUserInfo = async (req, res) => {
   }
 };
 
+const getCharUser = async (req, res) => {
+  const { fullYear } = req.query;
+  try {
+    const [users, metadataUser] = await sequelize.query(
+      `SELECT name_user, updatedAt FROM ecommerce_clothes.users WHERE role = 'user';`
+    );
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1;
+    let x;
+    if (parseInt(fullYear) === 0) {
+      x = 6;
+    } else {
+      x = 12;
+    }
+    let arrayMonth = [];
+    while (x > 0) {
+      if (currentMonth - x + 1 <= 0) {
+        arrayMonth.push(currentMonth - x + 12 + 1);
+      } else {
+        arrayMonth.push(currentMonth - x + 1);
+      }
+      x--;
+    }
+    let result = [];
+    arrayMonth.forEach((item, index) => {
+      result.push({
+        month: item,
+        totalUser: 0,
+      });
+      users.forEach((i) => {
+        const date = new Date(i.updatedAt);
+        if (date.getMonth() + 1 === item) {
+          result[index].totalUser += 1;
+        }
+      });
+    });
+    if (result) {
+      res.status(200).send(result);
+    } else {
+      throw new Error("Cannot get chart user");
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
 module.exports = {
   registerUser,
   loginAdmin,
   loginUser,
   getUserInfo,
+  getCharUser,
 };

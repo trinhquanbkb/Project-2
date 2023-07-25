@@ -39,7 +39,6 @@ export default function Login() {
       });
     }
   }, [statusLogin]);
-  console.log(statusLogin);
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
