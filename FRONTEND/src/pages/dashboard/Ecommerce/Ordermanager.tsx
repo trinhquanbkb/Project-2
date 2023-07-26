@@ -19,7 +19,11 @@ export default function Ordermanager() {
 		})
 	}, [])
 
-	useEffect(() => {}, [orderManager, listProduct])
+	useEffect(() => {
+		dispatch({
+			type: 'GET_ALL_ORDER_MANAGER'
+		})
+	}, [orderManager, listProduct])
 
 	const renderStatus = (item: any) => {
 		if (item.status === 1) {

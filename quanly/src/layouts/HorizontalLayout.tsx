@@ -51,11 +51,6 @@ const HorizontalLayout = ({ children }: ILayoutProp) => {
                 Quản lý đơn hàng
               </NavLink>
             </Menu.Item>
-            <Menu.Item icon={<DatabaseOutlined className="menu-item" />}>
-              <NavLink className="nav-link menu-item-link" to="#">
-                Quản lý danh mục
-              </NavLink>
-            </Menu.Item>
             <Menu.Item icon={<BarChartOutlined className="menu-item" />}>
               <NavLink
                 className="nav-link menu-item-link"

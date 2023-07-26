@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Table, Select, Button, Modal } from "antd";
+import { Table, Select, Button, Modal, Form, Input } from "antd";
 import HorizontalLayout from "../../layouts/HorizontalLayout";
 import { useDispatch, useSelector } from "react-redux";
-import { renderPrice } from "../../util/const/function";
+import { parseDate, renderPrice } from "../../util/const/function";
 
 interface Order {
   id: number;
@@ -24,7 +24,8 @@ export default function OrderManagerPage() {
   const [selectedOrderId, setSelectedOrderId] = useState<number | null>(null);
   const [confirmVisible, setConfirmVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [noteData, setNoteData] = useState("");
+  const [idData, setIdData] = useState<any>();
+  const { TextArea } = Input;
 
   useEffect(() => {
     dispatch({
@@ -62,17 +63,17 @@ export default function OrderManagerPage() {
   };
 
   const showModal = (orderId: any) => {
-    setNoteData(orderId.note);
+    setIdData(orderId);
     setIsModalOpen(true);
   };
 
   const handleOk = () => {
-    setNoteData("");
+    setIdData("");
     setIsModalOpen(false);
   };
 
   const handleCancel = () => {
-    setNoteData("");
+    setIdData("");
     setIsModalOpen(false);
   };
 
@@ -118,7 +119,7 @@ export default function OrderManagerPage() {
       dataIndex: "note",
       key: "note",
       width: "10%",
-      render: (note: number, record: Order) => {
+      render: (note: number, record: any) => {
         return (
           <Button type="primary" onClick={() => showModal(record)}>
             Xem
@@ -149,8 +150,8 @@ export default function OrderManagerPage() {
       },
     },
   ];
-
-  const ordersData: Order[] = [];
+  console.log(idData);
+  const ordersData: any[] = [];
   if (listOrderAdmin.length > 0) {
     listOrderAdmin.forEach((i: any) => {
       ordersData.push({
@@ -175,6 +176,11 @@ export default function OrderManagerPage() {
         count: i.count,
         status: i.status,
         note: i.note,
+        name_user: i.name_user,
+        address: i.address_detail,
+        email: i.email,
+        phone: i.phoneNumber,
+        updatedAt: parseDate(i.updatedAt),
       });
     });
   }
@@ -227,7 +233,43 @@ export default function OrderManagerPage() {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        {noteData}
+        <Form className="form-userr-info">
+          <Form.Item label="Tên khách hàng">
+            <Input
+              defaultValue={
+                idData?.name_user === undefined ? "" : idData.name_user
+              }
+              disabled
+            />
+          </Form.Item>
+          <Form.Item label="Địa chỉ">
+            <Input
+              defaultValue={idData?.address === undefined ? "" : idData.address}
+              disabled
+            />
+          </Form.Item>
+          <Form.Item label="Số điện thoại">
+            <Input
+              defaultValue={idData?.phone === undefined ? "" : idData.phone}
+              disabled
+            />
+          </Form.Item>
+          <Form.Item label="Thời gian tạo">
+            <Input
+              defaultValue={
+                idData?.updatedAt === undefined ? "" : idData.updatedAt
+              }
+              disabled
+            />
+          </Form.Item>
+          <Form.Item label="Lưu ý của khách">
+            <TextArea
+              rows={3}
+              defaultValue={idData?.note === undefined ? "" : idData.note}
+              disabled
+            />
+          </Form.Item>
+        </Form>
       </Modal>
     </HorizontalLayout>
   );

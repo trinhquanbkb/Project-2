@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ImageProduct from './ImageProduct'
 import ContentProduct from './ContentProduct'
 import DescriptionProduct from './DescriptionProduct'
-import BreadCrumb from './BreadCrumb'
+import size from '../assets/images/bang_size.png'
+import ReviewProduct from './ReviewProduct'
 
 interface IBreadcumUrl {
 	url: string
@@ -17,6 +18,7 @@ export default function DetailProduct() {
 	if (jsonString !== null) {
 		productDetail = JSON.parse(jsonString)
 	}
+
 	const breadcumUrl: IBreadcumUrl[] = [
 		{
 			url: '/',
@@ -54,10 +56,15 @@ export default function DetailProduct() {
 			</div>
 			<DescriptionProduct item={productDetail} />
 			<div
-				className="bg-success mt-5"
-				style={{ width: '100%', height: '600px' }}>
-				bình luận
-			</div>
+				style={{
+					marginTop: '3rem',
+					width: '100%',
+					height: '700px',
+					backgroundImage: `url(${size})`,
+					backgroundSize: 'contain',
+					backgroundRepeat: 'no-repeat',
+					backgroundPosition: 'center'
+				}}></div>
 		</div>
 	)
 }

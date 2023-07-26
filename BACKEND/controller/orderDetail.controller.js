@@ -345,6 +345,10 @@ const getAllOrderDetailAdmin = async (req, res) => {
           id: item.dataValues.orders_orderDetail_id,
         },
       });
+      result[index].name_user = order.dataValues.name_user;
+      result[index].address_detail = order.dataValues.address_detail;
+      result[index].phoneNumber = order.dataValues.phoneNumber;
+      result[index].email = order.dataValues.email;
       result[index].status = order.dataValues.status;
       result[index].note = order.dataValues.note;
       const product = await Products.findOne({
