@@ -47,3 +47,25 @@ export const getChartUser = async (fullYear) => {
     }
   );
 };
+
+export const registerAdmin = async ({
+  password,
+  email,
+  phone_number,
+  name_user,
+}) => {
+  return await Axios.post(
+    `${DOMAIN_SERVER}/users/register-admin`,
+    {
+      password,
+      email,
+      phone_number,
+      name_user,
+    },
+    {
+      headers: {
+        token: localStorage.getItem(TOKEN_ADMIN),
+      },
+    }
+  );
+};

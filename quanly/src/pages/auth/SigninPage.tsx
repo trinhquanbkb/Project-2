@@ -4,33 +4,53 @@ import FormInput from "../../components/FormInput";
 import { Button } from "antd";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
+import { REGISTER_ADMIN_SAGA } from "../../redux/type";
 
 export default function SigninPage() {
   const dispatch = useDispatch();
+  const { statusRegisterAdmin } = useSelector(
+    (state: any) => state.userReducer
+  );
   const [user, setUser] = useState({
     values: {
+      name: "",
+      phone: "",
       email: "",
       password: "",
       rePassword: "",
     },
     error: {
+      name: "",
+      phone: "",
       email: "",
       password: "",
       rePassword: "",
     },
   });
 
-  // useEffect(() => {
-  //   if (statusRegister === true) {
-  //     navigate("/", { replace: true });
-  //   } else if (statusRegister === "error" || statusRegister === false) {
-  //     Swal.fire({
-  //       title: "Email đã được sử dụng, hãy nhập email mới!",
-  //       icon: "error",
-  //       confirmButtonText: "Chấp nhận",
-  //     });
-  //   }
-  // }, [statusRegister]);
+  useEffect(() => {
+    if (statusRegisterAdmin === true) {
+      Swal.fire({
+        title: "Đăng ký tài khoản mới cho người quản lý thành công!",
+        icon: "success",
+        confirmButtonText: "Chấp nhận",
+      });
+      dispatch({
+        type: REGISTER_ADMIN_SAGA,
+        data: "",
+      });
+    } else if (statusRegisterAdmin === false) {
+      Swal.fire({
+        title: "Email đã được sử dụng, hãy nhập email mới!",
+        icon: "error",
+        confirmButtonText: "Chấp nhận",
+      });
+      dispatch({
+        type: REGISTER_ADMIN_SAGA,
+        data: "",
+      });
+    }
+  }, [statusRegisterAdmin]);
 
   const handleOnChange = (event: any) => {
     let { name, value, type } = event.target;
@@ -51,6 +71,19 @@ export default function SigninPage() {
       if (value.trim() === "") {
         changeErrors[name] = name + " không được bỏ trống!";
       } else if (!regexMail.test(value)) {
+        changeErrors[name] = name + " không hợp lệ!";
+      } else {
+        changeErrors[name] = "";
+      }
+    }
+    //check phone
+    if (name === "phone") {
+      //regex của password
+      const regexPhone = /^([0-9]{10})$/g;
+      //dùng regex test password
+      if (value.trim() === "") {
+        changeErrors[name] = name + " không được bỏ trống!";
+      } else if (!regexPhone.test(value)) {
         changeErrors[name] = name + " không hợp lệ!";
       } else {
         changeErrors[name] = "";
@@ -108,15 +141,15 @@ export default function SigninPage() {
         confirmButtonText: "Chấp nhận",
       });
     } else {
-      // dispatch({
-      //   type: "REGISTER",
-      //   data: {
-      //     name_user: user.values.firstName + " " + user.values.lastName,
-      //     phone_number: user.values.phone,
-      //     password: user.values.password,
-      //     email: user.values.email,
-      //   },
-      // });
+      dispatch({
+        type: "REGISTER_ADMIN",
+        data: {
+          name_user: user.values.name,
+          phone_number: user.values.phone,
+          email: user.values.email,
+          password: user.values.password,
+        },
+      });
     }
   };
 
@@ -137,6 +170,38 @@ export default function SigninPage() {
         <form style={{ width: "45%", marginLeft: " 60px" }}>
           <div style={{ marginTop: "15px" }}>
             <FormInput
+              id="name"
+              name="name"
+              type="text"
+              label="Tên người dùng"
+              required={true}
+              onChange={(event) => {
+                handleOnChange(event);
+              }}
+            />
+            <span style={{ fontSize: "12px", color: "red" }}>
+              {user.error.name}
+            </span>
+          </div>
+
+          <div style={{ marginTop: "15px" }}>
+            <FormInput
+              id="phone"
+              name="phone"
+              type="text"
+              label="Số điện thoại"
+              required={true}
+              onChange={(event) => {
+                handleOnChange(event);
+              }}
+            />
+            <span style={{ fontSize: "12px", color: "red" }}>
+              {user.error.phone}
+            </span>
+          </div>
+
+          <div style={{ marginTop: "15px" }}>
+            <FormInput
               id="email"
               name="email"
               type="email"
@@ -146,7 +211,7 @@ export default function SigninPage() {
                 handleOnChange(event);
               }}
             />
-            <span style={{ fontSize: "12px" }} className="text text-danger">
+            <span style={{ fontSize: "12px", color: "red" }}>
               {user.error.email}
             </span>
           </div>
@@ -162,7 +227,7 @@ export default function SigninPage() {
                 handleOnChange(event);
               }}
             />
-            <span style={{ fontSize: "12px" }} className="text text-danger">
+            <span style={{ fontSize: "12px", color: "red" }}>
               {user.error.password}
             </span>
           </div>
@@ -178,7 +243,7 @@ export default function SigninPage() {
                 handleOnChange(event);
               }}
             />
-            <span style={{ fontSize: "12px" }} className="text text-danger">
+            <span style={{ fontSize: "12px", color: "red" }}>
               {user.error.rePassword}
             </span>
           </div>

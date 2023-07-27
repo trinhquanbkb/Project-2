@@ -5,12 +5,14 @@ import {
   registerUserInfor,
   loginAdminInfor,
   getChartUser,
+  registerAdmin,
 } from "../../services/userService";
 import { TOKEN_ADMIN, TOKEN_USER } from "../../util/const/data";
 import {
   GET_CHART_USER_SAGA,
   LOGIN_ADMIN_SAGA,
   LOGIN_USER,
+  REGISTER_ADMIN_SAGA,
   REGISTER_USER,
   USER_INFO_SAGA,
 } from "../type";
@@ -112,10 +114,28 @@ function* getChartUserSaga(action) {
   }
 }
 
+function* registerAdminSaga(action) {
+  try {
+    let promiseUser = yield registerAdmin(action.data);
+    if (promiseUser.status === 201) {
+      yield put({
+        type: REGISTER_ADMIN_SAGA,
+        data: "201",
+      });
+    }
+  } catch (error) {
+    yield put({
+      type: REGISTER_ADMIN_SAGA,
+      data: "500",
+    });
+  }
+}
+
 export function* userSaga() {
   yield takeLatest("LOGIN", loginUserSaga);
   yield takeLatest("LOGIN_ADMIN", loginAdminSaga);
   yield takeLatest("REGISTER", registerUserSaga);
+  yield takeLatest("REGISTER_ADMIN", registerAdminSaga);
   yield takeLatest("GET_USER_INFO", getUserInfoSaga);
   yield takeLatest("GET_CHART_USER", getChartUserSaga);
 }

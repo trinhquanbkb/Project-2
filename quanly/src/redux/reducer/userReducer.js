@@ -1,6 +1,7 @@
 import {
   GET_CHART_USER_SAGA,
   LOGIN_ADMIN_SAGA,
+  REGISTER_ADMIN_SAGA,
   REGISTER_USER,
   USER_INFO_SAGA,
 } from "../type";
@@ -8,6 +9,7 @@ import {
 const userData = {
   statusLogin: "",
   statusRegister: "",
+  statusRegisterAdmin: "",
   userInfo: null,
   chartUser: [],
 };
@@ -53,6 +55,16 @@ const userReducer = (state = userData, action) => {
         });
       });
       state.chartUser = [...array];
+      return { ...state };
+    }
+    case REGISTER_ADMIN_SAGA: {
+      if (action.data === "201") {
+        state.statusRegisterAdmin = true;
+      } else if (action.data === "500") {
+        state.statusRegisterAdmin = false;
+      } else {
+        state.statusRegisterAdmin = "";
+      }
       return { ...state };
     }
     default: {
