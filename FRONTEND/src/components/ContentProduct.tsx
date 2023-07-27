@@ -63,7 +63,8 @@ export default function ContentProduct(item: any) {
 			<div className="d-flex justify-content-between">
 				<p className="price-product">
 					{productDetail.percent_sale === 0 ||
-					productDetail.percent_sale === null ? (
+					productDetail.percent_sale === null ||
+					productDetail.percent_sale === undefined ? (
 						<div>
 							Giá:{' '}
 							<span className="text-danger fw-bold">

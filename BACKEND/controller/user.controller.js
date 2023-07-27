@@ -36,6 +36,38 @@ const registerUser = async (req, res) => {
   }
 };
 
+const registerAdmin = async (req, res) => {
+  const { name_user, phone_number, password, email } = req.body;
+  try {
+    //tạo ra một chuỗi 10 số ngẫu nhiên bằng thuật toán salt
+    const salt = bcrypt.genSaltSync(10);
+    //generate password
+    const hashPassword = bcrypt.hashSync(password, salt);
+    const allUser = await Users.findAll();
+    let i = 0;
+    allUser.forEach((item) => {
+      if (item.dataValues.email === email) {
+        i++;
+      }
+    });
+    if (i > 0) {
+      res.status(500).send(error);
+    } else {
+      const newUser = await Users.create({
+        name_user,
+        phone_number,
+        email,
+        password: hashPassword,
+        role: "admin",
+        isActive: 1,
+      });
+      res.status(201).send(newUser);
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -182,6 +214,7 @@ const getCharUser = async (req, res) => {
 
 module.exports = {
   registerUser,
+  registerAdmin,
   loginAdmin,
   loginUser,
   getUserInfo,

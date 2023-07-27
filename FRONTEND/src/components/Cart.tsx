@@ -69,7 +69,7 @@ export default function Cart() {
 		})
 		setIsDelete(0)
 	}, [statusDelete, isDelete, listSelect])
-
+	console.log(listOrderDetail)
 	return (
 		<div className="cart-page container-fluid">
 			<h2 className="fw-bold">Giỏ hàng</h2>

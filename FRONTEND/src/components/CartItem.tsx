@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { linkProduct, parseColor, renderCode } from '../util/const/function'
+import { parseColor, renderCode } from '../util/const/function'
 import { renderPrice } from '../util/const/function'
 import InputQuantity from './InputQuantity'
 import FeatherIcon from 'feather-icons-react'
 import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
 
 export default function CartItem({
 	cart,
@@ -15,7 +14,6 @@ export default function CartItem({
 	const [inputValue, setInputValue] = useState(cart.count)
 	const [isSelect, setIsSelect] = useState(0)
 	const dispatch = useDispatch()
-	const url = linkProduct(cart.products_orderDetail_id)
 
 	useEffect(() => {
 		if (isSelect === 1) {
@@ -76,20 +74,7 @@ export default function CartItem({
 				/>
 			</div>
 			<div className="img-cart">
-				<Link
-					onClick={() => {
-						localStorage.setItem(
-							'productDetail',
-							JSON.stringify(cart)
-						)
-					}}
-					to={`/product/product-detail?${url}`}>
-					<img
-						className="img"
-						src={imgMain(cart.listImage)}
-						alt="img"
-					/>
-				</Link>
+				<img className="img" src={imgMain(cart.listImage)} alt="img" />
 			</div>
 			<div className="content-cart d-flex flex-column justify-content-between">
 				<div>

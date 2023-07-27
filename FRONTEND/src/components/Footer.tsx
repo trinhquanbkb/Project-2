@@ -16,34 +16,34 @@ export default function Footer() {
 				<div className="footer-left d-flex justify-content-between">
 					<div className="d-flex flex-column">
 						<p className="title-footer">THÔNG TIN CÔNG TY</p>
-						<Link to="#" className="info">
+						<Link to="/page-update" className="info">
 							Giới thiệu về công ty
 						</Link>
-						<Link to="#" className="info">
+						<Link to="/page-update" className="info">
 							Tuyển dụng
 						</Link>
-						<Link to="#" className="info">
+						<Link to="/page-update" className="info">
 							Điều khoản bảo mật
 						</Link>
 					</div>
 					<div className="d-flex flex-column">
 						<p className="title-footer">HỖ TRỢ KHÁCH HÀNG</p>
-						<Link to="#" className="info">
+						<Link to="/page-update" className="info">
 							Phí vận chuyển
 						</Link>
-						<Link to="#" className="info">
+						<Link to="/page-update" className="info">
 							Trả hàng & Hoàn tiền
 						</Link>
-						<Link to="#" className="info">
+						<Link to="/page-update" className="info">
 							Hướng dẫn đặt hàng
 						</Link>
-						<Link to="#" className="info">
+						<Link to="/page-update" className="info">
 							Trung tâm trợ giúp
 						</Link>
-						<Link to="#" className="info">
+						<Link to="/page-update" className="info">
 							Chính sách bảo hành
 						</Link>
-						<Link to="#" className="info">
+						<Link to="/page-update" className="info">
 							Liên hệ với chúng tôi
 						</Link>
 					</div>

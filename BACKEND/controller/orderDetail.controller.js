@@ -142,6 +142,7 @@ const getAllOrderDetail = async (req, res) => {
             id: orderDetails[i].dataValues.id,
             name_product: products[j].name_product,
             price: orderDetails[i].dataValues.price,
+            percent_sale: products[j].percent_sale,
             color: orderDetails[i].dataValues.color,
             remain: products[j].remain,
             name_brand: products[j].name_brand,

@@ -3,7 +3,6 @@ import ImageProduct from './ImageProduct'
 import ContentProduct from './ContentProduct'
 import DescriptionProduct from './DescriptionProduct'
 import size from '../assets/images/bang_size.png'
-import ReviewProduct from './ReviewProduct'
 
 interface IBreadcumUrl {
 	url: string

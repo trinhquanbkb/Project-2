@@ -2,7 +2,7 @@ import React from "react";
 import {
   ProfileOutlined,
   PieChartOutlined,
-  DatabaseOutlined,
+  PlusCircleOutlined,
   ExportOutlined,
   BarChartOutlined,
 } from "@ant-design/icons";
@@ -57,6 +57,11 @@ const HorizontalLayout = ({ children }: ILayoutProp) => {
                 to="/manager-business"
               >
                 Thống kê
+              </NavLink>
+            </Menu.Item>
+            <Menu.Item icon={<PlusCircleOutlined className="menu-item" />}>
+              <NavLink className="nav-link menu-item-link" to="/signin">
+                Thêm tài khoản quản lý
               </NavLink>
             </Menu.Item>
             <Menu.Item

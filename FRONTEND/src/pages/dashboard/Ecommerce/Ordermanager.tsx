@@ -19,11 +19,7 @@ export default function Ordermanager() {
 		})
 	}, [])
 
-	useEffect(() => {
-		dispatch({
-			type: 'GET_ALL_ORDER_MANAGER'
-		})
-	}, [orderManager, listProduct])
+	useEffect(() => {}, [orderManager, listProduct])
 
 	const renderStatus = (item: any) => {
 		if (item.status === 1) {
@@ -180,17 +176,17 @@ export default function Ordermanager() {
 										}
 									})
 									setTimeout(() => {
-										dispatch({
-											type: 'GET_ALL_ORDER_MANAGER'
-										})
-									}, 300)
-									setTimeout(() => {
 										Swal.fire({
 											title: 'Đã đánh giá thành công.',
 											icon: 'success',
 											confirmButtonText: 'OK'
 										})
-									}, 500)
+									}, 300)
+									setTimeout(() => {
+										dispatch({
+											type: 'GET_ALL_ORDER_MANAGER'
+										})
+									}, 600)
 								}
 							})
 						}}>

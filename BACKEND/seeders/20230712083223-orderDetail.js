@@ -22,7 +22,7 @@ module.exports = {
         },
         {
           user_id: 2,
-          price: 800000,
+          price: 200000,
           count: 4,
           color: "grey",
           size: "XL",
@@ -78,7 +78,7 @@ module.exports = {
         },
         {
           user_id: 2,
-          price: 560000,
+          price: 280000,
           count: 2,
           color: "white",
           size: "XXXL",
@@ -92,7 +92,7 @@ module.exports = {
         },
         {
           user_id: 2,
-          price: 738000,
+          price: 369000,
           count: 2,
           color: "white",
           size: "XXL",

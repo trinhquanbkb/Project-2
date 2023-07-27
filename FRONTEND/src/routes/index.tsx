@@ -6,6 +6,7 @@ import CartPage from '../pages/dashboard/Ecommerce/CartPage'
 import OrderPage from '../pages/dashboard/Ecommerce/OrderPage'
 import Ordermanager from '../pages/dashboard/Ecommerce/Ordermanager'
 import ProductPage from '../pages/dashboard/Ecommerce/ProductPage'
+import PageFuture from '../pages/dashboard/Support/PageFuture'
 import PolicyPurchasePage from '../pages/dashboard/Support/PolicyPurchasePage'
 
 export interface RoutesProps {
@@ -22,6 +23,12 @@ const rootRoute: RoutesProps = {
 	path: '/',
 	name: 'index',
 	component: index
+}
+
+const pageUpdateRoute: RoutesProps = {
+	path: '/page-update',
+	name: 'PageUpdate',
+	component: PageFuture
 }
 
 const authRoutes: RoutesProps[] = [
@@ -84,7 +91,7 @@ const mergeRoutes = (routes: RoutesProps[]) => {
 	return flatRoutes
 }
 
-const routes = [rootRoute, ...authRoutes, ...publicRoutes]
+const routes = [rootRoute, ...authRoutes, ...publicRoutes, pageUpdateRoute]
 
 const mergePublicRoutes = mergeRoutes(routes)
 

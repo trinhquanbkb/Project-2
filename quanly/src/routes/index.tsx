@@ -3,6 +3,7 @@ import index from "../pages/Dashboard";
 import OrderManagerPage from "../pages/Order.tsx/OrderManagerPage";
 import ProductPage from "../pages/Product/ProductPage";
 import LoginPage from "../pages/auth/LoginPage";
+import SigninPage from "../pages/auth/SigninPage";
 
 export interface RoutesProps {
   path: string;
@@ -43,6 +44,11 @@ const authRoutes: RoutesProps[] = [
     path: "/login",
     name: "Login",
     component: LoginPage,
+  },
+  {
+    path: "/signin",
+    name: "Signin",
+    component: SigninPage,
   },
 ];
 
